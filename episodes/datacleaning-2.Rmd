@@ -33,7 +33,7 @@ library(curl)
 library(pheatmap)
 library(EnhancedVolcano)
 #library(STRINGdb)
-library(clusterProfiler)
+#library(clusterProfiler)
 library(org.Hs.eg.db)
 
 ```
@@ -360,30 +360,30 @@ Note: this part does not seem to be working
 
 ```{r}
 
-de_proteins <- results %>% filter(adj.P.Val < 0.05)
-
-# Convert UniProt IDs to Entrez IDs for enrichment
-converted <- bitr(de_proteins$Protein.Group, 
-                  fromType = "UNIPROT", 
-                  toType = "ENTREZID", 
-                  OrgDb = org.Hs.eg.db)
-
-# GO Biological Process enrichment
-ego <- enrichGO(gene = converted$ENTREZID,
-                OrgDb = org.Hs.eg.db,
-                ont = "BP",
-                pAdjustMethod = "BH",
-                pvalueCutoff = 0.05,
-                readable = TRUE)
-
-dotplot(ego, showCategory = 10)
-
-# KEGG pathway enrichment
-ekegg <- enrichKEGG(gene = converted$ENTREZID,
-                    organism = 'hsa',
-                    pvalueCutoff = 0.05)
-
-dotplot(ekegg, showCategory = 10)
+# de_proteins <- results %>% filter(adj.P.Val < 0.05)
+# 
+# # Convert UniProt IDs to Entrez IDs for enrichment
+# converted <- bitr(de_proteins$Protein.Group, 
+#                   fromType = "UNIPROT", 
+#                   toType = "ENTREZID", 
+#                   OrgDb = org.Hs.eg.db)
+# 
+# # GO Biological Process enrichment
+# ego <- enrichGO(gene = converted$ENTREZID,
+#                 OrgDb = org.Hs.eg.db,
+#                 ont = "BP",
+#                 pAdjustMethod = "BH",
+#                 pvalueCutoff = 0.05,
+#                 readable = TRUE)
+# 
+# dotplot(ego, showCategory = 10)
+# 
+# # KEGG pathway enrichment
+# ekegg <- enrichKEGG(gene = converted$ENTREZID,
+#                     organism = 'hsa',
+#                     pvalueCutoff = 0.05)
+# 
+# dotplot(ekegg, showCategory = 10)
 
 
 ```
