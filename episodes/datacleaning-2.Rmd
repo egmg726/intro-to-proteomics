@@ -32,8 +32,8 @@ library(readxl)
 library(curl)
 library(pheatmap)
 library(EnhancedVolcano)
-#library(STRINGdb)
-#library(clusterProfiler)
+library(STRINGdb)
+library(clusterProfiler)
 library(org.Hs.eg.db)
 
 ```
