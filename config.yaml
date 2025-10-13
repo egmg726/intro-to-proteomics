@@ -20,7 +20,7 @@ carpentry: 'incubator'
 title: 'Lesson Title'
 
 # Date the lesson was created (YYYY-MM-DD, this is empty by default)
-created: '2025-10-13'
+created: '2025-09-30'
 
 # Comma-separated list of keywords for the lesson
 keywords: 'software, data, lesson, The Carpentries'
@@ -64,17 +64,23 @@ contact: 'team@carpentries.org'
 # - another-learner.md
 
 # Order of episodes in your lesson
-episodes: 
-- introduction.Rmd
+episodes:
+# - introduction.Rmd
+- diann.Rmd
+- datacleaning.Rmd
+#- test.Rmd
+- datacleaning-2.Rmd
+#- de-analysis.Rmd
 
 # Information for Learners
-learners: 
+learners:
+- setup.md
 
 # Information for Instructors
-instructors: 
+instructors:
 
 # Learner Profiles
-profiles: 
+profiles:
 
 # Customisation ---------------------------------------------
 #
