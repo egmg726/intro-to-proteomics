@@ -10,3 +10,4 @@
 "instructors/instructor-notes.md" "5cf113fd22defb29d17b64597f3c9bc0" "site/built/instructor-notes.md" "2025-10-13"
 "learners/setup.md" "63ffb2cb815fdf6b4dbd103b3ba8372e" "site/built/setup.md" "2025-10-13"
 "profiles/learner-profiles.md" "5fe5bf7537072422b91ed393ada03f9a" "site/built/learner-profiles.md" "2025-10-13"
+"renv/profiles/lesson-requirements/renv.lock" "4272c164290ba624dca552d247571554" "site/built/renv.lock" "2025-10-13"
