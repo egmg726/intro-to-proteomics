@@ -307,7 +307,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Data cleaning and DE analysis</h1>
-        <p>Last updated on 2025-10-14 |
+        <p>Last updated on 2025-10-13 |
 
         <a href="https://example.com/template-source/lesson-example/edit/main/episodes/datacleaning-2.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -1113,7 +1113,7 @@ visualize via a clustered heatmap.</p>
 <div class="codewrapper">
 <h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in bitr(de_proteins$Protein.Group, fromType = "UNIPROT", toType = "ENTREZID", : could not find function "bitr"</code></pre>
+<pre class="error" tabindex="0"><code>Error: object 'de_proteins' not found</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb122">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1130,7 +1130,7 @@ visualize via a clustered heatmap.</p>
 <div class="codewrapper">
 <h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in enrichGO(gene = converted$ENTREZID, OrgDb = org.Hs.eg.db, ont = "BP", : could not find function "enrichGO"</code></pre>
+<pre class="error" tabindex="0"><code>Error: object 'converted' not found</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb124">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1141,7 +1141,7 @@ visualize via a clustered heatmap.</p>
 <div class="codewrapper">
 <h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in dotplot(ego, showCategory = 10): could not find function "dotplot"</code></pre>
+<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'dotplot': object 'ego' not found</code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb126">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1153,11 +1153,21 @@ visualize via a clustered heatmap.</p>
 <span>                    pvalueCutoff <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Reading KEGG annotation online: "https://rest.kegg.jp/link/hsa/pathway"...</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Reading KEGG annotation online: "https://rest.kegg.jp/list/pathway/hsa"...</code></pre>
+</div>
+<div class="codewrapper">
 <h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in enrichKEGG(gene = converted$ENTREZID, organism = "hsa", pvalueCutoff = 0.05): could not find function "enrichKEGG"</code></pre>
+<pre class="error" tabindex="0"><code>Error: object 'converted' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb128">
+<div class="codewrapper sourceCode" id="cb130">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1166,7 +1176,7 @@ visualize via a clustered heatmap.</p>
 <div class="codewrapper">
 <h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in dotplot(ekegg, showCategory = 10): could not find function "dotplot"</code></pre>
+<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'dotplot': object 'ekegg' not found</code></pre>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="potential-next-steps">Potential next steps<a class="anchor" aria-label="anchor" href="#potential-next-steps"></a></h2>
@@ -1250,7 +1260,7 @@ any links that you are not going to use.
   "url": "https://template-source.github.io/lesson-example/datacleaning-2.html",
   "identifier": "https://template-source.github.io/lesson-example/datacleaning-2.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2025-10-14",
+  "dateModified": "2025-10-13",
   "datePublished": "2025-10-14"
 }
 
