@@ -59,7 +59,8 @@ cran_packages <- c(
   "curl",          # Download files from URLs
   "pheatmap",      # Heatmap visualization
   "EnhancedVolcano", # Volcano plots
-  "STRINGdb"       # Protein-protein interaction network visualization
+  "STRINGdb",       # Protein-protein interaction network visualization
+  "arrow"           # Dependency for .parquet reading in limpa
 )
 
 # Packages from Bioconductor
