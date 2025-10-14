@@ -637,42 +637,84 @@ Note: this part does not seem to be working
 
 
 ``` r
-#string_db <- STRINGdb$new(version = "11.5", species = 9606, score_threshold = 400)
-#mapped <- string_db$map(results, "Protein.Names", removeUnmappedRows = TRUE)
-#de_proteins <- mapped %>% filter(adj.P.Val < 0.05)
+string_db <- STRINGdb$new(version = "11.5", species = 9606, score_threshold = 400)
+mapped <- string_db$map(results, "Protein.Names", removeUnmappedRows = TRUE)
+de_proteins <- mapped %>% filter(adj.P.Val < 0.05)
 
 # Plot network of significant proteins
-#string_db$plot_network(de_proteins$STRING_id)
+string_db$plot_network(de_proteins$STRING_id)
 ```
 
 ### Functional Enrichment (GO and KEGG)
 
 
 ``` r
-# de_proteins <- results %>% filter(adj.P.Val < 0.05)
-# 
-# # Convert UniProt IDs to Entrez IDs for enrichment
-# converted <- bitr(de_proteins$Protein.Group, 
-#                   fromType = "UNIPROT", 
-#                   toType = "ENTREZID", 
-#                   OrgDb = org.Hs.eg.db)
-# 
-# # GO Biological Process enrichment
-# ego <- enrichGO(gene = converted$ENTREZID,
-#                 OrgDb = org.Hs.eg.db,
-#                 ont = "BP",
-#                 pAdjustMethod = "BH",
-#                 pvalueCutoff = 0.05,
-#                 readable = TRUE)
-# 
-# dotplot(ego, showCategory = 10)
-# 
-# # KEGG pathway enrichment
-# ekegg <- enrichKEGG(gene = converted$ENTREZID,
-#                     organism = 'hsa',
-#                     pvalueCutoff = 0.05)
-# 
-# dotplot(ekegg, showCategory = 10)
+de_proteins <- results %>% filter(adj.P.Val < 0.05)
+```
+
+``` error
+Error: object 'results' not found
+```
+
+``` r
+# Convert UniProt IDs to Entrez IDs for enrichment
+converted <- bitr(de_proteins$Protein.Group,
+                  fromType = "UNIPROT",
+                  toType = "ENTREZID",
+                  OrgDb = org.Hs.eg.db)
+```
+
+``` error
+Error: object 'de_proteins' not found
+```
+
+``` r
+# GO Biological Process enrichment
+ego <- enrichGO(gene = converted$ENTREZID,
+                OrgDb = org.Hs.eg.db,
+                ont = "BP",
+                pAdjustMethod = "BH",
+                pvalueCutoff = 0.05,
+                readable = TRUE)
+```
+
+``` error
+Error: object 'converted' not found
+```
+
+``` r
+dotplot(ego, showCategory = 10)
+```
+
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'dotplot': object 'ego' not found
+```
+
+``` r
+# KEGG pathway enrichment
+ekegg <- enrichKEGG(gene = converted$ENTREZID,
+                    organism = 'hsa',
+                    pvalueCutoff = 0.05)
+```
+
+``` output
+Reading KEGG annotation online: "https://rest.kegg.jp/link/hsa/pathway"...
+```
+
+``` output
+Reading KEGG annotation online: "https://rest.kegg.jp/list/pathway/hsa"...
+```
+
+``` error
+Error: object 'converted' not found
+```
+
+``` r
+dotplot(ekegg, showCategory = 10)
+```
+
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'dotplot': object 'ekegg' not found
 ```
 
 
