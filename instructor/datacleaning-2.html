@@ -306,7 +306,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Data cleaning and DE analysis</h1>
-        <p>Last updated on 2025-10-13 |
+        <p>Last updated on 2025-10-14 |
 
         <a href="https://example.com/template-source/lesson-example/edit/main/episodes/datacleaning-2.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -1080,12 +1080,12 @@ visualize via a clustered heatmap.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#string_db &lt;- STRINGdb$new(version = "11.5", species = 9606, score_threshold = 400)</span></span>
-<span><span class="co">#mapped &lt;- string_db$map(results, "Protein.Names", removeUnmappedRows = TRUE)</span></span>
-<span><span class="co">#de_proteins &lt;- mapped %&gt;% filter(adj.P.Val &lt; 0.05)</span></span>
+<code class="sourceCode R"><span><span class="va">string_db</span> <span class="op">&lt;-</span> <span class="va">STRINGdb</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>version <span class="op">=</span> <span class="st">"11.5"</span>, species <span class="op">=</span> <span class="fl">9606</span>, score_threshold <span class="op">=</span> <span class="fl">400</span><span class="op">)</span></span>
+<span><span class="va">mapped</span> <span class="op">&lt;-</span> <span class="va">string_db</span><span class="op">$</span><span class="fu">map</span><span class="op">(</span><span class="va">results</span>, <span class="st">"Protein.Names"</span>, removeUnmappedRows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">de_proteins</span> <span class="op">&lt;-</span> <span class="va">mapped</span> <span class="op">%&gt;%</span> <span class="fu">filter</span><span class="op">(</span><span class="va">adj.P.Val</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot network of significant proteins</span></span>
-<span><span class="co">#string_db$plot_network(de_proteins$STRING_id)</span></span></code></pre>
+<span><span class="va">string_db</span><span class="op">$</span><span class="fu">plot_network</span><span class="op">(</span><span class="va">de_proteins</span><span class="op">$</span><span class="va">STRING_id</span><span class="op">)</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -1094,30 +1094,80 @@ visualize via a clustered heatmap.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># de_proteins &lt;- results %&gt;% filter(adj.P.Val &lt; 0.05)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># # Convert UniProt IDs to Entrez IDs for enrichment</span></span>
-<span><span class="co"># converted &lt;- bitr(de_proteins$Protein.Group, </span></span>
-<span><span class="co">#                   fromType = "UNIPROT", </span></span>
-<span><span class="co">#                   toType = "ENTREZID", </span></span>
-<span><span class="co">#                   OrgDb = org.Hs.eg.db)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># # GO Biological Process enrichment</span></span>
-<span><span class="co"># ego &lt;- enrichGO(gene = converted$ENTREZID,</span></span>
-<span><span class="co">#                 OrgDb = org.Hs.eg.db,</span></span>
-<span><span class="co">#                 ont = "BP",</span></span>
-<span><span class="co">#                 pAdjustMethod = "BH",</span></span>
-<span><span class="co">#                 pvalueCutoff = 0.05,</span></span>
-<span><span class="co">#                 readable = TRUE)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># dotplot(ego, showCategory = 10)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># # KEGG pathway enrichment</span></span>
-<span><span class="co"># ekegg &lt;- enrichKEGG(gene = converted$ENTREZID,</span></span>
-<span><span class="co">#                     organism = 'hsa',</span></span>
-<span><span class="co">#                     pvalueCutoff = 0.05)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># dotplot(ekegg, showCategory = 10)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">de_proteins</span> <span class="op">&lt;-</span> <span class="va">results</span> <span class="op">%&gt;%</span> <span class="fu">filter</span><span class="op">(</span><span class="va">adj.P.Val</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error: object 'results' not found</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb120">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Convert UniProt IDs to Entrez IDs for enrichment</span></span>
+<span><span class="va">converted</span> <span class="op">&lt;-</span> <span class="fu">bitr</span><span class="op">(</span><span class="va">de_proteins</span><span class="op">$</span><span class="va">Protein.Group</span>,</span>
+<span>                  fromType <span class="op">=</span> <span class="st">"UNIPROT"</span>,</span>
+<span>                  toType <span class="op">=</span> <span class="st">"ENTREZID"</span>,</span>
+<span>                  OrgDb <span class="op">=</span> <span class="va">org.Hs.eg.db</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in bitr(de_proteins$Protein.Group, fromType = "UNIPROT", toType = "ENTREZID", : could not find function "bitr"</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb122">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># GO Biological Process enrichment</span></span>
+<span><span class="va">ego</span> <span class="op">&lt;-</span> <span class="fu">enrichGO</span><span class="op">(</span>gene <span class="op">=</span> <span class="va">converted</span><span class="op">$</span><span class="va">ENTREZID</span>,</span>
+<span>                OrgDb <span class="op">=</span> <span class="va">org.Hs.eg.db</span>,</span>
+<span>                ont <span class="op">=</span> <span class="st">"BP"</span>,</span>
+<span>                pAdjustMethod <span class="op">=</span> <span class="st">"BH"</span>,</span>
+<span>                pvalueCutoff <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>                readable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in enrichGO(gene = converted$ENTREZID, OrgDb = org.Hs.eg.db, ont = "BP", : could not find function "enrichGO"</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb124">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">dotplot</span><span class="op">(</span><span class="va">ego</span>, showCategory <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in dotplot(ego, showCategory = 10): could not find function "dotplot"</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb126">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># KEGG pathway enrichment</span></span>
+<span><span class="va">ekegg</span> <span class="op">&lt;-</span> <span class="fu">enrichKEGG</span><span class="op">(</span>gene <span class="op">=</span> <span class="va">converted</span><span class="op">$</span><span class="va">ENTREZID</span>,</span>
+<span>                    organism <span class="op">=</span> <span class="st">'hsa'</span>,</span>
+<span>                    pvalueCutoff <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in enrichKEGG(gene = converted$ENTREZID, organism = "hsa", pvalueCutoff = 0.05): could not find function "enrichKEGG"</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb128">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">dotplot</span><span class="op">(</span><span class="va">ekegg</span>, showCategory <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in dotplot(ekegg, showCategory = 10): could not find function "dotplot"</code></pre>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="potential-next-steps">Potential next steps<a class="anchor" aria-label="anchor" href="#potential-next-steps"></a></h2>
@@ -1201,8 +1251,8 @@ any links that you are not going to use.
   "url": "https://template-source.github.io/lesson-example/instructor/datacleaning-2.html",
   "identifier": "https://template-source.github.io/lesson-example/instructor/datacleaning-2.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2025-10-13",
-  "datePublished": "2025-10-13"
+  "dateModified": "2025-10-14",
+  "datePublished": "2025-10-14"
 }
 
   </script><script>
