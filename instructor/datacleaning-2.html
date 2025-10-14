@@ -306,7 +306,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Data cleaning and DE analysis</h1>
-        <p>Last updated on 2025-10-13 |
+        <p>Last updated on 2025-10-14 |
 
         <a href="https://example.com/template-source/lesson-example/edit/main/episodes/datacleaning-2.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -348,15 +348,33 @@ paper.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Getting the subset of the data</span></span>
+<span></span>
+<span><span class="co"># curl::curl_download('https://ftp.pride.ebi.ac.uk/pride/data/archive/2024/02/PXD047585/report.tsv','data/report.tsv')</span></span>
+<span><span class="co"># report_tsv &lt;- read.csv('data/report.tsv', sep='\t')</span></span>
+<span><span class="co"># write.csv(stool_tsv_test,'~data/report.csv')</span></span>
+<span><span class="co"># parquetize::csv_to_parquet('data/report.csv',path_to_parquet = 'data/report.parquet')</span></span>
+<span><span class="co"># </span></span>
+<span><span class="co"># report_full &lt;- arrow::read_parquet('data/report.parquet')</span></span>
+<span><span class="co"># </span></span>
+<span><span class="co"># proteins_keep &lt;- c("RED2_HUMAN', 'MINT_HUMAN', 'Cationic', 'OVCH2_HUMAN', 'ITA4_HUMAN', 'Trypsin', 'G3PT_HUMAN', 'ZN451_HUMAN', 'DCD_HUMAN', 'CDHR2_HUMAN', 'DSG1_HUMAN', 'BRCA2_HUMAN', 'SIAE_HUMAN', 'CTRC_HUMAN', 'CEL3A_HUMAN', 'A1AT_HUMAN', 'CYTA_HUMAN', 'CADH1_HUMAN', 'TRY2_HUMAN', 'CEAM7_HUMAN', 'ITLN1_HUMAN', 'CEL3B_HUMAN', 'DPEP1_HUMAN', 'CUZD1_HUMAN', 'ZG16_HUMAN', 'ENPP7_HUMAN', 'HV601_HUMAN', 'SMR3B_HUMAN', 'PA21B_HUMAN', 'FCGBP_HUMAN', 'LEG4_HUMAN', 'RN170_HUMAN', 'IGLL5_HUMAN', 'PPBI_HUMAN', 'CLD34_HUMAN', 'CEAM5_HUMAN', 'CEAM6_HUMAN', 'MGA_HUMAN', 'TFF3_HUMAN', 'ENTK_HUMAN', 'IGKC_HUMAN', 'HV307_HUMAN', 'IGJ_HUMAN', 'CBPB1_HUMAN', 'KV401_HUMAN', 'CTRB2_HUMAN', 'CBPA1_HUMAN', 'AMYP_HUMAN', 'SODC_HUMAN', 'CEL2A_HUMAN")</span></span>
+<span><span class="co"># report_small &lt;- report_full %&gt;%</span></span>
+<span><span class="co">#   filter(Protein.Group %in% proteins_keep | runif(n()) &lt; 0.10)</span></span>
+<span><span class="co"># arrow::write_parquet(report_small, "data/report_subset.parquet")</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load peptide-level data processed by DIA-NN</span></span>
-<span><span class="va">y.peptide</span> <span class="op">&lt;-</span> <span class="fu">readDIANN</span><span class="op">(</span>file<span class="op">=</span><span class="st">'data/report_stool.parquet'</span>,format<span class="op">=</span><span class="st">"parquet"</span><span class="op">)</span></span></code></pre>
+<span><span class="va">y.peptide</span> <span class="op">&lt;-</span> <span class="fu">readDIANN</span><span class="op">(</span>file<span class="op">=</span><span class="st">'data/report_subset.parquet'</span>,format<span class="op">=</span><span class="st">"parquet"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in readDIANN(file = "data/report_stool.parquet", format = "parquet"): arrow package required but is not installed (or can't be loaded)</code></pre>
+<pre class="error" tabindex="0"><code>Error in readDIANN(file = "data/report_subset.parquet", format = "parquet"): arrow package required but is not installed (or can't be loaded)</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb3">
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -370,14 +388,14 @@ paper.</p>
 </section><section><h2 class="section-heading" id="annotating-and-filtering-our-dataset">Annotating and filtering our dataset<a class="anchor" aria-label="anchor" href="#annotating-and-filtering-our-dataset"></a></h2>
 <hr class="half-width"><p>In order to do differential expression analysis, we need information
 about what samples were used.</p>
-<div class="codewrapper sourceCode" id="cb5">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># The SampleAnnotation file was downloaded directly from PRIDE using this link&gt;</span></span>
 <span><span class="co"># curl::curl_download(url='https://ftp.pride.ebi.ac.uk/pride/data/archive/2024/02/PXD047585/SampleAnnotation.xlsx',destfile = 'data/SampleAnnotation.xlsx')</span></span></code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb6">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -393,7 +411,7 @@ their GitHub page.</p>
 Protein contaminants matter: building universal protein contaminant
 libraries for DDA and DIA proteomics. Journal of proteome research. 2022
 Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteome.2c00145" class="external-link uri">https://pubs.acs.org/doi/full/10.1021/acs.jproteome.2c00145</a></p>
-<div class="codewrapper sourceCode" id="cb7">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -401,7 +419,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 <span></span>
 <span><span class="co"># curl::curl_download('https://github.com/HaoGroup-ProtContLib/Protein-Contaminant-Libraries-for-DDA-and-DIA-Proteomics/raw/refs/heads/main/Universal%20protein%20contaminant%20FASTA/Contaminant%20protein%20information%20in%20the%20FASTA%20library%20and%20the%20potential%20source%20of%20contaminations.xlsx',destfile = 'data/Contaminants.xlsx')</span></span></code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -419,7 +437,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 • `` -&gt; `...7`
 • `` -&gt; `...8`</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb10">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -427,7 +445,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 <span><span class="va">contaminants</span> <span class="op">&lt;-</span> <span class="va">contaminants</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fu">nrow</span><span class="op">(</span><span class="va">contaminants</span><span class="op">)</span>,<span class="op">]</span></span>
 <span><span class="fu">colnames</span><span class="op">(</span><span class="va">contaminants</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contaminants_colnames</span></span></code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -439,7 +457,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 </h3>
 <pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function '%in%': object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -451,7 +469,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb15">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -462,7 +480,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb17">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -476,7 +494,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 </div>
 <div class="section level3">
 <h3 id="align-sample-metadata">Align sample metadata<a class="anchor" aria-label="anchor" href="#align-sample-metadata"></a></h3>
-<div class="codewrapper sourceCode" id="cb19">
+<div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -487,7 +505,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 </h3>
 <pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'table' in selecting a method for function '%in%': error in evaluating the argument 'x' in selecting a method for function 'colnames': object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -498,7 +516,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'sample_info' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb23">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -509,7 +527,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -521,7 +539,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'sample_info' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -533,7 +551,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -544,7 +562,7 @@ Jul 6;21(9):2104-13. <a href="https://pubs.acs.org/doi/full/10.1021/acs.jproteom
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb31">
+<div class="codewrapper sourceCode" id="cb32">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -560,7 +578,7 @@ limpa vignette.</p>
 </div>
 <div class="section level3">
 <h3 id="dimensionality-reduction-and-qc">Dimensionality Reduction and QC<a class="anchor" aria-label="anchor" href="#dimensionality-reduction-and-qc"></a></h3>
-<div class="codewrapper sourceCode" id="cb33">
+<div class="codewrapper sourceCode" id="cb34">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -571,7 +589,7 @@ limpa vignette.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb35">
+<div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -583,7 +601,7 @@ limpa vignette.</p>
 <pre class="error" tabindex="0"><code>Error: object 'dpcfit' not found</code></pre>
 </div>
 <p>By protein:</p>
-<div class="codewrapper sourceCode" id="cb37">
+<div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -594,7 +612,7 @@ limpa vignette.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb39">
+<div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -607,7 +625,7 @@ limpa vignette.</p>
 </div>
 <p>That plot is extremely messy and doesn’t tell us much! Let’s clean it
 up.</p>
-<div class="codewrapper sourceCode" id="cb41">
+<div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -619,7 +637,7 @@ up.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb43">
+<div class="codewrapper sourceCode" id="cb44">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -630,7 +648,7 @@ up.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'Class' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb45">
+<div class="codewrapper sourceCode" id="cb46">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -641,7 +659,7 @@ up.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'Class' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb47">
+<div class="codewrapper sourceCode" id="cb48">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -652,7 +670,7 @@ up.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'Class.color' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb49">
+<div class="codewrapper sourceCode" id="cb50">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -665,7 +683,7 @@ up.</p>
 </div>
 <p>Hmmm, not a lot of differences. Let’s see if there are any batch
 effects.</p>
-<div class="codewrapper sourceCode" id="cb51">
+<div class="codewrapper sourceCode" id="cb52">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -677,7 +695,7 @@ effects.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb53">
+<div class="codewrapper sourceCode" id="cb54">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -688,7 +706,7 @@ effects.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'Batch' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb55">
+<div class="codewrapper sourceCode" id="cb56">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -699,7 +717,7 @@ effects.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'Batch.color' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb57">
+<div class="codewrapper sourceCode" id="cb58">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -712,7 +730,7 @@ effects.</p>
 </div>
 <p>It looks like there are some differences between the batches. Let’s
 remove the batch effects and see how it looks.</p>
-<div class="codewrapper sourceCode" id="cb59">
+<div class="codewrapper sourceCode" id="cb60">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -724,7 +742,7 @@ remove the batch effects and see how it looks.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.protein' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb61">
+<div class="codewrapper sourceCode" id="cb62">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -737,7 +755,7 @@ remove the batch effects and see how it looks.</p>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="subset-comparison-ctrl-vs-auc">Subset Comparison: Ctrl vs aUC<a class="anchor" aria-label="anchor" href="#subset-comparison-ctrl-vs-auc"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb63">
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb64">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -748,7 +766,7 @@ remove the batch effects and see how it looks.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function '%in%': object 'y.peptide' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb65">
+<div class="codewrapper sourceCode" id="cb66">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -760,7 +778,7 @@ remove the batch effects and see how it looks.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.protein' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb67">
+<div class="codewrapper sourceCode" id="cb68">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -772,7 +790,7 @@ remove the batch effects and see how it looks.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.protein' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb69">
+<div class="codewrapper sourceCode" id="cb70">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -788,7 +806,7 @@ remove the batch effects and see how it looks.</p>
 </section><section><h2 class="section-heading" id="differential-expression-analysis">Differential Expression Analysis<a class="anchor" aria-label="anchor" href="#differential-expression-analysis"></a></h2>
 <hr class="half-width"><p>We now fit a linear model that includes both Class and Batch
 effects.</p>
-<div class="codewrapper sourceCode" id="cb71">
+<div class="codewrapper sourceCode" id="cb72">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -799,7 +817,7 @@ effects.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in eval(predvars, data, env): object 'Class' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb73">
+<div class="codewrapper sourceCode" id="cb74">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -810,7 +828,7 @@ effects.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.protein' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb75">
+<div class="codewrapper sourceCode" id="cb76">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -821,7 +839,7 @@ effects.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in eBayes(fit): fit is not a valid MArrayLM object</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb77">
+<div class="codewrapper sourceCode" id="cb78">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -835,7 +853,7 @@ effects.</p>
 </section><section><h2 class="section-heading" id="create-and-explore-contrasts">Create and Explore Contrasts<a class="anchor" aria-label="anchor" href="#create-and-explore-contrasts"></a></h2>
 <hr class="half-width"><p>We can define custom contrasts (e.g., comparing aCD vs Ctrl) and
 explore differential proteins.</p>
-<div class="codewrapper sourceCode" id="cb79">
+<div class="codewrapper sourceCode" id="cb80">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -848,7 +866,7 @@ explore differential proteins.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in if (levels[1] == "(Intercept)") {: argument is of length zero</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb81">
+<div class="codewrapper sourceCode" id="cb82">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -860,7 +878,7 @@ explore differential proteins.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'contrasts_fit' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb83">
+<div class="codewrapper sourceCode" id="cb84">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -871,7 +889,7 @@ explore differential proteins.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'fit2' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb85">
+<div class="codewrapper sourceCode" id="cb86">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -883,7 +901,7 @@ explore differential proteins.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'fit2' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb87">
+<div class="codewrapper sourceCode" id="cb88">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -895,7 +913,7 @@ explore differential proteins.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in topTable(fit, coef = 1): fit must be an MArrayLM object</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb89">
+<div class="codewrapper sourceCode" id="cb90">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -906,7 +924,7 @@ explore differential proteins.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in topTable(fit, coef = 3): fit must be an MArrayLM object</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb91">
+<div class="codewrapper sourceCode" id="cb92">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -917,7 +935,7 @@ explore differential proteins.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in topTable(fit, coef = 4): fit must be an MArrayLM object</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb93">
+<div class="codewrapper sourceCode" id="cb94">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -928,7 +946,7 @@ explore differential proteins.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in topTable(fit, coef = 6): fit must be an MArrayLM object</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb95">
+<div class="codewrapper sourceCode" id="cb96">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -940,7 +958,7 @@ explore differential proteins.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in as.vector(x, mode): cannot coerce type 'closure' to vector of type 'any'</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb97">
+<div class="codewrapper sourceCode" id="cb98">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -952,7 +970,7 @@ explore differential proteins.</p>
 <pre class="error" tabindex="0"><code>Error in as.vector(x, mode): cannot coerce type 'closure' to vector of type 'any'</code></pre>
 </div>
 </section><section><h2 class="section-heading" id="example-auc-vs-ctrl-comparison">Example: aUC vs Ctrl Comparison<a class="anchor" aria-label="anchor" href="#example-auc-vs-ctrl-comparison"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb99">
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb100">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -963,7 +981,7 @@ explore differential proteins.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in topTable(fit, coef = 3, number = Inf): fit must be an MArrayLM object</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb101">
+<div class="codewrapper sourceCode" id="cb102">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -975,7 +993,7 @@ explore differential proteins.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.protein' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb103">
+<div class="codewrapper sourceCode" id="cb104">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -989,7 +1007,7 @@ explore differential proteins.</p>
 </section><section><h2 class="section-heading" id="visualize-top-significant-proteins">Visualize Top Significant Proteins<a class="anchor" aria-label="anchor" href="#visualize-top-significant-proteins"></a></h2>
 <hr class="half-width"><p>We identify the top 50 most significant and variable proteins, then
 visualize via a clustered heatmap.</p>
-<div class="codewrapper sourceCode" id="cb105">
+<div class="codewrapper sourceCode" id="cb106">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1003,7 +1021,7 @@ visualize via a clustered heatmap.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'results' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb107">
+<div class="codewrapper sourceCode" id="cb108">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1014,7 +1032,7 @@ visualize via a clustered heatmap.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'y.protein' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb109">
+<div class="codewrapper sourceCode" id="cb110">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1025,7 +1043,7 @@ visualize via a clustered heatmap.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 't': error in evaluating the argument 'x' in selecting a method for function 't': object 'expr_matrix' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb111">
+<div class="codewrapper sourceCode" id="cb112">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1037,7 +1055,7 @@ visualize via a clustered heatmap.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'colnames': object 'y.protein' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb113">
+<div class="codewrapper sourceCode" id="cb114">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1054,7 +1072,7 @@ visualize via a clustered heatmap.</p>
 <pre class="error" tabindex="0"><code>Error: object 'scaled_expr' not found</code></pre>
 </div>
 </section><section><h2 class="section-heading" id="volcano-plot">Volcano plot<a class="anchor" aria-label="anchor" href="#volcano-plot"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb115">
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb116">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1076,7 +1094,7 @@ visualize via a clustered heatmap.</p>
 <hr class="half-width"><div class="section level3">
 <h3 id="string-proteinprotein-interaction-network">STRING Protein–Protein Interaction Network<a class="anchor" aria-label="anchor" href="#string-proteinprotein-interaction-network"></a></h3>
 <p>Note: this part does not seem to be working</p>
-<div class="codewrapper sourceCode" id="cb117">
+<div class="codewrapper sourceCode" id="cb118">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1090,7 +1108,7 @@ visualize via a clustered heatmap.</p>
 </div>
 <div class="section level3">
 <h3 id="functional-enrichment-go-and-kegg">Functional Enrichment (GO and KEGG)<a class="anchor" aria-label="anchor" href="#functional-enrichment-go-and-kegg"></a></h3>
-<div class="codewrapper sourceCode" id="cb118">
+<div class="codewrapper sourceCode" id="cb119">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1101,7 +1119,7 @@ visualize via a clustered heatmap.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'results' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb120">
+<div class="codewrapper sourceCode" id="cb121">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1116,7 +1134,7 @@ visualize via a clustered heatmap.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'de_proteins' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb122">
+<div class="codewrapper sourceCode" id="cb123">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1133,7 +1151,7 @@ visualize via a clustered heatmap.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'converted' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb124">
+<div class="codewrapper sourceCode" id="cb125">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1144,7 +1162,7 @@ visualize via a clustered heatmap.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'dotplot': object 'ego' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb126">
+<div class="codewrapper sourceCode" id="cb127">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1168,7 +1186,7 @@ visualize via a clustered heatmap.</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error: object 'converted' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb130">
+<div class="codewrapper sourceCode" id="cb131">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1261,7 +1279,7 @@ any links that you are not going to use.
   "url": "https://template-source.github.io/lesson-example/instructor/datacleaning-2.html",
   "identifier": "https://template-source.github.io/lesson-example/instructor/datacleaning-2.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2025-10-13",
+  "dateModified": "2025-10-14",
   "datePublished": "2025-10-14"
 }
 
