@@ -100,13 +100,23 @@ px <- PXDataset(px_id)
 Querying ProteomeXchange for PXD047585.
 ```
 
+``` warning
+Warning: Failed to open
+'ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2024/02/PXD047585/': Recv
+failure: Connection reset by peer
+```
+
+``` error
+Error in open.connection(con, open = mode): cannot open the connection
+```
+
 ``` r
 # Dataset title
 pxtitle(px)
 ```
 
-``` output
-[1] "Application of SWATH Mass Spectrometry and Machine Learning in Diagnosis of Inflammatory Bowel Disease Based on Stool Proteome"
+``` error
+Error: object 'px' not found
 ```
 
 ``` r
@@ -114,8 +124,8 @@ pxtitle(px)
 pxurl(px)
 ```
 
-``` output
-[1] "ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2024/02/PXD047585"
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'pxurl': object 'px' not found
 ```
 
 ``` r
@@ -123,8 +133,8 @@ pxurl(px)
 pxtax(px)
 ```
 
-``` output
-[1] "Homo sapiens (human)"
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'pxtax': object 'px' not found
 ```
 
 ## Exploring Dataset Files
@@ -137,19 +147,8 @@ Let’s see which files are included in this dataset.
 px_files <- pxfiles(px)
 ```
 
-``` output
-Project PXD047585 files (255):
- [remote] 20201016_UdSjfb_20190115_freshstool_003.mzML
- [remote] 20201016_UdSjfb_20190115_freshstool_003.wiff
- [remote] 20201016_UdSjfb_20190115_freshstool_003.wiff.scan
- [remote] 20201016_UdSjfb_20190115_freshstool_005.mzML
- [remote] 20201016_UdSjfb_20190115_freshstool_005.wiff
- [remote] 20201016_UdSjfb_20190115_freshstool_005.wiff.scan
- [remote] 20201016_UdSjfb_20190115_freshstool_007-3.mzML
- [remote] 20201016_UdSjfb_20190115_freshstool_007.wiff
- [remote] 20201016_UdSjfb_20190115_freshstool_007.wiff.scan
- [remote] 20201016_UdSjfb_20190115_freshstool_011.mzML
- ...
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'pxfiles': object 'px' not found
 ```
 
 ``` r
@@ -157,13 +156,8 @@ Project PXD047585 files (255):
 head(px_files)
 ```
 
-``` output
-[1] "20201016_UdSjfb_20190115_freshstool_003.mzML"     
-[2] "20201016_UdSjfb_20190115_freshstool_003.wiff"     
-[3] "20201016_UdSjfb_20190115_freshstool_003.wiff.scan"
-[4] "20201016_UdSjfb_20190115_freshstool_005.mzML"     
-[5] "20201016_UdSjfb_20190115_freshstool_005.wiff"     
-[6] "20201016_UdSjfb_20190115_freshstool_005.wiff.scan"
+``` error
+Error: object 'px_files' not found
 ```
 
 
@@ -179,10 +173,8 @@ To understand the data composition, we’ll examine file extensions.
 table(sapply(strsplit(px_files, "\\."), tail, 1))
 ```
 
-``` output
-
-    fas    mzML     pdf    scan speclib     tsv     txt    wiff    xlsx 
-      1      78       1      78       2      13       1      78       3 
+``` error
+Error: object 'px_files' not found
 ```
 
 Alternatively, we can get the same result with the tools package:
@@ -193,10 +185,8 @@ library(tools)
 table(file_ext(px_files))
 ```
 
-``` output
-
-    fas    mzML     pdf    scan speclib     tsv     txt    wiff    xlsx 
-      1      78       1      78       2      13       1      78       3 
+``` error
+Error: object 'px_files' not found
 ```
 
 

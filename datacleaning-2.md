@@ -53,18 +53,12 @@ This data was processed using DIA-NN in the method described in the paper.
 ``` r
 # Load peptide-level data processed by DIA-NN
 y.peptide <- readDIANN(file='data/report_subset.parquet',format="parquet")
-```
 
-``` error
-Error in readDIANN(file = "data/report_subset.parquet", format = "parquet"): arrow package required but is not installed (or can't be loaded)
-```
-
-``` r
 names(y.peptide)
 ```
 
-``` error
-Error: object 'y.peptide' not found
+``` output
+[1] "E"     "genes"
 ```
 
 ## Annotating and filtering our dataset
@@ -136,34 +130,25 @@ colnames(contaminants) <- contaminants_colnames
 table(y.peptide$genes$Protein.Group %in% contaminants$`Uniprot ID`)
 ```
 
-``` error
-Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function '%in%': object 'y.peptide' not found
+``` output
+
+FALSE  TRUE 
+ 6202   313 
 ```
 
 ``` r
 # Filter out contaminants
 y.peptide$genes <- dplyr::filter(y.peptide$genes, !(Protein.Group %in% contaminants$`Uniprot ID`))
-```
-
-``` error
-Error: object 'y.peptide' not found
-```
-
-``` r
 y.peptide$E <- y.peptide$E[rownames(y.peptide$genes), ]
-```
 
-``` error
-Error: object 'y.peptide' not found
-```
-
-``` r
 # Confirm removal
 table(y.peptide$genes$Protein.Group %in% contaminants$`Uniprot ID`)
 ```
 
-``` error
-Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function '%in%': object 'y.peptide' not found
+``` output
+
+FALSE 
+ 6202 
 ```
 
 
@@ -173,26 +158,8 @@ Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in sele
 
 ``` r
 sample_info <- samples_stool[samples_stool$sample_name %in% colnames(y.peptide$E),]
-```
-
-``` error
-Error in h(simpleError(msg, call)): error in evaluating the argument 'table' in selecting a method for function '%in%': error in evaluating the argument 'x' in selecting a method for function 'colnames': object 'y.peptide' not found
-```
-
-``` r
 rownames(sample_info) <- sample_info$sample_name
-```
-
-``` error
-Error: object 'sample_info' not found
-```
-
-``` r
 y.peptide$E <- y.peptide$E[,rownames(sample_info)]
-```
-
-``` error
-Error: object 'y.peptide' not found
 ```
 
 
@@ -201,35 +168,11 @@ Error: object 'y.peptide' not found
 ``` r
 # Add experimental metadata
 y.peptide$targets <- sample_info[, c('Class', 'Batch')]
-```
 
-``` error
-Error: object 'sample_info' not found
-```
-
-``` r
 # Apply peptide-level filters
 y.peptide <- filterNonProteotypicPeptides(y.peptide)
-```
-
-``` error
-Error: object 'y.peptide' not found
-```
-
-``` r
 y.peptide <- filterCompoundProteins(y.peptide)
-```
-
-``` error
-Error: object 'y.peptide' not found
-```
-
-``` r
 y.peptide <- filterSingletonPeptides(y.peptide, min.n.peptides = 2)
-```
-
-``` error
-Error: object 'y.peptide' not found
 ```
 
 
@@ -243,17 +186,15 @@ For more information on the peptide-level filters, please consult the limpa vign
 dpcfit <- dpc(y.peptide)
 ```
 
-``` error
-Error: object 'y.peptide' not found
+``` output
+157 peptides are completely missing in all samples.
 ```
 
 ``` r
 plotDPC(dpcfit)
 ```
 
-``` error
-Error: object 'dpcfit' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 
 By protein:
@@ -263,17 +204,23 @@ By protein:
 y.protein <- dpcQuant(y.peptide, "Protein.Names", dpc=dpcfit)
 ```
 
-``` error
-Error: object 'y.peptide' not found
+``` output
+Estimating hyperparameters ...
+```
+
+``` output
+Quantifying proteins ...
+```
+
+``` output
+Proteins: 406 Peptides: 4035
 ```
 
 ``` r
 plotMDSUsingSEs(y.protein)
 ```
 
-``` error
-Error: object 'y.protein' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 That plot is extremely messy and doesn't tell us much! Let's clean it up.
 
@@ -282,43 +229,13 @@ That plot is extremely messy and doesn't tell us much! Let's clean it up.
 ``` r
 # Class visualisation
 Class <- factor(y.peptide$targets$Class)
-```
-
-``` error
-Error: object 'y.peptide' not found
-```
-
-``` r
 levels(Class) <- c("Ctrl","aCD","aUC","CDr","UCr")
-```
-
-``` error
-Error: object 'Class' not found
-```
-
-``` r
 Class.color <- Class
-```
-
-``` error
-Error: object 'Class' not found
-```
-
-``` r
 levels(Class.color) <- c("pink","black",'grey','darkorange','darkgreen')
-```
-
-``` error
-Error: object 'Class.color' not found
-```
-
-``` r
 plotMDSUsingSEs(y.protein, pch=16, col=as.character(Class.color))
 ```
 
-``` error
-Error: object 'y.protein' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 Hmmm, not a lot of differences. Let's see if there are any batch effects.
 
@@ -326,35 +243,12 @@ Hmmm, not a lot of differences. Let's see if there are any batch effects.
 ``` r
 # Batch visualisation
 Batch <- factor(y.peptide$targets$Batch)
-```
-
-``` error
-Error: object 'y.peptide' not found
-```
-
-``` r
 Batch.color <- Batch
-```
-
-``` error
-Error: object 'Batch' not found
-```
-
-``` r
 levels(Batch.color) <- c("green","purple",'orange')
-```
-
-``` error
-Error: object 'Batch.color' not found
-```
-
-``` r
 plotMDSUsingSEs(y.protein, pch=16, col=as.character(Batch.color))
 ```
 
-``` error
-Error: object 'y.protein' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
 
 It looks like there are some differences between the batches. Let's remove the batch effects and see how it looks.
 
@@ -365,55 +259,41 @@ It looks like there are some differences between the batches. Let's remove the b
 y.protein.rbe <- removeBatchEffect(y.protein,batch = y.protein$targets$Batch)
 ```
 
-``` error
-Error: object 'y.protein' not found
+``` output
+design matrix of interest not specified. Assuming a one-group experiment.
 ```
 
 ``` r
 plotMDS(y.protein.rbe, pch=16, col=as.character(Batch.color))
 ```
 
-``` error
-Error: object 'y.protein.rbe' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
 
 ## Subset Comparison: Ctrl vs aUC
 
 
 ``` r
 cdr_bool <- y.peptide$targets$Class %in% c('Ctrl','aUC')
-```
 
-``` error
-Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function '%in%': object 'y.peptide' not found
-```
-
-``` r
 plotMDSUsingSEs(y.protein[, cdr_bool], 
                 pch=16, col=as.character(Class.color[cdr_bool]))
 ```
 
-``` error
-Error: object 'y.protein' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
 
 ``` r
 plotMDS(y.protein[, cdr_bool], 
          pch=16, col=as.character(Class.color[cdr_bool]))
 ```
 
-``` error
-Error: object 'y.protein' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-16-2.png" style="display: block; margin: auto;" />
 
 ``` r
 plotMDS(y.protein.rbe[, cdr_bool], 
          pch=16, col=as.character(Class.color[cdr_bool]))
 ```
 
-``` error
-Error: object 'y.protein.rbe' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-16-3.png" style="display: block; margin: auto;" />
 
 We should add batch as a covariate to our analysis.
 
@@ -424,26 +304,13 @@ We now fit a linear model that includes both Class and Batch effects.
 
 ``` r
 design <- model.matrix(~0 + Class + Batch)
-```
-
-``` error
-Error in eval(predvars, data, env): object 'Class' not found
-```
-
-``` r
 fit <- dpcDE(y.protein, design, plot = TRUE)
 ```
 
-``` error
-Error: object 'y.protein' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 ``` r
 fit <- eBayes(fit)
-```
-
-``` error
-Error in eBayes(fit): fit is not a valid MArrayLM object
 ```
 
 
@@ -451,8 +318,40 @@ Error in eBayes(fit): fit is not a valid MArrayLM object
 topTable(fit, coef = "ClassCtrl")
 ```
 
-``` error
-Error in topTable(fit, coef = "ClassCtrl"): fit must be an MArrayLM object
+``` output
+                                 Protein.Group      Protein.Names
+DPP2_HUMAN                              Q9UHL4         DPP2_HUMAN
+Beta-galactosidase contam_sp|P00722|BGAL_ECOLI Beta-galactosidase
+PSME2_HUMAN                             Q9UL46        PSME2_HUMAN
+IGLC7_HUMAN                             A0M8Q6        IGLC7_HUMAN
+GPA33_HUMAN                             Q99795        GPA33_HUMAN
+MYO1D_HUMAN                             O94832        MYO1D_HUMAN
+PRDX1_HUMAN                             Q06830        PRDX1_HUMAN
+KCRB_HUMAN                              P12277         KCRB_HUMAN
+HSPB1_HUMAN                             P04792        HSPB1_HUMAN
+HMGB2_HUMAN                             P26583        HMGB2_HUMAN
+                                Genes NPeptides     PropObs     logFC   AveExpr
+DPP2_HUMAN                       DPP7         2 0.003225806 10.220764 10.221984
+Beta-galactosidase Beta-galactosidase         2 0.006451613  9.924804  9.923592
+PSME2_HUMAN                     PSME2         2 0.006451613 10.226636 10.228126
+IGLC7_HUMAN                     IGLC7         2 0.006451613 10.048682 10.047295
+GPA33_HUMAN                     GPA33         3 0.004301075  9.660197  9.662022
+MYO1D_HUMAN                     MYO1D         2 0.009677419  9.731588  9.728144
+PRDX1_HUMAN                     PRDX1         2 0.009677419 10.432375 10.436082
+KCRB_HUMAN                        CKB         2 0.012903226 10.242352 10.244198
+HSPB1_HUMAN                     HSPB1         2 0.006451613 10.491556 10.495906
+HMGB2_HUMAN                     HMGB2         2 0.003225806 10.312915 10.316145
+                          t P.Value adj.P.Val        B
+DPP2_HUMAN         4877.269       0         0 850.6721
+Beta-galactosidase 6395.855       0         0 841.4553
+PSME2_HUMAN        6597.852       0         0 838.1056
+IGLC7_HUMAN        3960.205       0         0 830.1724
+GPA33_HUMAN        3963.989       0         0 827.7626
+MYO1D_HUMAN        4831.810       0         0 826.2010
+PRDX1_HUMAN        5230.944       0         0 816.8051
+KCRB_HUMAN         4244.864       0         0 806.9717
+HSPB1_HUMAN        3998.250       0         0 805.8680
+HMGB2_HUMAN        2999.040       0         0 800.8352
 ```
 
 ## Create and Explore Contrasts
@@ -464,36 +363,38 @@ We can define custom contrasts (e.g., comparing aCD vs Ctrl) and explore differe
 # Define contrasts
 contrasts_fit <- makeContrasts(Ctrl_aCD = ClassaCD - ClassCtrl, 
                                levels = colnames(design))
-```
 
-``` error
-Error in if (levels[1] == "(Intercept)") {: argument is of length zero
-```
-
-``` r
 # Apply contrasts
 fit2 <- contrasts.fit(fit, contrasts = contrasts_fit)
-```
-
-``` error
-Error: object 'contrasts_fit' not found
-```
-
-``` r
 fit2 <- eBayes(fit2)
-```
 
-``` error
-Error: object 'fit2' not found
-```
-
-``` r
 # Summaries
 topTable(fit2, coef = 1)
 ```
 
-``` error
-Error: object 'fit2' not found
+``` output
+            Protein.Group Protein.Names    Genes NPeptides    PropObs
+ALBU_HUMAN         P02768    ALBU_HUMAN      ALB        81 0.02692155
+HBB_HUMAN          P68871     HBB_HUMAN      HBB        11 0.02697947
+S10A9_HUMAN        P06702   S10A9_HUMAN   S100A9        30 0.05612903
+DPP4_HUMAN         P27487    DPP4_HUMAN     DPP4        54 0.05627240
+NEP_HUMAN          P08473     NEP_HUMAN      MME        49 0.05345622
+TRFE_HUMAN         P02787    TRFE_HUMAN       TF        32 0.01108871
+HEMO_HUMAN         P02790    HEMO_HUMAN      HPX         9 0.01505376
+MUC2_HUMAN         Q02817    MUC2_HUMAN     MUC2        79 0.04752960
+ANT3_HUMAN         P01008    ANT3_HUMAN SERPINC1        34 0.04724858
+PRTN3_HUMAN        P24158   PRTN3_HUMAN    PRTN3        10 0.04709677
+                  logFC  AveExpr         t      P.Value   adj.P.Val         B
+ALBU_HUMAN   2.23879844 10.40131  4.478478 1.480449e-05 0.006010624  1.677531
+HBB_HUMAN    0.36899249 11.35499  2.357978 1.966516e-02 0.998947663 -3.357132
+S10A9_HUMAN -0.67889289 12.45692 -2.174909 3.120371e-02 0.998947663 -3.530783
+DPP4_HUMAN   0.76076855 11.94575  2.030031 4.412074e-02 0.998947663 -3.771985
+NEP_HUMAN    0.51280892 11.55182  1.850375 6.622674e-02 0.998947663 -4.036171
+TRFE_HUMAN   0.21123633 10.12176  1.963051 5.148991e-02 0.998947663 -4.251168
+HEMO_HUMAN   0.08091332 11.54930  1.974498 5.016131e-02 0.998947663 -4.262076
+MUC2_HUMAN   0.66751339 11.82464  1.630523 1.050890e-01 0.998947663 -4.262562
+ANT3_HUMAN  -0.31282593 10.81556 -1.740333 8.385128e-02 0.998947663 -4.525959
+PRTN3_HUMAN -0.29640473 11.81750 -1.691011 9.291138e-02 0.998947663 -4.634509
 ```
 
 
@@ -502,32 +403,160 @@ Error: object 'fit2' not found
 topTable(fit, coef = 1)
 ```
 
-``` error
-Error in topTable(fit, coef = 1): fit must be an MArrayLM object
+``` output
+                                 Protein.Group      Protein.Names
+DPP2_HUMAN                              Q9UHL4         DPP2_HUMAN
+Beta-galactosidase contam_sp|P00722|BGAL_ECOLI Beta-galactosidase
+PSME2_HUMAN                             Q9UL46        PSME2_HUMAN
+IGLC7_HUMAN                             A0M8Q6        IGLC7_HUMAN
+GPA33_HUMAN                             Q99795        GPA33_HUMAN
+MYO1D_HUMAN                             O94832        MYO1D_HUMAN
+PRDX1_HUMAN                             Q06830        PRDX1_HUMAN
+KCRB_HUMAN                              P12277         KCRB_HUMAN
+HSPB1_HUMAN                             P04792        HSPB1_HUMAN
+HMGB2_HUMAN                             P26583        HMGB2_HUMAN
+                                Genes NPeptides     PropObs     logFC   AveExpr
+DPP2_HUMAN                       DPP7         2 0.003225806 10.220764 10.221984
+Beta-galactosidase Beta-galactosidase         2 0.006451613  9.924804  9.923592
+PSME2_HUMAN                     PSME2         2 0.006451613 10.226636 10.228126
+IGLC7_HUMAN                     IGLC7         2 0.006451613 10.048682 10.047295
+GPA33_HUMAN                     GPA33         3 0.004301075  9.660197  9.662022
+MYO1D_HUMAN                     MYO1D         2 0.009677419  9.731588  9.728144
+PRDX1_HUMAN                     PRDX1         2 0.009677419 10.432375 10.436082
+KCRB_HUMAN                        CKB         2 0.012903226 10.242352 10.244198
+HSPB1_HUMAN                     HSPB1         2 0.006451613 10.491556 10.495906
+HMGB2_HUMAN                     HMGB2         2 0.003225806 10.312915 10.316145
+                          t P.Value adj.P.Val        B
+DPP2_HUMAN         4877.269       0         0 850.6721
+Beta-galactosidase 6395.855       0         0 841.4553
+PSME2_HUMAN        6597.852       0         0 838.1056
+IGLC7_HUMAN        3960.205       0         0 830.1724
+GPA33_HUMAN        3963.989       0         0 827.7626
+MYO1D_HUMAN        4831.810       0         0 826.2010
+PRDX1_HUMAN        5230.944       0         0 816.8051
+KCRB_HUMAN         4244.864       0         0 806.9717
+HSPB1_HUMAN        3998.250       0         0 805.8680
+HMGB2_HUMAN        2999.040       0         0 800.8352
 ```
 
 ``` r
 topTable(fit, coef = 3)
 ```
 
-``` error
-Error in topTable(fit, coef = 3): fit must be an MArrayLM object
+``` output
+                                 Protein.Group      Protein.Names
+DPP2_HUMAN                              Q9UHL4         DPP2_HUMAN
+Beta-galactosidase contam_sp|P00722|BGAL_ECOLI Beta-galactosidase
+PSME2_HUMAN                             Q9UL46        PSME2_HUMAN
+IGLC7_HUMAN                             A0M8Q6        IGLC7_HUMAN
+GPA33_HUMAN                             Q99795        GPA33_HUMAN
+MYO1D_HUMAN                             O94832        MYO1D_HUMAN
+PRDX1_HUMAN                             Q06830        PRDX1_HUMAN
+HSPB1_HUMAN                             P04792        HSPB1_HUMAN
+SCMC1_HUMAN                             Q6NUK1        SCMC1_HUMAN
+ACTN3_HUMAN                             Q08043        ACTN3_HUMAN
+                                Genes NPeptides     PropObs     logFC   AveExpr
+DPP2_HUMAN                       DPP7         2 0.003225806 10.220752 10.221984
+Beta-galactosidase Beta-galactosidase         2 0.006451613  9.925068  9.923592
+PSME2_HUMAN                     PSME2         2 0.006451613 10.226641 10.228126
+IGLC7_HUMAN                     IGLC7         2 0.006451613 10.047665 10.047295
+GPA33_HUMAN                     GPA33         3 0.004301075  9.661512  9.662022
+MYO1D_HUMAN                     MYO1D         2 0.009677419  9.731603  9.728144
+PRDX1_HUMAN                     PRDX1         2 0.009677419 10.432355 10.436082
+HSPB1_HUMAN                     HSPB1         2 0.006451613 10.491542 10.495906
+SCMC1_HUMAN                  SLC25A24         2 0.009677419 10.453710 10.457892
+ACTN3_HUMAN                     ACTN3         2 0.006451613 10.381462 10.385495
+                          t P.Value adj.P.Val        B
+DPP2_HUMAN         6014.446       0         0 882.1088
+Beta-galactosidase 7930.433       0         0 873.7109
+PSME2_HUMAN        8137.383       0         0 869.5640
+IGLC7_HUMAN        4972.912       0         0 864.3338
+GPA33_HUMAN        4951.280       0         0 861.1143
+MYO1D_HUMAN        5887.336       0         0 855.8380
+PRDX1_HUMAN        6446.345       0         0 848.1433
+HSPB1_HUMAN        4930.013       0         0 837.2906
+SCMC1_HUMAN        5176.668       0         0 835.4328
+ACTN3_HUMAN        4544.208       0         0 833.0233
 ```
 
 ``` r
 topTable(fit, coef = 4)
 ```
 
-``` error
-Error in topTable(fit, coef = 4): fit must be an MArrayLM object
+``` output
+                                 Protein.Group      Protein.Names
+DPP2_HUMAN                              Q9UHL4         DPP2_HUMAN
+Beta-galactosidase contam_sp|P00722|BGAL_ECOLI Beta-galactosidase
+PSME2_HUMAN                             Q9UL46        PSME2_HUMAN
+IGLC7_HUMAN                             A0M8Q6        IGLC7_HUMAN
+GPA33_HUMAN                             Q99795        GPA33_HUMAN
+MYO1D_HUMAN                             O94832        MYO1D_HUMAN
+PRDX1_HUMAN                             Q06830        PRDX1_HUMAN
+KCRB_HUMAN                              P12277         KCRB_HUMAN
+HSPB1_HUMAN                             P04792        HSPB1_HUMAN
+ACTN3_HUMAN                             Q08043        ACTN3_HUMAN
+                                Genes NPeptides     PropObs     logFC   AveExpr
+DPP2_HUMAN                       DPP7         2 0.003225806 10.222675 10.221984
+Beta-galactosidase Beta-galactosidase         2 0.006451613  9.925129  9.923592
+PSME2_HUMAN                     PSME2         2 0.006451613 10.226647 10.228126
+IGLC7_HUMAN                     IGLC7         2 0.006451613 10.046443 10.047295
+GPA33_HUMAN                     GPA33         3 0.004301075  9.663383  9.662022
+MYO1D_HUMAN                     MYO1D         2 0.009677419  9.730722  9.728144
+PRDX1_HUMAN                     PRDX1         2 0.009677419 10.433241 10.436082
+KCRB_HUMAN                        CKB         2 0.012903226 10.242268 10.244198
+HSPB1_HUMAN                     HSPB1         2 0.006451613 10.492542 10.495906
+ACTN3_HUMAN                     ACTN3         2 0.006451613 10.381636 10.385495
+                          t P.Value adj.P.Val        B
+DPP2_HUMAN         4919.450       0         0 851.9517
+Beta-galactosidase 6649.977       0         0 847.2963
+PSME2_HUMAN        6749.099       0         0 841.5052
+IGLC7_HUMAN        4064.202       0         0 834.0719
+GPA33_HUMAN        4044.728       0         0 830.7692
+MYO1D_HUMAN        4826.051       0         0 826.0299
+PRDX1_HUMAN        5213.601       0         0 816.2985
+KCRB_HUMAN         4266.358       0         0 807.7300
+HSPB1_HUMAN        4006.021       0         0 806.1518
+ACTN3_HUMAN        3763.088       0         0 804.7304
 ```
 
 ``` r
 topTable(fit, coef = 6)
 ```
 
-``` error
-Error in topTable(fit, coef = 6): fit must be an MArrayLM object
+``` output
+                                 Protein.Group      Protein.Names    Genes
+DIGEST_Label13C15N                    P9999999 DIGEST_Label13C15N DL13C15N
+Trypsin              contam_sp|P00761|TRYP_PIG            Trypsin  Trypsin
+CTRC_HUMAN                              Q99895         CTRC_HUMAN     CTRC
+MGA_HUMAN                               O43451          MGA_HUMAN     MGAM
+CEL3A_HUMAN                             P09093        CEL3A_HUMAN   CELA3A
+CDHR2_HUMAN                             Q9BYE9        CDHR2_HUMAN    CDHR2
+CBPA1_HUMAN                             P15085        CBPA1_HUMAN     CPA1
+DPEP1_HUMAN                             P16444        DPEP1_HUMAN    DPEP1
+Serum              contam_sp|P02769|ALBU_BOVIN              Serum    Serum
+MUC2_HUMAN                              Q02817         MUC2_HUMAN     MUC2
+                   NPeptides    PropObs      logFC  AveExpr         t
+DIGEST_Label13C15N        14 0.02672811  0.4528090 12.80679  5.756188
+Trypsin                   26 0.05707196 -0.5672180 13.66182 -4.054078
+CTRC_HUMAN                37 0.07061901 -0.7645132 14.23116 -3.872798
+MGA_HUMAN                 92 0.06367461 -0.7376365 12.84200 -3.460817
+CEL3A_HUMAN               34 0.06907021 -0.5811737 14.01516 -3.399523
+CDHR2_HUMAN               40 0.08016129 -0.5862240 13.28108 -3.170783
+CBPA1_HUMAN               49 0.05543120 -0.6468480 12.69218 -2.109360
+DPEP1_HUMAN               27 0.06905615 -0.2534077 12.33003 -1.925096
+Serum                     53 0.03992696  0.3432754 10.74604  1.803974
+MUC2_HUMAN                79 0.04752960  0.4196754 11.82464  1.599716
+                        P.Value    adj.P.Val          B
+DIGEST_Label13C15N 4.693993e-08 1.905761e-05  8.2068985
+Trypsin            8.058659e-05 1.635908e-02  1.2767389
+CTRC_HUMAN         1.602282e-04 2.168421e-02  0.6739633
+MGA_HUMAN          7.016031e-04 7.023562e-02 -0.5608611
+CEL3A_HUMAN        8.649707e-04 7.023562e-02 -0.8696406
+CDHR2_HUMAN        1.843621e-03 1.247517e-01 -1.4593639
+CBPA1_HUMAN        3.657416e-02 9.999636e-01 -4.1158372
+DPEP1_HUMAN        5.610980e-02 9.999636e-01 -4.6781628
+Serum              7.324194e-02 9.999636e-01 -4.7376792
+MUC2_HUMAN         1.117658e-01 9.999636e-01 -4.7700018
 ```
 
 ``` r
@@ -535,45 +564,26 @@ Error in topTable(fit, coef = 6): fit must be an MArrayLM object
 plotMD(fit, coef = 1)
 ```
 
-``` error
-Error in as.vector(x, mode): cannot coerce type 'closure' to vector of type 'any'
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
 
 ``` r
 plotMD(fit, coef = 2)
 ```
 
-``` error
-Error in as.vector(x, mode): cannot coerce type 'closure' to vector of type 'any'
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-20-2.png" style="display: block; margin: auto;" />
 
 ## Example: aUC vs Ctrl Comparison
 
 
 ``` r
 results <- topTable(fit, coef = 3, number = Inf)
-```
 
-``` error
-Error in topTable(fit, coef = 3, number = Inf): fit must be an MArrayLM object
-```
-
-``` r
 # Visualize a specific protein
 plotProtein(y.protein, "S10A9_HUMAN", col = as.character(Class.color))
-```
-
-``` error
-Error: object 'y.protein' not found
-```
-
-``` r
 legend('topleft', legend = levels(Class), fill = levels(Class.color))
 ```
 
-``` error
-Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'levels': object 'Class' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
 
 ## Visualize Top Significant Proteins
 
@@ -585,38 +595,13 @@ sig_proteins <- results %>%
   filter(adj.P.Val < 0.05) %>%
   top_n(50, wt = abs(logFC)) %>%
   pull(Protein.Names)
-```
 
-``` error
-Error: object 'results' not found
-```
-
-``` r
 expr_matrix <- y.protein$E[sig_proteins, ]
-```
-
-``` error
-Error: object 'y.protein' not found
-```
-
-``` r
 scaled_expr <- t(scale(t(expr_matrix)))
-```
 
-``` error
-Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 't': error in evaluating the argument 'x' in selecting a method for function 't': object 'expr_matrix' not found
-```
-
-``` r
 col_annotation <- data.frame(Class = Class,
                              row.names = colnames(y.protein$E))
-```
 
-``` error
-Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'colnames': object 'y.protein' not found
-```
-
-``` r
 pheatmap(scaled_expr,
          cluster_rows = TRUE,
          cluster_cols = TRUE,
@@ -625,9 +610,7 @@ pheatmap(scaled_expr,
          annotation_col = col_annotation)
 ```
 
-``` error
-Error: object 'scaled_expr' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-22-1.png" style="display: block; margin: auto;" />
 
 
 ## Volcano plot
@@ -644,9 +627,37 @@ EnhancedVolcano(results,
                 labSize = 3.0)
 ```
 
-``` error
-Error: object 'results' not found
+``` warning
+Warning: One or more p-values is 0. Converting to 10^-1 * current lowest
+non-zero p-value...
 ```
+
+``` warning
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+ℹ The deprecated feature was likely used in the EnhancedVolcano package.
+  Please report the issue to the authors.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+generated.
+```
+
+``` warning
+Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+ℹ Please use the `linewidth` argument instead.
+ℹ The deprecated feature was likely used in the EnhancedVolcano package.
+  Please report the issue to the authors.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+generated.
+```
+
+``` warning
+Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_vline()`).
+```
+
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-23-1.png" style="display: block; margin: auto;" />
 
 
 ## Network and Enrichment Analysis
@@ -670,13 +681,7 @@ string_db$plot_network(de_proteins$STRING_id)
 
 ``` r
 de_proteins <- results %>% filter(adj.P.Val < 0.05)
-```
 
-``` error
-Error: object 'results' not found
-```
-
-``` r
 # Convert UniProt IDs to Entrez IDs for enrichment
 converted <- bitr(de_proteins$Protein.Group,
                   fromType = "UNIPROT",
@@ -684,8 +689,13 @@ converted <- bitr(de_proteins$Protein.Group,
                   OrgDb = org.Hs.eg.db)
 ```
 
-``` error
-Error: object 'de_proteins' not found
+``` output
+'select()' returned 1:many mapping between keys and columns
+```
+
+``` warning
+Warning in bitr(de_proteins$Protein.Group, fromType = "UNIPROT", toType =
+"ENTREZID", : 16.5% of input gene IDs are fail to map...
 ```
 
 ``` r
@@ -696,19 +706,11 @@ ego <- enrichGO(gene = converted$ENTREZID,
                 pAdjustMethod = "BH",
                 pvalueCutoff = 0.05,
                 readable = TRUE)
-```
 
-``` error
-Error: object 'converted' not found
-```
-
-``` r
 dotplot(ego, showCategory = 10)
 ```
 
-``` error
-Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'dotplot': object 'ego' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-25-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # KEGG pathway enrichment
@@ -725,17 +727,11 @@ Reading KEGG annotation online: "https://rest.kegg.jp/link/hsa/pathway"...
 Reading KEGG annotation online: "https://rest.kegg.jp/list/pathway/hsa"...
 ```
 
-``` error
-Error: object 'converted' not found
-```
-
 ``` r
 dotplot(ekegg, showCategory = 10)
 ```
 
-``` error
-Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'dotplot': object 'ekegg' not found
-```
+<img src="fig/datacleaning-2-rendered-unnamed-chunk-25-2.png" style="display: block; margin: auto;" />
 
 
 ## Potential next steps
