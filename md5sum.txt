@@ -8,6 +8,6 @@
 "episodes/datacleaning.Rmd" "35ef188413ab3b397be6b4d3d366831e" "site/built/datacleaning.md" "2025-10-14"
 "episodes/datacleaning-2.Rmd" "f3a3fb5df41113a0964742895c713839" "site/built/datacleaning-2.md" "2025-10-14"
 "instructors/instructor-notes.md" "5cf113fd22defb29d17b64597f3c9bc0" "site/built/instructor-notes.md" "2025-10-14"
-"learners/setup.md" "63ffb2cb815fdf6b4dbd103b3ba8372e" "site/built/setup.md" "2025-10-14"
+"learners/setup.md" "380f448f49e65750dc06841fe72cd9b8" "site/built/setup.md" "2025-10-14"
 "profiles/learner-profiles.md" "5fe5bf7537072422b91ed393ada03f9a" "site/built/learner-profiles.md" "2025-10-14"
 "renv/profiles/lesson-requirements/renv.lock" "0c9836b7c93cbc2f187196e1b74e8b5f" "site/built/renv.lock" "2025-10-14"
