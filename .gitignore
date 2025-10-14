@@ -1,5 +1,5 @@
 # data
-*.parquet
+report.parquet
 
 # sandpaper files
 episodes/*html
