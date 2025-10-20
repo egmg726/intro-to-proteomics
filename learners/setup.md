@@ -53,20 +53,21 @@ If you not have R and RStudio already installed, please download them here:
 
 # Packages from CRAN
 cran_packages <- c(
-  "limpa",         # Proteomics data processing and DE analysis
-  "dplyr",         # Data manipulation
-  "readxl",        # Read Excel files
-  "curl",          # Download files from URLs
-  "pheatmap",      # Heatmap visualization
+  "limpa",           # Proteomics data processing and DE analysis
+  "dplyr",           # Data manipulation
+  "readxl",          # Read Excel files
+  "curl",            # Download files from URLs
+  "pheatmap",        # Heatmap visualization
   "EnhancedVolcano", # Volcano plots
-  "STRINGdb",       # Protein-protein interaction network visualization
-  "arrow"           # Dependency for .parquet reading in limpa
+  "STRINGdb",        # Protein-protein interaction network visualization
+  "arrow"            # Dependency for .parquet reading in limpa
 )
 
 # Packages from Bioconductor
 bioc_packages <- c(
   "clusterProfiler", # Functional enrichment analysis
-  "org.Hs.eg.db"     # Human gene annotation (for GO/KEGG)
+  "org.Hs.eg.db",    # Human gene annotation (for GO/KEGG)
+  "rpx"              # Interface to the ProteomeXchange Repository
 )
 
 # Function to install missing CRAN packages
