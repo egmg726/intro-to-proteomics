@@ -67,7 +67,8 @@ cran_packages <- c(
 bioc_packages <- c(
   "clusterProfiler", # Functional enrichment analysis
   "org.Hs.eg.db",    # Human gene annotation (for GO/KEGG)
-  "rpx"              # Interface to the ProteomeXchange Repository
+  "rpx",             # Interface to the ProteomeXchange Repository
+  "STRINGdb"         #  Interface to the STRING protein-protein interactions database
 )
 
 # Function to install missing CRAN packages
