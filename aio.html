@@ -330,7 +330,7 @@
         
 <section id="aio-diann"><p>Content from <a href="diann.html">Working with DIA-NN</a></p>
 <hr>
-<p>Last updated on 2025-10-21 |
+<p>Last updated on 2025-10-28 |
 
         <a href="https://example.com/template-source/lesson-example/edit/main/episodes/diann.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -467,7 +467,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-datacleaning"><p>Content from <a href="datacleaning.html">Exploring the dataset on PRIDE</a></p>
 <hr>
-<p>Last updated on 2025-10-21 |
+<p>Last updated on 2025-10-28 |
 
         <a href="https://example.com/template-source/lesson-example/edit/main/episodes/datacleaning.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -612,7 +612,19 @@ ProteomeXchange without having to leave R.</p>
 </h3>
 <pre class="output" tabindex="0"><code>Querying ProteomeXchange for PXD047585.</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper">
+<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="warning" tabindex="0"><code>Warning: Failed to open
+'ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2024/02/PXD047585/': Recv
+failure: Connection reset by peer</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in open.connection(con, open = mode): cannot open the connection</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -620,11 +632,11 @@ ProteomeXchange without having to leave R.</p>
 <span><span class="fu">pxtitle</span><span class="op">(</span><span class="va">px</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "Application of SWATH Mass Spectrometry and Machine Learning in Diagnosis of Inflammatory Bowel Disease Based on Stool Proteome"</code></pre>
+<pre class="error" tabindex="0"><code>Error: object 'px' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb14">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -632,11 +644,11 @@ ProteomeXchange without having to leave R.</p>
 <span><span class="fu">pxurl</span><span class="op">(</span><span class="va">px</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2024/02/PXD047585"</code></pre>
+<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'pxurl': object 'px' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb16">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -644,15 +656,15 @@ ProteomeXchange without having to leave R.</p>
 <span><span class="fu">pxtax</span><span class="op">(</span><span class="va">px</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "Homo sapiens (human)"</code></pre>
+<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'pxtax': object 'px' not found</code></pre>
 </div>
 </section><section><h2 class="section-heading" id="exploring-dataset-files">Exploring Dataset Files<a class="anchor" aria-label="anchor" href="#exploring-dataset-files"></a>
 </h2>
 <hr class="half-width">
 <p>Let’s see which files are included in this dataset.</p>
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -660,22 +672,11 @@ ProteomeXchange without having to leave R.</p>
 <span><span class="va">px_files</span> <span class="op">&lt;-</span> <span class="fu">pxfiles</span><span class="op">(</span><span class="va">px</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>Project PXD047585 files (255):
- [remote] 20201016_UdSjfb_20190115_freshstool_003.mzML
- [remote] 20201016_UdSjfb_20190115_freshstool_003.wiff
- [remote] 20201016_UdSjfb_20190115_freshstool_003.wiff.scan
- [remote] 20201016_UdSjfb_20190115_freshstool_005.mzML
- [remote] 20201016_UdSjfb_20190115_freshstool_005.wiff
- [remote] 20201016_UdSjfb_20190115_freshstool_005.wiff.scan
- [remote] 20201016_UdSjfb_20190115_freshstool_007-3.mzML
- [remote] 20201016_UdSjfb_20190115_freshstool_007.wiff
- [remote] 20201016_UdSjfb_20190115_freshstool_007.wiff.scan
- [remote] 20201016_UdSjfb_20190115_freshstool_011.mzML
- ...</code></pre>
+<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'pxfiles': object 'px' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -683,20 +684,15 @@ ProteomeXchange without having to leave R.</p>
 <span><span class="fu">head</span><span class="op">(</span><span class="va">px_files</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "20201016_UdSjfb_20190115_freshstool_003.mzML"
-[2] "20201016_UdSjfb_20190115_freshstool_003.wiff"
-[3] "20201016_UdSjfb_20190115_freshstool_003.wiff.scan"
-[4] "20201016_UdSjfb_20190115_freshstool_005.mzML"
-[5] "20201016_UdSjfb_20190115_freshstool_005.wiff"
-[6] "20201016_UdSjfb_20190115_freshstool_005.wiff.scan"</code></pre>
+<pre class="error" tabindex="0"><code>Error: object 'px_files' not found</code></pre>
 </div>
 <p>PRIDE datasets often include a mix of raw data, search results,
 processed outputs, and metadata.</p>
 <p>To understand the data composition, we’ll examine file
 extensions.</p>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -704,14 +700,12 @@ extensions.</p>
 <span><span class="fu">table</span><span class="op">(</span><span class="fu">sapply</span><span class="op">(</span><span class="fu">strsplit</span><span class="op">(</span><span class="va">px_files</span>, <span class="st">"\\."</span><span class="op">)</span>, <span class="va">tail</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>
-    fas    mzML     pdf    scan speclib     tsv     txt    wiff    xlsx
-      1      78       1      78       2      13       1      78       3 </code></pre>
+<pre class="error" tabindex="0"><code>Error: object 'px_files' not found</code></pre>
 </div>
 <p>Alternatively, we can get the same result with the tools package:</p>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -719,11 +713,9 @@ extensions.</p>
 <span><span class="fu">table</span><span class="op">(</span><span class="fu">file_ext</span><span class="op">(</span><span class="va">px_files</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>
-    fas    mzML     pdf    scan speclib     tsv     txt    wiff    xlsx
-      1      78       1      78       2      13       1      78       3 </code></pre>
+<pre class="error" tabindex="0"><code>Error: object 'px_files' not found</code></pre>
 </div>
 <p>Understanding File Formats</p>
 <p>Each file extension represents a specific proteomics data type. For
@@ -771,7 +763,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-datacleaning-2"><p>Content from <a href="datacleaning-2.html">Data cleaning and DE analysis</a></p>
 <hr>
-<p>Last updated on 2025-10-21 |
+<p>Last updated on 2025-10-28 |
 
         <a href="https://example.com/template-source/lesson-example/edit/main/episodes/datacleaning-2.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1627,8 +1619,8 @@ any links that you are not going to use.
   "url": "https://template-source.github.io/lesson-example/aio.html",
   "identifier": "https://template-source.github.io/lesson-example/aio.html",
   "dateCreated": "2025-09-30",
-  "dateModified": "2025-10-21",
-  "datePublished": "2025-10-21"
+  "dateModified": "2025-10-28",
+  "datePublished": "2025-10-28"
 }
 
   </script><script>
