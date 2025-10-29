@@ -1,0 +1,2 @@
+{"Main .parquet report":"E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics-first-pass.parquet"}
+{"Matrix of precursor quantities":"E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics-first-pass.pr_matrix.tsv"}
