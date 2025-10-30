@@ -56,10 +56,7 @@ contact: 'bioinformatics-training@unimelb.edu.au'
 episodes: # UPDATE
 # - introduction.Rmd
 - 01dataset.Rmd
-- diann.Rmd
-#- test.Rmd
-- datacleaning-2.Rmd
-#- de-analysis.Rmd
+- 02diann.Rmd
 
 # Information for Learners
 learners:

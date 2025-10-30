@@ -52,15 +52,6 @@ names(y.peptide)
 
 In order to do differential expression analysis, we need information about what samples were used.
 
-```{r,eval=FALSE}
-
-
-# The SampleAnnotation file was downloaded directly from PRIDE using this link>
-# curl::curl_download(url='https://ftp.pride.ebi.ac.uk/pride/data/archive/2024/02/PXD047585/SampleAnnotation.xlsx',destfile = 'data/SampleAnnotation.xlsx')
-
-
-```
-
 
 ```{r}
 
