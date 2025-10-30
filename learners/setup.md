@@ -2,54 +2,68 @@
 title: Setup
 ---
 
+## Workshop overview
 
-## Data Sets
+This workshop will introduce participants to proteomic data processing, cleaning, and analysis, 
+with a focus on **label-free, bottom-up, DIA, mass-spectrometry based quantitative proteomics**. 
 
-<!--
-FIXME: place any data you want learners to use in `episodes/data` and then use
-       a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
-       link to it, replacing the example.com link.
--->
+We will begin with a brief overview of the proteomics workflow and introduction to the dataset used in this tutorial. 
+This will be followed by an introduction to DIA-NN as an open-source DIA-focused proteomic data processing software. 
+Participants will then be introduced to the *limpa* package for protein quantification and guided through key steps for 
+cleaning and converting proteomics data to an analysis-ready format, including removing contaminants and quality filtering. 
+Finally, we will introduce some basic statistical analyses for interpreting proteomics data, 
+including differential expression analysis, enrichment analysis, and protein-protein interaction network analysis. 
 
-We will be using this dataset.
-
-https://www.ebi.ac.uk/pride/archive/projects/PXD047585
-
-Read the paper here: https://dx.doi.org/10.3390/BIOMEDICINES12020333
-
-
-
-
+<br>
 
 :::: prereq
+# LEARNING OBJECTIVES
 
-Some knowledge of R is assumed, no proteomics knowledge is assumed.
+By the end of this workshop, you will be able to: 
 
-You should review introductory materials here.
-
-This lesson assumes you have R and RStudio installed on your computer.
-
+- Describe the proteomics workflow and understand the types of information that can be acquired from proteomic testing. 
+- List the steps required to process and clean proteomics data, and justify which methods are most appropriate for your data. 
+- Apply a variety of statistical analyses to a proteomics dataset and interpret their meaning. 
 
 ::::
 
+### Timing
 
-## Software Setup
+The anticipated workshop duration when delivered to a group of participants is **4 hours**. 
 
-::::::::::::::::::::::::::::::::::::::: discussion
+### Skill level
 
-If you not have R and RStudio already installed, please download them here:
+This introductory workshop assumes some knowledge of R and basic biology. No proteomics knowledge is assumed.
 
-[Download and install the latest version of R using the UniMelb mirror](https://cran.ms.unimelb.edu.au/).
-[Download and install RStudio](https://posit.co/download/rstudio-desktop/#download).
+## Prior to the workshop
 
+:::: checklist
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::
+## REQUIRED KNOWLEDGE
 
+- This workshop assumes participants have a basic understanding of R or have previously attended 
+an Intro to R workshop. Please review introductory materials [here](https://melbournebioinformatics.github.io/intro-to-r/).
 
-## Install Libraries
+::::
+
+:::: checklist
+
+## REQUIRED SOFTWARE
+
+Attendees are required to bring their own laptop computers. Please ensure you have installed:
+
+- [Chrome](https://www.google.com/chrome/) or [FireFox](https://www.mozilla.org/en-US/)
+- R (Download and install the latest version of R [here](https://cran.ms.unimelb.edu.au/) using the UniMelb mirror)
+- [RStudio](https://posit.co/download/rstudio-desktop/#download)
+- R packages required for this workshop (see below)
+
+::::
+
+### Installing required R packages
+
+Please copy and run the below code to install the required R packages prior to the workshop.
 
 ```r
-
 
 # Packages from CRAN
 cran_packages <- c(
@@ -94,9 +108,23 @@ for (pkg in bioc_packages) {
   }
 }
 
-
-
 ```
 
+:::: checklist
+## DATASET
+
+In this workshop, we will be using [this dataset](https://www.ebi.ac.uk/pride/archive/projects/PXD047585) downloaded from PRIDE, 
+a public repository for mass spectrometry-based proteomics data.
+
+You can read the associated paper [here](https://dx.doi.org/10.3390/BIOMEDICINES12020333).
+
+You do not need to download any data prior to the workshop.
+
+::::
 
 
+<!--
+FIXME: place any data you want learners to use in `episodes/data` and then use
+       a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
+       link to it, replacing the example.com link.
+-->

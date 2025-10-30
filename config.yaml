@@ -10,20 +10,25 @@
 # incubator: The Carpentries Incubator
 # Note that you can also use a custom carpentry type. For more info,
 # see the documentation: https://carpentries.github.io/sandpaper-docs/editing.html
-carpentry: 'incubator'
+# uom: University of Melbourne
+# mb: Melbourne Bioinformatics
+# mig: Melbourne Integrative Genomics
+# wehi: Walter and Eliza Hall Institute
+carpentry: 'uom'
 
 # Custom carpentry description
 # This will be used as the alt text for the logo
-# carpentry_description: "Custom Carpentry"
+carpentry_description: 'This workshop will introduce participants to proteomic data processing, cleaning, and analysis,
+with a focus on label-free, bottom-up, DIA, mass-spectrometry based quantitative proteomics.'
 
 # Overall title for pages.
-title: 'Lesson Title'
+title: 'Introduction to Proteomics'
 
 # Date the lesson was created (YYYY-MM-DD, this is empty by default)
-created: '2025-09-30'
+created: '2025-10-30'
 
 # Comma-separated list of keywords for the lesson
-keywords: 'software, data, lesson, The Carpentries'
+keywords: 'proteomics, mass spectrometry, DIA, DIA-NN, limpa, differential expression analysis, enrichment analysis, network analysis'
 
 # Life cycle stage of the lesson
 # possible values: pre-alpha, alpha, beta, stable
@@ -33,13 +38,13 @@ life_cycle: 'pre-alpha'
 license: 'CC-BY 4.0'
 
 # Link to the source repository for this lesson
-source: 'https://example.com/template-source/lesson-example'
+source: 'https://example.com/template-source/lesson-example' # UPDATE
 
 # Default branch of your lesson
 branch: 'main'
 
 # Who to contact if there are any issues
-contact: 'team@carpentries.org'
+contact: 'bioinformatics-training@unimelb.edu.au'
 
 # Navigation ------------------------------------------------
 #
@@ -47,24 +52,8 @@ contact: 'team@carpentries.org'
 # individual pages in each dropdown section. Leave blank to
 # include all pages in the folder.
 #
-# Example -------------
-#
-# episodes:
-# - introduction.md
-# - first-steps.md
-#
-# learners:
-# - setup.md
-#
-# instructors:
-# - instructor-notes.md
-#
-# profiles:
-# - one-learner.md
-# - another-learner.md
-
 # Order of episodes in your lesson
-episodes:
+episodes: # UPDATE
 # - introduction.Rmd
 - diann.Rmd
 - datacleaning.Rmd
@@ -75,16 +64,23 @@ episodes:
 # Information for Learners
 learners:
 - setup.md
+# - reference.md
+- contact.md
 
 # Information for Instructors
 instructors:
+# - instructor-notes.md
 
 # Learner Profiles
 profiles:
+# - one-learner.md
+# - another-learner.md
 
 # Customisation ---------------------------------------------
 #
 # This space below is where custom yaml items (e.g. pinning
 # sandpaper and varnish versions) should live
 
-
+# This is the UoM varnish, which is a custom version of the Carpentries varnish
+varnish: 'melbournebioinformatics/uom-varnish@main'
+url: 'melbournebioinformatics.github.io/uom-varnish'
