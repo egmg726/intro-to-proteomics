@@ -27,9 +27,13 @@ By the end of this workshop, you will be able to:
 
 ::::
 
+<br>
+
 ### Timing
 
 The anticipated workshop duration when delivered to a group of participants is **4 hours**. 
+
+<br>
 
 ### Skill level
 
@@ -53,7 +57,7 @@ an Intro to R workshop. Please review introductory materials [here](https://melb
 Attendees are required to bring their own laptop computers. Please ensure you have installed:
 
 - [Chrome](https://www.google.com/chrome/) or [FireFox](https://www.mozilla.org/en-US/)
-- R (Download and install the latest version of R [here](https://cran.ms.unimelb.edu.au/) using the UniMelb mirror)
+- [R](https://cran.ms.unimelb.edu.au/) (Download and install the latest version of R using the UniMelb mirror)
 - [RStudio](https://posit.co/download/rstudio-desktop/#download)
 - R packages required for this workshop (see below)
 
@@ -110,8 +114,10 @@ for (pkg in bioc_packages) {
 
 ```
 
+<br>
+
 :::: checklist
-## DATASET
+## REQUIRED DATA
 
 In this workshop, we will be using [this dataset](https://www.ebi.ac.uk/pride/archive/projects/PXD047585) downloaded from PRIDE, 
 a public repository for mass spectrometry-based proteomics data.

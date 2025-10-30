@@ -55,8 +55,8 @@ contact: 'bioinformatics-training@unimelb.edu.au'
 # Order of episodes in your lesson
 episodes: # UPDATE
 # - introduction.Rmd
+- 01dataset.Rmd
 - diann.Rmd
-- datacleaning.Rmd
 #- test.Rmd
 - datacleaning-2.Rmd
 #- de-analysis.Rmd
