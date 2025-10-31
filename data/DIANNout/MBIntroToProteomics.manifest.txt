@@ -1,0 +1,7 @@
+{"Library in .speclib format for Skyline":"E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics-lib.parquet.skyline.speclib"}
+{"Main .parquet report":"E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.parquet"}
+{"Matrix of precursor quantities":"E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.pr_matrix.tsv"}
+{"Matrix of QuantUMS/MaxLFQ protein group quantities":"E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.pg_matrix.tsv"}
+{"Matrix of QuantUMS/MaxLFQ gene group quantities":"E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.gg_matrix.tsv"}
+{"Matrix of QuantUMS/MaxLFQ gene quantities calculated with proteotypic peptides":"E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.unique_genes_matrix.tsv"}
+{"Protein description":"E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.protein_description.tsv"}
