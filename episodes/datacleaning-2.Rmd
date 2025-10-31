@@ -29,7 +29,6 @@ exercises: 2
 library(limpa)
 library(dplyr)
 library(readxl)
-library(curl)
 library(pheatmap)
 library(EnhancedVolcano)
 library(STRINGdb)
@@ -38,28 +37,6 @@ library(org.Hs.eg.db)
 library(arrow)
 
 ```
-
-
-This data was processed using DIA-NN in the method described in the paper.
-
-```{r, eval=FALSE}
-
-# Getting the subset of the data
-
-# curl::curl_download('https://ftp.pride.ebi.ac.uk/pride/data/archive/2024/02/PXD047585/report.tsv','data/report.tsv')
-# report_tsv <- read.csv('data/report.tsv', sep='\t')
-# write.csv(stool_tsv_test,'~data/report.csv')
-# parquetize::csv_to_parquet('data/report.csv',path_to_parquet = 'data/report.parquet')
-# 
-# report_full <- arrow::read_parquet('data/report.parquet')
-# 
-# proteins_keep <- c("RED2_HUMAN', 'MINT_HUMAN', 'Cationic', 'OVCH2_HUMAN', 'ITA4_HUMAN', 'Trypsin', 'G3PT_HUMAN', 'ZN451_HUMAN', 'DCD_HUMAN', 'CDHR2_HUMAN', 'DSG1_HUMAN', 'BRCA2_HUMAN', 'SIAE_HUMAN', 'CTRC_HUMAN', 'CEL3A_HUMAN', 'A1AT_HUMAN', 'CYTA_HUMAN', 'CADH1_HUMAN', 'TRY2_HUMAN', 'CEAM7_HUMAN', 'ITLN1_HUMAN', 'CEL3B_HUMAN', 'DPEP1_HUMAN', 'CUZD1_HUMAN', 'ZG16_HUMAN', 'ENPP7_HUMAN', 'HV601_HUMAN', 'SMR3B_HUMAN', 'PA21B_HUMAN', 'FCGBP_HUMAN', 'LEG4_HUMAN', 'RN170_HUMAN', 'IGLL5_HUMAN', 'PPBI_HUMAN', 'CLD34_HUMAN', 'CEAM5_HUMAN', 'CEAM6_HUMAN', 'MGA_HUMAN', 'TFF3_HUMAN', 'ENTK_HUMAN', 'IGKC_HUMAN', 'HV307_HUMAN', 'IGJ_HUMAN', 'CBPB1_HUMAN', 'KV401_HUMAN', 'CTRB2_HUMAN', 'CBPA1_HUMAN', 'AMYP_HUMAN', 'SODC_HUMAN', 'CEL2A_HUMAN")
-# report_small <- report_full %>%
-#   filter(Protein.Group %in% proteins_keep | runif(n()) < 0.10)
-# arrow::write_parquet(report_small, "data/report_subset.parquet")
-
-```
-
 
 
 
@@ -74,15 +51,6 @@ names(y.peptide)
 ## Annotating and filtering our dataset
 
 In order to do differential expression analysis, we need information about what samples were used.
-
-```{r,eval=FALSE}
-
-
-# The SampleAnnotation file was downloaded directly from PRIDE using this link>
-# curl::curl_download(url='https://ftp.pride.ebi.ac.uk/pride/data/archive/2024/02/PXD047585/SampleAnnotation.xlsx',destfile = 'data/SampleAnnotation.xlsx')
-
-
-```
 
 
 ```{r}
