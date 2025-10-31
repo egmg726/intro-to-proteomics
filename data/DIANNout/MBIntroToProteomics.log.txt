@@ -1,0 +1,753 @@
+
+DIA-NN 2.2.0 Academia  (Data-Independent Acquisition by Neural Networks)
+Compiled on May 29 2025 21:29:29
+Current date and time: Tue Oct 28 17:37:50 2025
+CPU: AuthenticAMD AMD EPYC 9474F 48-Core Processor
+SIMD instructions: AVX AVX2 AVX512CD AVX512F FMA SSE4.1 SSE4.2 SSE4a 
+Logical CPU cores: 64
+C:\DIA-NN\2.2.0\diann.exe --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_159-73X.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_036-41.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_008-47.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_032-19.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_020-38.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_098-25.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_080-42.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_064-26.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_030-45.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_004-6.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_173-80.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_181-84.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_165-76.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_157-73.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_195-91.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_035-14.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_007-3.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_003.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_013-5X.mzML  --f E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_019-8.mzML  --lib E:\Julia\400PBMCs\20250620_SpectralLibrary\20250620_SpectralLibrary_report-lib.predicted.speclib --threads 30 --verbose 1 --out E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.parquet --qvalue 0.01 --matrices --unimod4 --mass-acc 20 --mass-acc-ms1 12.0 --reanalyse --rt-profiling 
+
+Thread number set to 30
+Output will be filtered at 0.01 FDR
+Precursor/protein x samples expression level matrices will be saved along with the main report
+Cysteine carbamidomethylation enabled as a fixed modification
+MBR enabled; .quant files will only be saved to disk during the first pass
+The spectral library (if generated) will retain the original spectra but will include empirically-aligned RTs
+Mass accuracy will be fixed to 2e-05 (MS2) and 1.2e-05 (MS1)
+WARNING: protein inference is enabled but no FASTA provided - is this intended?
+
+20 files will be processed
+[0:00] Loading spectral library E:\Julia\400PBMCs\20250620_SpectralLibrary\20250620_SpectralLibrary_report-lib.predicted.speclib
+[0:08] Library annotated with sequence database(s): Z:\Lab-Stroud\_JuliaB\DIANN\20250620_SpectralLibrary\0602_Universal Contaminants_20250620.fasta; Z:\Lab-Stroud\_JuliaB\DIANN\20250620_SpectralLibrary\uniprotkb_AND_model_organism_9606_AND_r_2025_06_20.fasta
+[0:08] Gene names missing for some isoforms
+[0:08] Library contains 20628 proteins, and 20251 genes
+[0:09] Spectral library loaded: 42875 protein isoforms, 68860 protein groups and 6642967 precursors in 2067940 elution groups.
+[0:15] Initialising library
+
+First pass: generating a spectral library from DIA data
+
+[0:30] File #1/20
+[0:30] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_159-73X.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[0:38] Pre-processing...
+[0:41] 1025 MS1 and 91880 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 5251365 precursors in range
+[0:42] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[6:52] RT window set to 4.13888
+[6:52] Peak width: 2.948
+[6:52] Scan window radius set to 6
+[6:54] Recommended MS1 mass accuracy setting: 9 ppm
+[10:18] Main search
+[13:23] Removing low confidence identifications
+[13:31] Removing interfering precursors
+[13:41] Training neural networks on 3835 target and 2382 decoy PSMs
+[13:49] Number of IDs at 0.01 FDR: 1910
+[13:54] Calculating protein q-values
+[13:55] Number of genes identified at 1% FDR: 241 (precursor-level), 219 (protein-level) (inference performed using proteotypic peptides only)
+[13:55] Quantification
+[13:56] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_159-73X.mzML.quant
+
+[13:56] File #2/20
+[13:56] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_036-41.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[14:06] Pre-processing...
+[14:09] 1044 MS1 and 74992 MS2 scans in 1044 (inferred) and 1044 (encoded) cycles, 5254960 precursors in range
+[14:10] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[20:50] RT window set to 1.96739
+[20:52] Recommended MS1 mass accuracy setting: 12 ppm
+[26:00] Main search
+[31:35] Removing low confidence identifications
+[31:42] Removing interfering precursors
+[31:52] Training neural networks on 5348 target and 3872 decoy PSMs
+[32:01] Number of IDs at 0.01 FDR: 1535
+[32:06] Calculating protein q-values
+[32:06] Number of genes identified at 1% FDR: 233 (precursor-level), 182 (protein-level) (inference performed using proteotypic peptides only)
+[32:07] Quantification
+[32:09] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_036-41.mzML.quant
+
+[32:09] File #3/20
+[32:09] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_008-47.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[32:25] Pre-processing...
+[32:28] 1044 MS1 and 74966 MS2 scans in 1044 (inferred) and 1044 (encoded) cycles, 5254960 precursors in range
+[32:30] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[37:24] RT window set to 1.99179
+[37:26] Recommended MS1 mass accuracy setting: 12 ppm
+[41:48] Main search
+[48:23] Removing low confidence identifications
+[48:31] Removing interfering precursors
+[48:41] Training neural networks on 5409 target and 3531 decoy PSMs
+[48:49] Number of IDs at 0.01 FDR: 2049
+[48:54] Calculating protein q-values
+[48:54] Number of genes identified at 1% FDR: 330 (precursor-level), 278 (protein-level) (inference performed using proteotypic peptides only)
+[48:55] Quantification
+[48:57] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_008-47.mzML.quant
+
+[48:57] File #4/20
+[48:57] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_032-19.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[49:13] Pre-processing...
+[49:16] 1041 MS1 and 74998 MS2 scans in 1042 (inferred) and 1042 (encoded) cycles, 5254960 precursors in range
+[49:17] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[57:53] RT window set to 1.67032
+[57:55] Recommended MS1 mass accuracy setting: 14 ppm
+[67:09] Main search
+[72:57] Removing low confidence identifications
+[73:05] Removing interfering precursors
+[73:15] Training neural networks on 5034 target and 3701 decoy PSMs
+[73:24] Number of IDs at 0.01 FDR: 1245
+[73:29] Calculating protein q-values
+[73:30] Number of genes identified at 1% FDR: 233 (precursor-level), 169 (protein-level) (inference performed using proteotypic peptides only)
+[73:30] Quantification
+[73:32] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_032-19.mzML.quant
+
+[73:32] File #5/20
+[73:32] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_020-38.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[73:48] Pre-processing...
+[73:51] 1042 MS1 and 75032 MS2 scans in 1042 (inferred) and 1042 (encoded) cycles, 5254960 precursors in range
+[73:53] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[78:51] RT window set to 2.28744
+[78:52] Recommended MS1 mass accuracy setting: 13 ppm
+[83:53] Main search
+[90:47] Removing low confidence identifications
+[90:56] Removing interfering precursors
+[91:06] Training neural networks on 5075 target and 3521 decoy PSMs
+[91:15] Number of IDs at 0.01 FDR: 1915
+[91:20] Calculating protein q-values
+[91:21] Number of genes identified at 1% FDR: 274 (precursor-level), 233 (protein-level) (inference performed using proteotypic peptides only)
+[91:21] Quantification
+[91:23] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_020-38.mzML.quant
+
+[91:23] File #6/20
+[91:23] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_098-25.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[91:33] Pre-processing...
+[91:36] 1042 MS1 and 74824 MS2 scans in 1042 (inferred) and 1042 (encoded) cycles, 5254960 precursors in range
+[91:37] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[99:24] RT window set to 2.36045
+[99:27] Recommended MS1 mass accuracy setting: 11 ppm
+[105:20] Main search
+[110:25] Removing low confidence identifications
+[110:34] Removing interfering precursors
+[110:44] Training neural networks on 4601 target and 3632 decoy PSMs
+[110:53] Number of IDs at 0.01 FDR: 1242
+[110:58] Calculating protein q-values
+[110:58] Number of genes identified at 1% FDR: 190 (precursor-level), 161 (protein-level) (inference performed using proteotypic peptides only)
+[110:58] Quantification
+[111:00] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_098-25.mzML.quant
+
+[111:00] File #7/20
+[111:00] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_080-42.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[111:12] Pre-processing...
+[111:16] 1043 MS1 and 75084 MS2 scans in 1044 (inferred) and 1044 (encoded) cycles, 5254960 precursors in range
+[111:17] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[116:06] RT window set to 1.74698
+[116:08] Recommended MS1 mass accuracy setting: 12 ppm
+[120:05] Main search
+[125:22] Removing low confidence identifications
+[125:31] Removing interfering precursors
+[125:41] Training neural networks on 5196 target and 3479 decoy PSMs
+[125:49] Number of IDs at 0.01 FDR: 2115
+[125:54] Calculating protein q-values
+[125:55] Number of genes identified at 1% FDR: 300 (precursor-level), 263 (protein-level) (inference performed using proteotypic peptides only)
+[125:55] Quantification
+[125:57] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_080-42.mzML.quant
+
+[125:57] File #8/20
+[125:57] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_064-26.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[126:13] Pre-processing...
+[126:16] 1043 MS1 and 74933 MS2 scans in 1043 (inferred) and 1043 (encoded) cycles, 5254960 precursors in range
+[126:17] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[132:23] RT window set to 2.48941
+[132:25] Recommended MS1 mass accuracy setting: 11 ppm
+[137:37] Main search
+[144:55] Removing low confidence identifications
+[145:04] Removing interfering precursors
+[145:14] Training neural networks on 5207 target and 3560 decoy PSMs
+[145:24] Number of IDs at 0.01 FDR: 1708
+[145:29] Calculating protein q-values
+[145:30] Number of genes identified at 1% FDR: 256 (precursor-level), 202 (protein-level) (inference performed using proteotypic peptides only)
+[145:30] Quantification
+[145:33] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_064-26.mzML.quant
+
+[145:33] File #9/20
+[145:33] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_030-45.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[145:45] Pre-processing...
+[145:48] 1045 MS1 and 75088 MS2 scans in 1045 (inferred) and 1045 (encoded) cycles, 5254960 precursors in range
+[145:49] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[149:03] RT window set to 2.19378
+[149:04] Recommended MS1 mass accuracy setting: 11 ppm
+[152:41] Main search
+[157:44] Removing low confidence identifications
+[157:53] Removing interfering precursors
+[158:03] Training neural networks on 5516 target and 3323 decoy PSMs
+[158:11] Number of IDs at 0.01 FDR: 2606
+[158:16] Calculating protein q-values
+[158:17] Number of genes identified at 1% FDR: 470 (precursor-level), 409 (protein-level) (inference performed using proteotypic peptides only)
+[158:17] Quantification
+[158:18] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_030-45.mzML.quant
+
+[158:19] File #10/20
+[158:19] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_004-6.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[158:32] Pre-processing...
+[158:35] 1043 MS1 and 74904 MS2 scans in 1043 (inferred) and 1043 (encoded) cycles, 5254960 precursors in range
+[158:36] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[166:48] RT window set to 1.93178
+[166:51] Recommended MS1 mass accuracy setting: 11 ppm
+[172:08] Main search
+[177:05] Removing low confidence identifications
+[177:14] Removing interfering precursors
+[177:25] Training neural networks on 4599 target and 3049 decoy PSMs
+[177:33] Number of IDs at 0.01 FDR: 1764
+[177:38] Calculating protein q-values
+[177:39] Number of genes identified at 1% FDR: 334 (precursor-level), 292 (protein-level) (inference performed using proteotypic peptides only)
+[177:39] Quantification
+[177:41] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_004-6.mzML.quant
+
+[177:41] File #11/20
+[177:41] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_173-80.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[177:53] Pre-processing...
+[177:56] 1025 MS1 and 92110 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 5251365 precursors in range
+[177:57] Calibrating with mass accuracies 29 (MS1), 25 (MS2)
+[184:10] RT window set to 4.44179
+[184:12] Recommended MS1 mass accuracy setting: 13 ppm
+[187:47] Main search
+[191:26] Removing low confidence identifications
+[191:34] Removing interfering precursors
+[191:44] Training neural networks on 4511 target and 2755 decoy PSMs
+[191:52] Number of IDs at 0.01 FDR: 1827
+[191:58] Calculating protein q-values
+[191:58] Number of genes identified at 1% FDR: 289 (precursor-level), 223 (protein-level) (inference performed using proteotypic peptides only)
+[191:58] Quantification
+[192:00] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_173-80.mzML.quant
+
+[192:00] File #12/20
+[192:00] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_181-84.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[192:13] Pre-processing...
+[192:16] 1025 MS1 and 92019 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 5251365 precursors in range
+[192:17] Calibrating with mass accuracies 24 (MS1), 25 (MS2)
+[199:49] RT window set to 5.53235
+[199:52] Recommended MS1 mass accuracy setting: 11 ppm
+[206:08] Main search
+[210:48] Removing low confidence identifications
+[210:56] Removing interfering precursors
+[211:07] Training neural networks on 3878 target and 2746 decoy PSMs
+[211:15] Number of IDs at 0.01 FDR: 1070
+[211:20] Calculating protein q-values
+[211:21] Number of genes identified at 1% FDR: 157 (precursor-level), 135 (protein-level) (inference performed using proteotypic peptides only)
+[211:21] Quantification
+[211:23] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_181-84.mzML.quant
+
+[211:23] File #13/20
+[211:23] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_165-76.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[211:32] Pre-processing...
+[211:36] 1025 MS1 and 92035 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 5251365 precursors in range
+[211:37] Calibrating with mass accuracies 27 (MS1), 25 (MS2)
+[221:39] RT window set to 9.64784
+[221:42] Recommended MS1 mass accuracy setting: 10 ppm
+[239:44] Main search
+[249:39] Removing low confidence identifications
+[249:47] Removing interfering precursors
+[249:57] Training neural networks on 2233 target and 1764 decoy PSMs
+[250:07] Number of IDs at 0.01 FDR: 547
+[250:12] Calculating protein q-values
+[250:13] Number of genes identified at 1% FDR: 111 (precursor-level), 0 (protein-level) (inference performed using proteotypic peptides only)
+[250:13] Quantification
+[250:14] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_165-76.mzML.quant
+
+[250:14] File #14/20
+[250:14] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_157-73.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[250:28] Pre-processing...
+[250:31] 1025 MS1 and 92079 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 5251365 precursors in range
+[250:32] Calibrating with mass accuracies 30 (MS1), 25 (MS2)
+[259:50] RT window set to 4.07471
+[259:53] Recommended MS1 mass accuracy setting: 11 ppm
+[265:09] Main search
+[269:10] Removing low confidence identifications
+[269:18] Removing interfering precursors
+[269:29] Training neural networks on 3810 target and 2518 decoy PSMs
+[269:37] Number of IDs at 0.01 FDR: 1244
+[269:43] Calculating protein q-values
+[269:44] Number of genes identified at 1% FDR: 191 (precursor-level), 167 (protein-level) (inference performed using proteotypic peptides only)
+[269:44] Quantification
+[269:46] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_157-73.mzML.quant
+
+[269:46] File #15/20
+[269:46] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_195-91.mzML
+[270:00] Pre-processing...
+[270:03] 1025 MS1 and 92250 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 5251365 precursors in range
+[270:05] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[278:01] RT window set to 3.86033
+[278:03] Recommended MS1 mass accuracy setting: 12 ppm
+[283:26] Main search
+[287:36] Removing low confidence identifications
+[287:44] Removing interfering precursors
+[287:54] Training neural networks on 3930 target and 2891 decoy PSMs
+[288:03] Number of IDs at 0.01 FDR: 999
+[288:08] Calculating protein q-values
+[288:09] Number of genes identified at 1% FDR: 182 (precursor-level), 161 (protein-level) (inference performed using proteotypic peptides only)
+[288:09] Quantification
+[288:11] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_195-91.mzML.quant
+
+[288:11] File #16/20
+[288:11] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_035-14.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[288:23] Pre-processing...
+[288:26] 1025 MS1 and 92230 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 5251365 precursors in range
+[288:27] Calibrating with mass accuracies 29 (MS1), 25 (MS2)
+[298:11] RT window set to 3.62332
+[298:14] Recommended MS1 mass accuracy setting: 10 ppm
+[303:40] Main search
+[306:17] Removing low confidence identifications
+[306:26] Removing interfering precursors
+[306:36] Training neural networks on 4155 target and 3130 decoy PSMs
+[306:45] Number of IDs at 0.01 FDR: 1148
+[306:50] Calculating protein q-values
+[306:50] Number of genes identified at 1% FDR: 176 (precursor-level), 149 (protein-level) (inference performed using proteotypic peptides only)
+[306:50] Quantification
+[306:52] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_035-14.mzML.quant
+
+[306:52] File #17/20
+[306:52] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_007-3.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[307:05] Pre-processing...
+[307:09] 1025 MS1 and 92245 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 5251365 precursors in range
+[307:10] Calibrating with mass accuracies 30 (MS1), 25 (MS2)
+[312:29] RT window set to 5.69164
+[312:31] Recommended MS1 mass accuracy setting: 11 ppm
+[316:03] Main search
+[320:47] Removing low confidence identifications
+[320:56] Removing interfering precursors
+[321:07] Training neural networks on 5893 target and 3789 decoy PSMs
+[321:15] Number of IDs at 0.01 FDR: 2318
+[321:21] Calculating protein q-values
+[321:21] Number of genes identified at 1% FDR: 358 (precursor-level), 313 (protein-level) (inference performed using proteotypic peptides only)
+[321:22] Quantification
+[321:23] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_007-3.mzML.quant
+
+[321:23] File #18/20
+[321:23] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_003.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[321:33] Pre-processing...
+[321:36] 1025 MS1 and 92175 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 5251365 precursors in range
+[321:37] Calibrating with mass accuracies 30 (MS1), 25 (MS2)
+[330:29] RT window set to 4.68167
+[330:33] Recommended MS1 mass accuracy setting: 12 ppm
+[334:54] Main search
+[337:08] Removing low confidence identifications
+[337:17] Removing interfering precursors
+[337:28] Training neural networks on 3983 target and 3000 decoy PSMs
+[337:36] Number of IDs at 0.01 FDR: 1284
+[337:42] Calculating protein q-values
+[337:43] Number of genes identified at 1% FDR: 177 (precursor-level), 159 (protein-level) (inference performed using proteotypic peptides only)
+[337:43] Quantification
+[337:44] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_003.mzML.quant
+
+[337:44] File #19/20
+[337:44] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_013-5X.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[337:53] Pre-processing...
+[337:56] 1025 MS1 and 92185 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 5251365 precursors in range
+[337:57] Calibrating with mass accuracies 24 (MS1), 25 (MS2)
+[346:31] RT window set to 4.83005
+[346:34] Recommended MS1 mass accuracy setting: 9 ppm
+[352:20] Main search
+[354:37] Removing low confidence identifications
+[354:45] Removing interfering precursors
+[354:56] Training neural networks on 3626 target and 2902 decoy PSMs
+[355:04] Number of IDs at 0.01 FDR: 922
+[355:09] Calculating protein q-values
+[355:10] Number of genes identified at 1% FDR: 134 (precursor-level), 107 (protein-level) (inference performed using proteotypic peptides only)
+[355:10] Quantification
+[355:11] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_013-5X.mzML.quant
+
+[355:11] File #20/20
+[355:11] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_019-8.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[355:22] Pre-processing...
+[355:25] 1025 MS1 and 92235 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 5251365 precursors in range
+[355:27] Calibrating with mass accuracies 29 (MS1), 25 (MS2)
+[362:28] RT window set to 4.65349
+[362:30] Recommended MS1 mass accuracy setting: 11 ppm
+[367:05] Main search
+[369:56] Removing low confidence identifications
+[370:05] Removing interfering precursors
+[370:16] Training neural networks on 3859 target and 2848 decoy PSMs
+[370:24] Number of IDs at 0.01 FDR: 1250
+[370:30] Calculating protein q-values
+[370:30] Number of genes identified at 1% FDR: 180 (precursor-level), 144 (protein-level) (inference performed using proteotypic peptides only)
+[370:30] Quantification
+[370:32] Quantification information saved to E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_019-8.mzML.quant
+
+[370:32] Cross-run analysis
+[370:32] Reading quantification information: 20 files
+[370:46] Quantifying peptides
+[370:50] Assembling protein groups
+[370:51] Quantifying proteins
+[370:52] Calculating q-values for protein and gene groups
+[371:02] Calculating global q-values for protein and gene groups
+[371:02] Protein groups with global q-value <= 0.01: 711
+[371:03] Compressed report saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics-first-pass.parquet. Use R 'arrow' or Python 'PyArrow' package to process
+[371:03] Saving precursor levels matrix
+[371:03] Precursor levels matrix (1% precursor and protein group FDR) saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics-first-pass.pr_matrix.tsv.
+[371:03] Manifest saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics-first-pass.manifest.txt
+[371:03] Stats report saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics-first-pass.stats.tsv
+[371:03] Generating spectral library:
+[371:03] 4842 target and 40 decoy precursors saved
+[371:03] Spectral library saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics-lib.parquet
+
+[371:04] Loading spectral library E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics-lib.parquet
+[371:05] Spectral library loaded: 1570 protein isoforms, 865 protein groups and 4882 precursors in 4262 elution groups.
+[371:05] Initialising library
+[371:06] Saving the library to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics-lib.parquet.skyline.speclib
+
+
+Second pass: using the newly created spectral library to reanalyse the data
+
+[371:06] File #1/20
+[371:06] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_159-73X.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[371:17] Pre-processing...
+[371:18] 1025 MS1 and 91880 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 4842 precursors in range
+[371:18] Calibrating with mass accuracies 24 (MS1), 25 (MS2)
+[371:19] RT window set to 1.09077
+[371:19] Recommended MS1 mass accuracy setting: 14 ppm
+[371:20] Main search
+[371:20] Removing low confidence identifications
+[371:21] Removing interfering precursors
+[371:21] Training neural networks on 3732 target and 3598 decoy PSMs
+[371:24] Number of IDs at 0.01 FDR: 2433
+[371:24] No protein annotation, skipping protein q-value calculation
+[371:24] Quantification
+
+[371:26] File #2/20
+[371:26] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_036-41.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[371:38] Pre-processing...
+[371:40] 1044 MS1 and 74992 MS2 scans in 1044 (inferred) and 1044 (encoded) cycles, 4842 precursors in range
+[371:40] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[371:40] RT window set to 0.495437
+[371:40] Recommended MS1 mass accuracy setting: 15 ppm
+[371:41] Main search
+[371:41] Removing low confidence identifications
+[371:42] Removing interfering precursors
+[371:42] Training neural networks on 3854 target and 3774 decoy PSMs
+[371:45] Number of IDs at 0.01 FDR: 2073
+[371:45] No protein annotation, skipping protein q-value calculation
+[371:45] Quantification
+
+[371:47] File #3/20
+[371:47] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_008-47.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[372:03] Pre-processing...
+[372:04] 1044 MS1 and 74966 MS2 scans in 1044 (inferred) and 1044 (encoded) cycles, 4842 precursors in range
+[372:04] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[372:05] RT window set to 0.475524
+[372:05] Recommended MS1 mass accuracy setting: 17 ppm
+[372:06] Main search
+[372:06] Removing low confidence identifications
+[372:07] Removing interfering precursors
+[372:07] Training neural networks on 3867 target and 3811 decoy PSMs
+[372:11] Number of IDs at 0.01 FDR: 2656
+[372:11] No protein annotation, skipping protein q-value calculation
+[372:11] Quantification
+
+[372:13] File #4/20
+[372:13] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_032-19.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[372:29] Pre-processing...
+[372:30] 1041 MS1 and 74998 MS2 scans in 1042 (inferred) and 1042 (encoded) cycles, 4842 precursors in range
+[372:30] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[372:31] RT window set to 0.494132
+[372:31] Recommended MS1 mass accuracy setting: 19 ppm
+[372:32] Main search
+[372:33] Removing low confidence identifications
+[372:33] Removing interfering precursors
+[372:33] Training neural networks on 3866 target and 3809 decoy PSMs
+[372:37] Number of IDs at 0.01 FDR: 1756
+[372:37] No protein annotation, skipping protein q-value calculation
+[372:37] Quantification
+
+[372:39] File #5/20
+[372:39] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_020-38.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[372:54] Pre-processing...
+[372:55] 1042 MS1 and 75032 MS2 scans in 1042 (inferred) and 1042 (encoded) cycles, 4842 precursors in range
+[372:55] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[372:56] RT window set to 0.486583
+[372:56] Recommended MS1 mass accuracy setting: 14 ppm
+[372:57] Main search
+[372:57] Removing low confidence identifications
+[372:57] Removing interfering precursors
+[372:57] Training neural networks on 3863 target and 3799 decoy PSMs
+[373:01] Number of IDs at 0.01 FDR: 2452
+[373:01] No protein annotation, skipping protein q-value calculation
+[373:01] Quantification
+
+[373:03] File #6/20
+[373:03] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_098-25.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[373:14] Pre-processing...
+[373:15] 1042 MS1 and 74824 MS2 scans in 1042 (inferred) and 1042 (encoded) cycles, 4842 precursors in range
+[373:15] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[373:15] RT window set to 0.484015
+[373:15] Recommended MS1 mass accuracy setting: 13 ppm
+[373:16] Main search
+[373:17] Removing low confidence identifications
+[373:17] Removing interfering precursors
+[373:17] Training neural networks on 3742 target and 3559 decoy PSMs
+[373:20] Number of IDs at 0.01 FDR: 1738
+[373:20] No protein annotation, skipping protein q-value calculation
+[373:20] Quantification
+
+[373:22] File #7/20
+[373:22] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_080-42.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[373:36] Pre-processing...
+[373:37] 1043 MS1 and 75084 MS2 scans in 1044 (inferred) and 1044 (encoded) cycles, 4842 precursors in range
+[373:37] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[373:38] RT window set to 0.48922
+[373:38] Recommended MS1 mass accuracy setting: 14 ppm
+[373:38] Main search
+[373:39] Removing low confidence identifications
+[373:39] Removing interfering precursors
+[373:39] Training neural networks on 3846 target and 3778 decoy PSMs
+[373:43] Number of IDs at 0.01 FDR: 2808
+[373:43] No protein annotation, skipping protein q-value calculation
+[373:43] Quantification
+
+[373:45] File #8/20
+[373:45] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_064-26.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[374:01] Pre-processing...
+[374:01] 1043 MS1 and 74933 MS2 scans in 1043 (inferred) and 1043 (encoded) cycles, 4842 precursors in range
+[374:01] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[374:02] RT window set to 0.47389
+[374:02] Recommended MS1 mass accuracy setting: 15 ppm
+[374:03] Main search
+[374:04] Removing low confidence identifications
+[374:04] Removing interfering precursors
+[374:04] Training neural networks on 3861 target and 3781 decoy PSMs
+[374:08] Number of IDs at 0.01 FDR: 2351
+[374:08] No protein annotation, skipping protein q-value calculation
+[374:08] Quantification
+
+[374:10] File #9/20
+[374:10] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_030-45.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[374:21] Pre-processing...
+[374:21] 1045 MS1 and 75088 MS2 scans in 1045 (inferred) and 1045 (encoded) cycles, 4842 precursors in range
+[374:21] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[374:22] RT window set to 0.485772
+[374:23] Recommended MS1 mass accuracy setting: 13 ppm
+[374:24] Main search
+[374:24] Removing low confidence identifications
+[374:24] Removing interfering precursors
+[374:24] Training neural networks on 3840 target and 3633 decoy PSMs
+[374:28] Number of IDs at 0.01 FDR: 3267
+[374:28] No protein annotation, skipping protein q-value calculation
+[374:28] Quantification
+
+[374:29] File #10/20
+[374:29] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20220311_RDMitacsJFB_cal2a_004-6.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[374:41] Pre-processing...
+[374:42] 1043 MS1 and 74904 MS2 scans in 1043 (inferred) and 1043 (encoded) cycles, 4842 precursors in range
+[374:42] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[374:43] RT window set to 0.470485
+[374:43] Recommended MS1 mass accuracy setting: 15 ppm
+[374:44] Main search
+[374:44] Removing low confidence identifications
+[374:45] Removing interfering precursors
+[374:45] Training neural networks on 3791 target and 3632 decoy PSMs
+[374:48] Number of IDs at 0.01 FDR: 2339
+[374:48] No protein annotation, skipping protein q-value calculation
+[374:48] Quantification
+
+[374:50] File #11/20
+[374:50] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_173-80.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[375:01] Pre-processing...
+[375:02] 1025 MS1 and 92110 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 4842 precursors in range
+[375:02] Calibrating with mass accuracies 26 (MS1), 25 (MS2)
+[375:02] RT window set to 1.19564
+[375:02] Recommended MS1 mass accuracy setting: 14 ppm
+[375:03] Main search
+[375:04] Removing low confidence identifications
+[375:04] Removing interfering precursors
+[375:04] Training neural networks on 3831 target and 3662 decoy PSMs
+[375:08] Number of IDs at 0.01 FDR: 2481
+[375:08] No protein annotation, skipping protein q-value calculation
+[375:08] Quantification
+
+[375:09] File #12/20
+[375:09] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_181-84.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[375:22] Pre-processing...
+[375:22] 1025 MS1 and 92019 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 4842 precursors in range
+[375:22] Calibrating with mass accuracies 24 (MS1), 25 (MS2)
+[375:23] RT window set to 1.24504
+[375:23] Recommended MS1 mass accuracy setting: 16 ppm
+[375:24] Main search
+[375:25] Removing low confidence identifications
+[375:25] Removing interfering precursors
+[375:25] Training neural networks on 3762 target and 3676 decoy PSMs
+[375:29] Number of IDs at 0.01 FDR: 1587
+[375:29] No protein annotation, skipping protein q-value calculation
+[375:29] Quantification
+
+[375:30] File #13/20
+[375:30] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_165-76.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[375:39] Pre-processing...
+[375:40] 1025 MS1 and 92035 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 4842 precursors in range
+[375:40] Calibrating with mass accuracies 26 (MS1), 25 (MS2)
+[375:40] RT window set to 1.53875
+[375:40] Recommended MS1 mass accuracy setting: 10 ppm
+[375:41] Main search
+[375:41] Removing low confidence identifications
+[375:42] Removing interfering precursors
+[375:42] Training neural networks on 3596 target and 3457 decoy PSMs
+[375:45] Number of IDs at 0.01 FDR: 823
+[375:45] No protein annotation, skipping protein q-value calculation
+[375:45] Quantification
+
+[375:46] File #14/20
+[375:46] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_157-73.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[375:58] Pre-processing...
+[375:59] 1025 MS1 and 92079 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 4842 precursors in range
+[375:59] Calibrating with mass accuracies 27 (MS1), 25 (MS2)
+[376:00] RT window set to 1.09986
+[376:00] Recommended MS1 mass accuracy setting: 15 ppm
+[376:01] Main search
+[376:01] Removing low confidence identifications
+[376:01] Removing interfering precursors
+[376:02] Training neural networks on 3828 target and 3725 decoy PSMs
+[376:05] Number of IDs at 0.01 FDR: 2017
+[376:05] No protein annotation, skipping protein q-value calculation
+[376:05] Quantification
+
+[376:07] File #15/20
+[376:07] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_195-91.mzML
+[376:19] Pre-processing...
+[376:20] 1025 MS1 and 92250 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 4842 precursors in range
+[376:20] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[376:21] RT window set to 1.32216
+[376:21] Recommended MS1 mass accuracy setting: 19 ppm
+[376:22] Main search
+[376:22] Removing low confidence identifications
+[376:22] Removing interfering precursors
+[376:23] Training neural networks on 3835 target and 3776 decoy PSMs
+[376:26] Number of IDs at 0.01 FDR: 1647
+[376:26] No protein annotation, skipping protein q-value calculation
+[376:26] Quantification
+
+[376:28] File #16/20
+[376:28] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_035-14.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[376:36] Pre-processing...
+[376:37] 1025 MS1 and 92230 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 4842 precursors in range
+[376:37] Calibrating with mass accuracies 28 (MS1), 25 (MS2)
+[376:38] RT window set to 1.35045
+[376:38] Recommended MS1 mass accuracy setting: 12 ppm
+[376:38] Main search
+[376:39] Removing low confidence identifications
+[376:39] Removing interfering precursors
+[376:39] Training neural networks on 3724 target and 3555 decoy PSMs
+[376:43] Number of IDs at 0.01 FDR: 1561
+[376:43] No protein annotation, skipping protein q-value calculation
+[376:43] Quantification
+
+[376:44] File #17/20
+[376:44] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_007-3.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[376:53] Pre-processing...
+[376:54] 1025 MS1 and 92245 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 4842 precursors in range
+[376:54] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[376:55] RT window set to 1.2034
+[376:55] Recommended MS1 mass accuracy setting: 14 ppm
+[376:56] Main search
+[376:56] Removing low confidence identifications
+[376:57] Removing interfering precursors
+[376:57] Training neural networks on 3815 target and 3692 decoy PSMs
+[377:00] Number of IDs at 0.01 FDR: 2688
+[377:00] No protein annotation, skipping protein q-value calculation
+[377:00] Quantification
+
+[377:02] File #18/20
+[377:02] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_003.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[377:08] Pre-processing...
+[377:09] 1025 MS1 and 92175 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 4842 precursors in range
+[377:09] Calibrating with mass accuracies 25 (MS1), 25 (MS2)
+[377:09] RT window set to 1.27547
+[377:10] Recommended MS1 mass accuracy setting: 13 ppm
+[377:10] Main search
+[377:10] Removing low confidence identifications
+[377:11] Removing interfering precursors
+[377:11] Training neural networks on 3545 target and 3278 decoy PSMs
+[377:14] Number of IDs at 0.01 FDR: 1774
+[377:14] No protein annotation, skipping protein q-value calculation
+[377:14] Quantification
+
+[377:15] File #19/20
+[377:15] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_013-5X.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[377:21] Pre-processing...
+[377:22] 1025 MS1 and 92185 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 4842 precursors in range
+[377:22] Calibrating with mass accuracies 24 (MS1), 25 (MS2)
+[377:23] RT window set to 1.28985
+[377:23] Recommended MS1 mass accuracy setting: 13 ppm
+[377:23] Main search
+[377:24] Removing low confidence identifications
+[377:24] Removing interfering precursors
+[377:24] Training neural networks on 3520 target and 3228 decoy PSMs
+[377:27] Number of IDs at 0.01 FDR: 1248
+[377:27] No protein annotation, skipping protein q-value calculation
+[377:27] Quantification
+
+[377:28] File #20/20
+[377:28] Loading run E:\Julia\MB_proteomicsWorkshop\RawFiles\20201016_UdSjfb_20190115_freshstool_019-8.mzML
+WARNING: spectra other than MS1 and MS2 detected
+[377:36] Pre-processing...
+[377:36] 1025 MS1 and 92235 MS2 scans in 1025 (inferred) and 1025 (encoded) cycles, 4842 precursors in range
+[377:36] Calibrating with mass accuracies 27 (MS1), 25 (MS2)
+[377:37] RT window set to 1.12723
+[377:37] Recommended MS1 mass accuracy setting: 13 ppm
+[377:37] Main search
+[377:38] Removing low confidence identifications
+[377:38] Removing interfering precursors
+[377:38] Training neural networks on 3656 target and 3447 decoy PSMs
+[377:42] Number of IDs at 0.01 FDR: 1685
+[377:42] No protein annotation, skipping protein q-value calculation
+[377:42] Quantification
+
+[377:43] Cross-run analysis
+[377:43] Reading quantification information: 20 files
+[377:43] Quantifying peptides
+[377:56] Quantification parameters: 0.298785, 0.00674285, 0.00960734, 0.281433, 0.0482955, 0.163317, 0.0130912, 0.0205136, 0.0144323, 0.0456845, 0.0146607, 0.0286169, 0.986123, 0.34059, 0.383661, 0.643637
+[377:59] Quantifying proteins
+[377:59] Calculating q-values for protein and gene groups
+[377:59] Calculating global q-values for protein and gene groups
+[377:59] Protein groups with global q-value <= 0.01: 667
+[377:59] Compressed report saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.parquet. Use R 'arrow' or Python 'PyArrow' package to process
+[377:59] Saving precursor levels matrix
+[377:59] Precursor levels matrix (1% precursor and protein group FDR) saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.pr_matrix.tsv.
+[377:59] Saving protein group levels matrix
+[377:59] Protein groups matrix saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.pg_matrix.tsv.
+[377:59] Saving gene group levels matrix
+[377:59] Gene groups matrix saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.gg_matrix.tsv.
+[377:59] Saving unique genes levels matrix
+[377:59] Unique genes matrix saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.unique_genes_matrix.tsv.
+[377:59] Manifest saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.manifest.txt
+[377:59] Stats report saved to E:\Julia\MB_proteomicsWorkshop\Output\MBIntroToProteomics.stats.tsv
+
