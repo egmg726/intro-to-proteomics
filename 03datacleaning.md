@@ -1,24 +1,24 @@
 ---
-title: 'Data cleaning using R'
+title: 'Data cleaning with R'
 teaching: 10
 exercises: 2
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- What is DE analysis
+- How do we convert our processed proteomics data (DIA-NN output) into an analysis-ready format?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- To do DE analysis
+- Understand the steps required to clean proteomics data and generate analysis-ready protein values.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Load processed data and sample annotation 
 
-After processing raw proteomics data, further cleaning and analysis can be conducted using R, Python, or by importing data to other platforms like **Perseus** or **Skyline**.
+After processing raw proteomics data, further cleaning and analysis can be conducted using **(R, Python, or by importing data to other platforms like **Perseus** or **Skyline**.
 
 In this workshop, we will be teaching you one method of cleaning and analysing proteomics data using R. To follow along the remainder of this workshop, you should **open a new R script in RStudio** and **run the example code provided.**
 
@@ -68,8 +68,8 @@ y.peptide <- readDIANN(file='data/MBIntroToProteomics.parquet',format="parquet",
                        q.cutoffs = 0.01)
 ```
 
-``` error
-Error in readDIANN(file = "data/MBIntroToProteomics.parquet", format = "parquet", : could not find function "readDIANN"
+``` output
+Length of q-value columns does not match with length of q-value cutoffs. Use q.cutoffs[1] for all columns.
 ```
 
 :::::challenge
@@ -87,8 +87,8 @@ y.peptide <- readDIANN(file='data/MBIntroToProteomics.parquet',format="parquet",
                        q.cutoffs = 0.01)
 ```
 
-``` error
-Error in readDIANN(file = "data/MBIntroToProteomics.parquet", format = "parquet", : could not find function "readDIANN"
+``` output
+Length of q-value columns does not match with length of q-value cutoffs. Use q.cutoffs[1] for all columns.
 ```
 :::
 :::::
@@ -100,29 +100,188 @@ Let's look at the structure of the data.
 names(y.peptide)
 ```
 
-``` error
-Error: object 'y.peptide' not found
+``` output
+[1] "E"     "genes"
 ```
 
 ``` r
 head(y.peptide$E)
 ```
 
-``` error
-Error: object 'y.peptide' not found
+``` output
+                                                 20220311_RDMitacsJFB_cal2a_036-41
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                    9.391807
+(UniMod:1)AQTPAFDKPK2                                                           NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                             11.219885
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
+                                                 20220311_RDMitacsJFB_cal2a_008-47
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                    13.18627
+(UniMod:1)AQTPAFDKPK2                                                      9.22398
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                    NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
+                                                 20220311_RDMitacsJFB_cal2a_064-26
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                   12.363677
+(UniMod:1)AQTPAFDKPK2                                                     9.763128
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                    NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
+                                                 20220311_RDMitacsJFB_cal2a_030-45
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                     9.88099
+(UniMod:1)AQTPAFDKPK2                                                           NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                    NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
+                                                 20201016_UdSjfb_20190115_freshstool_007-3
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                            8.200415
+(UniMod:1)AQTPAFDKPK2                                                                   NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                        NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                   NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                            NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                             NA
+                                                 20201016_UdSjfb_20190115_freshstool_159-73X
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                    NA
+(UniMod:1)AQTPAFDKPK2                                                               10.93557
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                          NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                     NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                              NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                               NA
+                                                 20220311_RDMitacsJFB_cal2a_080-42
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                          NA
+(UniMod:1)AQTPAFDKPK2                                                     10.09564
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                              10.26728
+(UniMod:1)SNYSVSLVGPAPWGFR2                                               12.39978
+                                                 20220311_RDMitacsJFB_cal2a_004-6
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                         NA
+(UniMod:1)AQTPAFDKPK2                                                     11.6263
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                               NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                          NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                   NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                    NA
+                                                 20201016_UdSjfb_20190115_freshstool_173-80
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
+(UniMod:1)AQTPAFDKPK2                                                              11.38190
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                   11.16801
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
+                                                 20201016_UdSjfb_20190115_freshstool_181-84
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
+(UniMod:1)AQTPAFDKPK2                                                              13.79761
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
+                                                 20220311_RDMitacsJFB_cal2a_032-19
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                          NA
+(UniMod:1)AQTPAFDKPK2                                                           NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                          14.27238
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                     14.91819
+(UniMod:1)MDVLAEANGTFALNLLK2                                              11.19329
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
+                                                 20201016_UdSjfb_20190115_freshstool_195-91
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
+(UniMod:1)AQTPAFDKPK2                                                                    NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                   12.22596
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                              11.55929
+(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
+                                                 20201016_UdSjfb_20190115_freshstool_019-8
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                  NA
+(UniMod:1)AQTPAFDKPK2                                                                   NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                  12.09667
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                   NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                            NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                             NA
+                                                 20220311_RDMitacsJFB_cal2a_020-38
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                          NA
+(UniMod:1)AQTPAFDKPK2                                                           NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                    NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
+                                                 20220311_RDMitacsJFB_cal2a_098-25
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                          NA
+(UniMod:1)AQTPAFDKPK2                                                           NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                    NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
+                                                 20201016_UdSjfb_20190115_freshstool_157-73
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
+(UniMod:1)AQTPAFDKPK2                                                                    NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
+                                                 20201016_UdSjfb_20190115_freshstool_003
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                NA
+(UniMod:1)AQTPAFDKPK2                                                                 NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                      NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                 NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                          NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                           NA
+                                                 20201016_UdSjfb_20190115_freshstool_165-76
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
+(UniMod:1)AQTPAFDKPK2                                                                    NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
+                                                 20201016_UdSjfb_20190115_freshstool_035-14
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
+(UniMod:1)AQTPAFDKPK2                                                                    NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
+                                                 20201016_UdSjfb_20190115_freshstool_013-5X
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
+(UniMod:1)AQTPAFDKPK2                                                                    NA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         NA
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
+(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
+(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
 ```
 
 ``` r
 head(y.peptide$genes)
 ```
 
-``` error
-Error: object 'y.peptide' not found
+``` output
+                                                                                       Protein.Group
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                        P06703
+(UniMod:1)AQTPAFDKPK2                                                                         P00813
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         Cont_P01012
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    Cont_P01012
+(UniMod:1)MDVLAEANGTFALNLLK2                                                                  P35237
+(UniMod:1)SNYSVSLVGPAPWGFR2                      Q96HC4;Q96HC4-2;Q96HC4-3;Q96HC4-4;Q96HC4-6;Q96HC4-7
+                                                 Protein.Names     Genes
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2             S10A6_HUMAN    S100A6
+(UniMod:1)AQTPAFDKPK2                                ADA_HUMAN       ADA
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2    OVAL_CHICK SERPINB14
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2               OVAL_CHICK SERPINB14
+(UniMod:1)MDVLAEANGTFALNLLK2                        SPB6_HUMAN  SERPINB6
+(UniMod:1)SNYSVSLVGPAPWGFR2                        PDLI5_HUMAN    PDLIM5
+                                                 Proteotypic
+(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                     1
+(UniMod:1)AQTPAFDKPK2                                      1
+(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2           1
+(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                      1
+(UniMod:1)MDVLAEANGTFALNLLK2                               1
+(UniMod:1)SNYSVSLVGPAPWGFR2                                1
 ```
 
 As you can see, our data has been imported as a limma EList object, with components **'E' (log2 peptide matrix)** and **'genes' (feature annotation)** containing information about each peptide.
 
-### Load sample data
+### Load sample annotation
 
 We also need to import information about our samples for later analyses.
 
@@ -164,96 +323,27 @@ samples_stool$sample_name <- gsub(".mzML", "",samples_stool$fixed_file_name)
 samples_stool <- samples_stool %>% filter(samples_stool$sample_name %in% colnames(y.peptide$E))
 ```
 
-``` error
-Error in samples_stool %>% filter(samples_stool$sample_name %in% colnames(y.peptide$E)): could not find function "%>%"
-```
-
 We can attach our sample annotation data to the EList object for later analyses.
 
 
 ``` r
 # Ensure sample row order matches column order of the peptide matrix
 sample_info <- samples_stool[samples_stool$sample_name %in% colnames(y.peptide$E),]
-```
-
-``` error
-Error: object 'y.peptide' not found
-```
-
-``` r
 rownames(sample_info) <- sample_info$sample_name
-```
-
-``` error
-Error: object 'sample_info' not found
-```
-
-``` r
 y.peptide$E <- y.peptide$E[,rownames(sample_info)]
-```
 
-``` error
-Error: object 'y.peptide' not found
-```
-
-``` r
 # Add experimental metadata to EList
 y.peptide$targets <- sample_info[, c('Class', 'Batch')]
-```
 
-``` error
-Error: object 'sample_info' not found
-```
-
-``` r
 # Set colors for later plotting
 Class <- factor(y.peptide$targets$Class)
-```
-
-``` error
-Error: object 'y.peptide' not found
-```
-
-``` r
 Class.color <- Class
-```
+levels(Class.color) <- hcl.colors(nlevels(Class), palette = "cividis")
 
-``` error
-Error: object 'Class' not found
-```
-
-``` r
-levels(Class.color) <- hcl.colors(nlevels(Class), palette = "Set 2")
-```
-
-``` error
-Error: object 'Class' not found
-```
-
-``` r
 Batch <- factor(y.peptide$targets$Batch)
-```
-
-``` error
-Error: object 'y.peptide' not found
-```
-
-``` r
 Batch.color <- Batch
+levels(Batch.color) <- hcl.colors(nlevels(Batch), palette = "Set 2")
 ```
-
-``` error
-Error: object 'Batch' not found
-```
-
-``` r
-levels(Batch.color) <- hcl.colors(nlevels(Batch), palette = "cividis")
-```
-
-``` error
-Error: object 'Batch' not found
-```
-
 
 ## Quality filtering
 
@@ -266,26 +356,8 @@ After reading in the data, it is common to conduct additional filtering to impro
 
 ``` r
 y.peptide <- filterNonProteotypicPeptides(y.peptide)
-```
-
-``` error
-Error in filterNonProteotypicPeptides(y.peptide): could not find function "filterNonProteotypicPeptides"
-```
-
-``` r
 y.peptide <- filterCompoundProteins(y.peptide)
-```
-
-``` error
-Error in filterCompoundProteins(y.peptide): could not find function "filterCompoundProteins"
-```
-
-``` r
 y.peptide <- filterSingletonPeptides(y.peptide, min.n.peptides = 2)
-```
-
-``` error
-Error in filterSingletonPeptides(y.peptide, min.n.peptides = 2): could not find function "filterSingletonPeptides"
 ```
 
 These filtering steps are optional; limpa will still work if they are not run. For more information about these peptide-level filters and whether they are appropriate for your experiment, please consult the limpa documentation.
@@ -302,19 +374,9 @@ In the previous lesson, we incorporated the universal contaminants fasta into ou
 ``` r
 # Remove contaminant proteins from the genes dataframe
 y.peptide$genes <- y.peptide$genes %>% filter(!str_detect(Protein.Group, "Cont_"))
-```
 
-``` error
-Error in y.peptide$genes %>% filter(!str_detect(Protein.Group, "Cont_")): could not find function "%>%"
-```
-
-``` r
 # Match peptides in the matrix to only those remaining in the dataframe
 y.peptide$E <- y.peptide$E[rownames(y.peptide$genes), ]
-```
-
-``` error
-Error: object 'y.peptide' not found
 ```
 
 :::::callout
@@ -350,19 +412,14 @@ The DPC coefficients are related to the dataset and software used for processing
 
 ``` r
 dpcfit <- dpcON(y.peptide, robust=TRUE)
-```
 
-``` error
-Error in dpcON(y.peptide, robust = TRUE): could not find function "dpcON"
-```
-
-``` r
 # Print the intercept and slope of our DPC
 dpcfit$dpc
 ```
 
-``` error
-Error: object 'dpcfit' not found
+``` output
+     beta0      beta1 
+-7.1928577  0.6050907 
 ```
 
 ``` r
@@ -370,9 +427,7 @@ Error: object 'dpcfit' not found
 plotDPC(dpcfit)
 ```
 
-``` error
-Error in plotDPC(dpcfit): could not find function "plotDPC"
-```
+<img src="fig/03datacleaning-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 Now we can use the DPC to generate our log2 protein values. This function requires the following input:
 
@@ -385,8 +440,16 @@ Now we can use the DPC to generate our log2 protein values. This function requir
 y.protein <- dpcQuant(y.peptide, "Protein.Names", dpc=dpcfit)
 ```
 
-``` error
-Error in dpcQuant(y.peptide, "Protein.Names", dpc = dpcfit): could not find function "dpcQuant"
+``` output
+Estimating hyperparameters ...
+```
+
+``` output
+Quantifying proteins ...
+```
+
+``` output
+Proteins: 275 Peptides: 2520
 ```
 
 *Note: our dataset is quite small, so this process should only take a few seconds. For larger datasets, it may take minutes or hours for this command to run.*
@@ -427,37 +490,38 @@ We have now generated an EList object for our protein values. Let's investigate 
 names(y.protein)
 ```
 
-``` error
-Error: object 'y.protein' not found
+``` output
+[1] "E"       "genes"   "other"   "targets" "dpc"    
 ```
 
 ``` r
 names(y.protein$other)
 ```
 
-``` error
-Error: object 'y.protein' not found
+``` output
+[1] "n.observations" "standard.error"
 ```
 
 ``` r
 names(y.protein$genes)
 ```
 
-``` error
-Error: object 'y.protein' not found
+``` output
+[1] "Protein.Group" "Protein.Names" "Genes"         "NPeptides"    
+[5] "PropObs"      
 ```
 
-| EList Component     | Description                                                                         |
-| ------              | ------------------                                                                        |
-| **E**               | A complete matrix of log2 protein values with no missing data, with samples as columns and proteins as rows |
-| **genes**           | Feature annotation dataframe, including UniProt IDs (Protein.Group), proteins (Protein.Names), gene names (Genes), number of peptides used to quantify each protein (NPeptides), and the proportion of possible observations used to generate each protein value (PropObs) |
-| **other**           | Two matrices with columns and rows corresponding to E: number of peptides observed in each sample for each protein (n.observations) and the standard error associated with each protein value for each sample (standard.error) |
-| **targets**         | Sample annotation dataframe |
-| **dpc**             | DPC intercept and slope coefficient used for protein quantification |
+| EList component   | Description                                                                         |
+| :-----:           | ------------------                                                                        |
+| **E**             | A complete matrix of log2 protein values with no missing data, with samples as columns and proteins as rows |
+| **genes**         | Feature annotation dataframe, with columns for: UniProt IDs (Protein.Group), proteins (Protein.Names), gene names (Genes), number of peptides used to quantify each protein (NPeptides), and the proportion of possible observations used to generate each protein value (PropObs) |
+| **other**         | List of two matrices with columns and rows corresponding to protein matrix E: number of peptides observed for each protein in each sample (n.observations), and the standard error associated with each protein value for each sample (standard.error) |
+| **targets**       | Sample annotation dataframe |
+| **dpc**           | DPC intercept and slope coefficient used for protein quantification |
 
 :::::challenge
 
-Compare the first few rows of the protein (E), n.observations and standard.error matrices. Take a look at the NPeptides and PropObs values for those proteins also. What do you notice about the relationship between these values?
+Compare the first few rows of the *protein (E)*, *n.observations* and *standard.error* matrices. Take a look at the *NPeptides* and *PropObs* values for those proteins also. What do you notice about the relationship between these quality metrics?
 
 :::solution
 
@@ -470,442 +534,82 @@ If you are interested in a particular protein, it is important to look at these 
 :::
 :::::
 
+## Dimensionality Reduction and QC
 
-
-### Dimensionality Reduction and QC
-
-
-
-
-
-
-That plot is extremely messy and doesn't tell us much! Let's clean it up.
-
-
-
+Let's take a look at our dataset. The `plotMDSUsingSEs()` function, or *Multidimensional Scaling Plot of Gene Expression Profiles, Using Standard Errors*, is similar to `plotMDS()` in the *limma* package, but takes account of the standard errors generated by `dpcQuant()`. This is essentially a PCA plot for the newly generated protein values that takes into consideration their standard error.
 
 
 ``` r
 plotMDSUsingSEs(y.protein)
 ```
 
-``` error
-Error in plotMDSUsingSEs(y.protein): could not find function "plotMDSUsingSEs"
-```
+<img src="fig/03datacleaning-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+
+That plot is extremely messy and doesn't tell us much! Let's clean it up using the Class and Batch coloring we generated earlier.
+
 
 ``` r
 # Class visualisation
-
 plotMDSUsingSEs(y.protein, pch=16, col=as.character(Class.color))
 ```
 
-``` error
-Error in plotMDSUsingSEs(y.protein, pch = 16, col = as.character(Class.color)): could not find function "plotMDSUsingSEs"
-```
-
-Hmmm, not a lot of differences. Let's see if there are any batch effects.
-
+<img src="fig/03datacleaning-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # Batch visualisation
-
 plotMDSUsingSEs(y.protein, pch=16, col=as.character(Batch.color))
 ```
 
-``` error
-Error in plotMDSUsingSEs(y.protein, pch = 16, col = as.character(Batch.color)): could not find function "plotMDSUsingSEs"
-```
-
-It looks like there are some differences between the batches. Let's remove the batch effects and see how it looks.
-
-
+<img src="fig/03datacleaning-rendered-unnamed-chunk-14-2.png" style="display: block; margin: auto;" />
 
 ``` r
-# Correct for batch effects
-y.protein.rbe <- removeBatchEffect(y.protein,batch = y.protein$targets$Batch)
+# Class (labels) and batch (colors) visualisation
+plotMDSUsingSEs(y.protein, labels=Class, col=as.character(Batch.color))
 ```
 
-``` error
-Error in removeBatchEffect(y.protein, batch = y.protein$targets$Batch): could not find function "removeBatchEffect"
-```
-
-``` r
-plotMDS(y.protein.rbe, pch=16, col=as.character(Batch.color))
-```
-
-``` error
-Error in plotMDS(y.protein.rbe, pch = 16, col = as.character(Batch.color)): could not find function "plotMDS"
-```
-
-## Subset Comparison: Ctrl vs aUC
-
-
-``` r
-cdr_bool <- y.peptide$targets$Class %in% c('Ctrl','aUC')
-```
-
-``` error
-Error: object 'y.peptide' not found
-```
-
-``` r
-plotMDSUsingSEs(y.protein[, cdr_bool], 
-                pch=16, col=as.character(Class.color[cdr_bool]))
-```
-
-``` error
-Error in plotMDSUsingSEs(y.protein[, cdr_bool], pch = 16, col = as.character(Class.color[cdr_bool])): could not find function "plotMDSUsingSEs"
-```
-
-``` r
-plotMDS(y.protein[, cdr_bool], 
-         pch=16, col=as.character(Class.color[cdr_bool]))
-```
-
-``` error
-Error in plotMDS(y.protein[, cdr_bool], pch = 16, col = as.character(Class.color[cdr_bool])): could not find function "plotMDS"
-```
-
-``` r
-plotMDS(y.protein.rbe[, cdr_bool], 
-         pch=16, col=as.character(Class.color[cdr_bool]))
-```
-
-``` error
-Error in plotMDS(y.protein.rbe[, cdr_bool], pch = 16, col = as.character(Class.color[cdr_bool])): could not find function "plotMDS"
-```
-
-We should add batch as a covariate to our analysis.
-
-## Differential Expression Analysis
-
-We now fit a linear model that includes both Class and Batch effects.
-
-
-``` r
-design <- model.matrix(~0 + Class + Batch)
-```
-
-``` error
-Error in eval(predvars, data, env): object 'Class' not found
-```
-
-``` r
-fit <- dpcDE(y.protein, design, plot = TRUE)
-```
-
-``` error
-Error in dpcDE(y.protein, design, plot = TRUE): could not find function "dpcDE"
-```
-
-``` r
-fit <- eBayes(fit)
-```
-
-``` error
-Error in eBayes(fit): could not find function "eBayes"
-```
-
-
-``` r
-topTable(fit, coef = "ClassCtrl")
-```
-
-``` error
-Error in topTable(fit, coef = "ClassCtrl"): could not find function "topTable"
-```
-
-## Create and Explore Contrasts
-
-We can define custom contrasts (e.g., comparing aCD vs Ctrl) and explore differential proteins.
-
-
-``` r
-# Define contrasts
-contrasts_fit <- makeContrasts(Ctrl_aCD = ClassaCD - ClassCtrl, 
-                               levels = colnames(design))
-```
-
-``` error
-Error in makeContrasts(Ctrl_aCD = ClassaCD - ClassCtrl, levels = colnames(design)): could not find function "makeContrasts"
-```
-
-``` r
-# Apply contrasts
-fit2 <- contrasts.fit(fit, contrasts = contrasts_fit)
-```
-
-``` error
-Error in contrasts.fit(fit, contrasts = contrasts_fit): could not find function "contrasts.fit"
-```
-
-``` r
-fit2 <- eBayes(fit2)
-```
-
-``` error
-Error in eBayes(fit2): could not find function "eBayes"
-```
-
-``` r
-# Summaries
-topTable(fit2, coef = 1)
-```
-
-``` error
-Error in topTable(fit2, coef = 1): could not find function "topTable"
-```
-
-
-``` r
-# Compare multiple coefficients
-topTable(fit, coef = 1)
-```
-
-``` error
-Error in topTable(fit, coef = 1): could not find function "topTable"
-```
-
-``` r
-topTable(fit, coef = 3)
-```
-
-``` error
-Error in topTable(fit, coef = 3): could not find function "topTable"
-```
-
-``` r
-topTable(fit, coef = 4)
-```
-
-``` error
-Error in topTable(fit, coef = 4): could not find function "topTable"
-```
-
-``` r
-topTable(fit, coef = 6)
-```
+<img src="fig/03datacleaning-rendered-unnamed-chunk-14-3.png" style="display: block; margin: auto;" />
 
-``` error
-Error in topTable(fit, coef = 6): could not find function "topTable"
-```
-
-``` r
-# Example diagnostic plots
-plotMD(fit, coef = 1)
-```
-
-``` error
-Error in plotMD(fit, coef = 1): could not find function "plotMD"
-```
-
-``` r
-plotMD(fit, coef = 2)
-```
-
-``` error
-Error in plotMD(fit, coef = 2): could not find function "plotMD"
-```
-
-## Example: aUC vs Ctrl Comparison
-
-
-``` r
-results <- topTable(fit, coef = 3, number = Inf)
-```
-
-``` error
-Error in topTable(fit, coef = 3, number = Inf): could not find function "topTable"
-```
-
-``` r
-# Visualize a specific protein
-plotProtein(y.protein, "S10A9_HUMAN", col = as.character(Class.color))
-```
-
-``` error
-Error in plotProtein(y.protein, "S10A9_HUMAN", col = as.character(Class.color)): could not find function "plotProtein"
-```
-
-``` r
-legend('topleft', legend = levels(Class), fill = levels(Class.color))
-```
-
-``` error
-Error: object 'Class' not found
-```
-
-## Visualize Top Significant Proteins
-
-We identify the top 50 most significant and variable proteins, then visualize via a clustered heatmap.
-
-
-``` r
-sig_proteins <- results %>%
-  filter(adj.P.Val < 0.05) %>%
-  top_n(50, wt = abs(logFC)) %>%
-  pull(Protein.Names)
-```
-
-``` error
-Error in results %>% filter(adj.P.Val < 0.05) %>% top_n(50, wt = abs(logFC)) %>% : could not find function "%>%"
-```
-
-``` r
-expr_matrix <- y.protein$E[sig_proteins, ]
-```
-
-``` error
-Error: object 'y.protein' not found
-```
-
-``` r
-scaled_expr <- t(scale(t(expr_matrix)))
-```
-
-``` error
-Error: object 'expr_matrix' not found
-```
-
-``` r
-col_annotation <- data.frame(Class = Class,
-                             row.names = colnames(y.protein$E))
-```
-
-``` error
-Error: object 'y.protein' not found
-```
-
-``` r
-pheatmap(scaled_expr,
-         cluster_rows = TRUE,
-         cluster_cols = TRUE,
-         show_rownames = TRUE,
-         show_colnames = FALSE,
-         annotation_col = col_annotation)
-```
-
-``` error
-Error in pheatmap(scaled_expr, cluster_rows = TRUE, cluster_cols = TRUE, : could not find function "pheatmap"
-```
-
-
-## Volcano plot
-
-
-``` r
-EnhancedVolcano(results,
-                lab = results$Protein.Names,
-                x = 'logFC',
-                y = 'adj.P.Val',
-                pCutoff = 0.05,
-                FCcutoff = 1.0,
-                pointSize = 3.0,
-                labSize = 3.0)
-```
-
-``` error
-Error in EnhancedVolcano(results, lab = results$Protein.Names, x = "logFC", : could not find function "EnhancedVolcano"
-```
-
-
-## Network and Enrichment Analysis
-
-### STRING Protein–Protein Interaction Network
-
-Note: this part does not seem to be working
-
+We can already see a distinction between the aCD and Ctrl groups, which will be explored further in the next lesson.
 
-``` r
-string_db <- STRINGdb$new(version = "11.5", species = 9606, score_threshold = 400)
-mapped <- string_db$map(results, "Protein.Names", removeUnmappedRows = TRUE)
-de_proteins <- mapped %>% filter(adj.P.Val < 0.05)
+It also looks like there are some differences between the batches. **We should add batch as a covariate to our analyses in the next lesson.**
 
-# Plot network of significant proteins
-string_db$plot_network(de_proteins$STRING_id)
-```
-
-### Functional Enrichment (GO and KEGG)
-
-
-``` r
-de_proteins <- results %>% filter(adj.P.Val < 0.05)
-```
-
-``` error
-Error in results %>% filter(adj.P.Val < 0.05): could not find function "%>%"
-```
-
-``` r
-# Convert UniProt IDs to Entrez IDs for enrichment
-converted <- bitr(de_proteins$Protein.Group,
-                  fromType = "UNIPROT",
-                  toType = "ENTREZID",
-                  OrgDb = org.Hs.eg.db)
-```
-
-``` error
-Error in bitr(de_proteins$Protein.Group, fromType = "UNIPROT", toType = "ENTREZID", : could not find function "bitr"
-```
-
-``` r
-# GO Biological Process enrichment
-ego <- enrichGO(gene = converted$ENTREZID,
-                OrgDb = org.Hs.eg.db,
-                ont = "BP",
-                pAdjustMethod = "BH",
-                pvalueCutoff = 0.05,
-                readable = TRUE)
-```
+:::callout
 
-``` error
-Error in enrichGO(gene = converted$ENTREZID, OrgDb = org.Hs.eg.db, ont = "BP", : could not find function "enrichGO"
-```
+Explaining the different methods of identifying, accounting and correcting for batch effects in proteomics data is an entire workshop itself! For further information, we recommend the [Melbourne Integrative Genomics Workshop: Managing batch effects in biological studies](https://github.com/melbintgen/Batch-effect-management?tab=readme-ov-file).
 
-``` r
-dotplot(ego, showCategory = 10)
-```
+If you are concerned about batch effects in your data, University of Melbourne staff and students or affiliates can also [contact us](https://mdhs.unimelb.edu.au/melbournebioinformatics/training-and-support/expert-advice) for a free consultation.
 
-``` error
-Error in dotplot(ego, showCategory = 10): could not find function "dotplot"
-```
+:::
 
-``` r
-# KEGG pathway enrichment
-ekegg <- enrichKEGG(gene = converted$ENTREZID,
-                    organism = 'hsa',
-                    pvalueCutoff = 0.05)
-```
+### Normalisation
 
-``` error
-Error in enrichKEGG(gene = converted$ENTREZID, organism = "hsa", pvalueCutoff = 0.05): could not find function "enrichKEGG"
-```
+Normalisation is another key element of the proteomics data cleaning workflow. Normalisation techniques aim to remove non-biological variation in the data, for example, variation due to sample loading or batch effects.
 
-``` r
-dotplot(ekegg, showCategory = 10)
-```
+The default RT-dependent normalisation applied during DIA-NN processing is quite effective and often sufficient for DIA data; however, each experimental environment and techniques will have a different optimal approach. You may wish to apply an additional method of normalisation to your data.
 
-``` error
-Error in dotplot(ekegg, showCategory = 10): could not find function "dotplot"
-```
+To learn more about normalisation, keep an eye on the [Melbourne Bioinformatics Eventbrite page](https://www.eventbrite.com.au/o/melbourne-bioinformatics-13058846490) for a normalisation workshop coming in 2026.
 
+:::spoiler
+# More about normalisation
 
-## Potential next steps
+To learn more about different normalisation techniques for proteomics data, we recommend the following papers:
 
-* Compare coefficients between classes as an exercise.
+Peng, H., Wang, H., Kong, W., Li, J., & Goh, W. W. B. (2024). Optimizing differential expression analysis for proteomics data via high-performing rules and ensemble inference. Nature communications, 15(1), 3922. https://doi.org/10.1038/s41467-024-47899-w
 
-* Visualize selected proteins of interest across experimental groups.
+Tseng, C. Y., Salguero, J. A., Breidenbach, J. D., Solomon, E., Sanders, C. K., Harvey, T., Thornhill, M. G., Palmisano, S. J., Sasiene, Z. J., Blackwell, B. R., McBride, E. M., Luchini, K. A., LeBrun, E. S., Alvarez, M., Mach, P. M., Rivera, E. S., & Glaros, T. G. (2025). Evaluation of normalization strategies for mass spectrometry-based multi-omics datasets. Metabolomics : Official journal of the Metabolomic Society, 21(4), 98. https://doi.org/10.1007/s11306-025-02297-1
 
-* Extend enrichment analyses using Reactome or GSEA approaches.
+Välikangas, T., Suomi, T., & Elo, L. L. (2018). A systematic evaluation of normalization methods in quantitative label-free proteomics. Briefings in bioinformatics, 19(1), 1–11. https://doi.org/10.1093/bib/bbw095
 
-* Integrate sample metadata for clinical covariates or longitudinal modeling.
+:::
 
 
+Good work! We now have a clean dataset ready for analysis.
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Data!
+- Key elements of the proteomics data cleaning workflow include quality filtering, removing contaminants, protein quantification, managing batch effects, and normalisation.
+- We can use the *limpa* package in R to clean our peptide data and generate a complete, analysis-ready protein matrix with corresponding standard error values.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
