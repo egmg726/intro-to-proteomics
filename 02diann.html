@@ -57,6 +57,7 @@
           </ul></li>
       </div>
 
+
       <div class="dropdown" id="instructor-dropdown">
         <button class="btn btn-secondary dropdown-toggle bordered-button" type="button" id="dropdownMenu1" data-bs-toggle="dropdown" aria-expanded="false">
           <i aria-hidden="true" class="icon" data-feather="eye"></i> Learner View <i data-feather="chevron-down"></i>
@@ -118,11 +119,11 @@
   Introduction to Proteomics
 </div>
 
-<aside class="col-md-12 lesson-progress"><div style="width: 50%" class="percentage">
-    50%
+<aside class="col-md-12 lesson-progress"><div style="width: 36%" class="percentage">
+    36%
   </div>
   <div class="progress uom">
-    <div class="progress-bar uom" role="progressbar" style="width: 50%" aria-valuenow="50" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar uom" role="progressbar" style="width: 36%" aria-valuenow="36" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -227,11 +228,18 @@
       <div class="accordion-body">
         <ul><li><a href="#processing-proteomics-data">Processing proteomics data</a></li>
 <li><a href="#dia-nn-workflow">DIA-NN workflow</a></li>
-<li><a href="#part-1-creating-a-spectral-library">Part 1: Creating a spectral library</a></li>
-<li><a href="#general-workflow">General Workflow</a></li>
-<li><a href="#example-command-line-usage">Example Command-Line Usage</a></li>
+<li><a href="#dia-nn-output">DIA-NN output</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush4">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading4">
+        <a href="03datacleaning.html">3. Data cleaning using R</a>
+    </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -279,7 +287,7 @@
   <div class="col-xl-8 col-lg-12 primary-content">
     <nav class="lesson-content mx-md-4" aria-label="Previous and Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="01dataset.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="index.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="03datacleaning.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
@@ -287,16 +295,16 @@
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
           Previous: Exploring the
         </a>
-        <a class="chapter-link float-end" href="index.html" rel="next">
-          Home
+        <a class="chapter-link float-end" href="03datacleaning.html" rel="next">
+          Next: Data cleaning using...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Processing data with DIA-NN</h1>
-        <p>Last updated on 2025-10-31 |
+        <p>Last updated on 2025-11-10 |
 
-        <a href="https://example.com/template-source/lesson-example/edit/main/episodes/02diann.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/julia-broadbent/intro-to-proteomics/edit/main/episodes/02diann.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
 
 
@@ -344,7 +352,8 @@ spectra against a spectral library to identify peptides and assign them
 to a protein or protein group. Source: <a href="https://training.galaxyproject.org/training-material/topics/proteomics/tutorials/introduction/slides.html#15" class="external-link">Galaxy
 Training Network</a>
 </div>
-</figure><div class="section level3">
+</figure><p><br></p>
+<div class="section level3">
 <h3 id="why-dia-nn">Why DIA-NN?<a class="anchor" aria-label="anchor" href="#why-dia-nn"></a></h3>
 <p>Key features of DIA-NN software include:</p>
 <ul><li>
@@ -369,7 +378,9 @@ it easy to integrate into an automated pipeline.</li>
 </ul><p>DIA-NN is free to download. Detailed operating instructions and a
 link to install the latest version of DIA-NN can be found on the <a href="https://github.com/vdemichev/DiaNN?tab=readme-ov-file" class="external-link">GitHub
 page</a>.</p>
-<div id="important-note" class="callout">
+</div>
+</section><section><h2 class="section-heading" id="dia-nn-workflow">DIA-NN workflow<a class="anchor" aria-label="anchor" href="#dia-nn-workflow"></a></h2>
+<hr class="half-width"><div id="important-note" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -384,25 +395,80 @@ procedures described below.</p>
 </div>
 </div>
 </div>
-</div>
-</section><section><h2 class="section-heading" id="dia-nn-workflow">DIA-NN workflow<a class="anchor" aria-label="anchor" href="#dia-nn-workflow"></a></h2>
-<hr class="half-width"></section><section><h2 class="section-heading" id="part-1-creating-a-spectral-library">Part 1: Creating a spectral library<a class="anchor" aria-label="anchor" href="#part-1-creating-a-spectral-library"></a></h2>
-<hr class="half-width"><p>DIA-NN analysis consists of two steps. The first step is to generate
-a predicted spectral library for your experimental organism.</p>
+<div class="section level3">
+<h3 id="part-1-creating-a-spectral-library">Part 1: Creating a spectral library<a class="anchor" aria-label="anchor" href="#part-1-creating-a-spectral-library"></a></h3>
+<p>DIA-NN analysis consists of two steps. The first step is to
+<strong>generate a predicted spectral library</strong> for your
+experimental organism.</p>
 <ol style="list-style-type: decimal"><li>
-</li></ol><p>Variable mods</p>
-<figure><img src="fig/02diann_peptideMatching.png" alt="Example of the DIA-NN GUI used to generate a predicted spectral library. Settings which have been altered from the default are highlighted in red" class="figure mx-auto d-block"><div class="figcaption">Example of the DIA-NN GUI used to generate a
+<p><strong>Download a sequence database</strong> from <a href="https://www.uniprot.org/uniprotkb?query=Human&amp;facets=model_organism%3A9606%2Creviewed%3Atrue" class="external-link">UniProt</a>.</p>
+<ol style="list-style-type: lower-alpha"><li><p>Go to <a href="https://www.uniprot.org/uniprotkb?query=" class="external-link uri">https://www.uniprot.org/uniprotkb?query=</a>*</p></li>
+<li><p>Select the <code>relevant organism</code> for your sample and
+<code>Reviewed (Swiss-Prot)</code> status to filter results.</p></li>
+<li><p>Click <code>Download</code></p></li>
+<li><p>Change the format to
+<code>FASTA (canonical and isoform)</code></p></li>
+<li><p>Select <code>No</code> under Compressed and download the Fasta
+file</p></li>
+</ol></li>
+</ol><div id="for-specific-searches" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="for-specific-searches" class="callout-inner">
+<h3 class="callout-title">FOR SPECIFIC SEARCHES</h3>
+<div class="callout-content">
+<p>If you need to search for a variant protein or peptide that differs
+from the standard organism proteome, you can manually edit the protein
+sequences in the UniProt fasta in a text editor.</p>
+</div>
+</div>
+</div>
+<ol start="2" style="list-style-type: decimal"><li><p><strong>Download a contaminant Fasta file</strong> from <a href="https://github.com/HaoGroup-ProtContLib/Protein-Contaminant-Libraries-for-DDA-and-DIA-Proteomics/tree/main" class="external-link">here</a>.
+For most studies, the Universal Contaminants.fasta will be appropriate,
+but you may prefer to use one of the sample-type specific contaminant
+fastas depending on your experiment. <strong><em>More information about
+this resource and contaminants will be discussed in the next
+lesson.</em></strong></p></li>
+<li><p><strong>Open the DIA-NN</strong> GUI or a command line interface.
+If there are multiple versions of DIA-NN installed on your device,
+ensure to update <code>DIA-NN exe</code> with the file path to the
+version you wish to use.</p></li>
+<li><p><strong>Add the UniProt and Contaminant fasta files</strong> you
+just downloaded.</p></li>
+</ol><div id="caution1" class="callout caution">
+<div class="callout-square">
+<i class="callout-icon" data-feather="alert-triangle"></i>
+</div>
+<span class="callout-header">Caution</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>At the time of writing, DIA-NN 2.2.0 cannot read or write files saved
+in an external drive. Please ensure all input and output files are saved
+on a local drive to avoid error.</p>
+</div>
+</div>
+</div>
+<ol start="5" style="list-style-type: decimal"><li><p>Examples are included below for the additional <strong>settings
+we recommend changing from the default</strong>. Depending on your
+experiment and research goals, you may wish to change additional
+settings from the default - read more in the <a href="https://github.com/vdemichev/DiaNN?tab=readme-ov-file#changing-default-settings" class="external-link">DIA-NN
+documentation</a>.</p></li>
+<li><p><strong>Run</strong>. DIA-NN will output a predicted spectral
+library in the <code>.speclib</code> file type.</p></li>
+</ol><figure><img src="fig/02diann_DIANNgui_speclib.png" alt="Example of the DIA-NN GUI used to generate a predicted spectral library. Settings which have been altered from the default are highlighted in red" class="figure mx-auto d-block"><div class="figcaption">Example of the DIA-NN GUI used to generate a
 predicted spectral library. Settings which have been altered from the
 default are highlighted in red</div>
 </figure><div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">C:\DIA-NN\2.2.0\diann.exe</span> <span class="kw">`</span></span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">C:\DIA-NN\2.2.0\diann.exe</span> <span class="kw">`</span> <span class="co"># Replace with file path to DIA-NN on your device</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">--lib</span> <span class="st">""</span> <span class="kw">`</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="ex">--out</span> <span class="st">"C:\path\to\output\report.parquet"</span> <span class="kw">`</span> <span class="co"># Replace with file path</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="ex">--out-lib</span> <span class="st">"C:\path\to\output\report-lib.parquet"</span> <span class="kw">`</span> <span class="co"># Replace with file path</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="ex">--fasta</span> <span class="st">"C:\path\to\UniprotFasta\.fasta"</span> <span class="kw">`</span> <span class="co"># Replace with file path</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="ex">--fasta</span> <span class="st">"C:\path\to\ContaminantsFasta\.fasta"</span> <span class="kw">`</span> <span class="co"># Replace with file path</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="ex">--out</span> <span class="st">"C:\path\to\output\report.parquet"</span> <span class="kw">`</span> <span class="co"># Replace with file path to output report.parquet</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="ex">--out-lib</span> <span class="st">"C:\path\to\output\report-lib.parquet"</span> <span class="kw">`</span> <span class="co"># Replace with file path to output report-lib.parquet</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="ex">--fasta</span> <span class="st">"C:\path\to\UniprotFasta\.fasta"</span> <span class="kw">`</span> <span class="co"># Replace with file path to Uniprot fasta</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="ex">--fasta</span> <span class="st">"C:\path\to\ContaminantsFasta\.fasta"</span> <span class="kw">`</span> <span class="co"># Replace with file path to contaminants fasta</span></span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="ex">--threads</span> 30 <span class="kw">`</span> <span class="co"># Replace with the number of threads to use for this analysis</span></span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="ex">--verbose</span> 1 <span class="kw">`</span></span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="ex">--qvalue</span> 0.01 <span class="kw">`</span></span>
@@ -425,82 +491,200 @@ default are highlighted in red</div>
 <span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="ex">--unimod4</span> <span class="kw">`</span></span>
 <span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="ex">--rt-profiling</span> </span></code></pre>
 </div>
-<p>This library can be re-used for all of analyses of samples from the
-same organism. It is recommended to re-download the UniProt fasta and
-re-run this step approximately once a month to ensure your library is
-up-to-date.</p>
-</section><section><h2 class="section-heading" id="general-workflow">General Workflow<a class="anchor" aria-label="anchor" href="#general-workflow"></a></h2>
-<hr class="half-width"><p>The DIA-NN workflow typically consists of the following steps:</p>
-<ol style="list-style-type: decimal"><li>
-<strong>Prepare input data</strong>
-<ul><li>Raw DIA data files (<code>.raw</code>, <code>.wiff</code>, or
-converted <code>.mzML</code> files).</li>
-<li>(Optional) A spectral library (<code>.tsv</code> or
-<code>.speclib</code>).</li>
-</ul></li>
+<p>This spectral library can be re-used for all analyses of samples from
+the same organism. It is recommended to re-download the UniProt fasta
+and re-run this step approximately once a month to ensure your library
+is up-to-date.</p>
+<p><br></p>
+</div>
+<div class="section level3">
+<h3 id="part-2-analysis">Part 2: Analysis<a class="anchor" aria-label="anchor" href="#part-2-analysis"></a></h3>
+<p>The second step is to <strong>search your raw files (mass
+spectrometry output files)</strong> against the spectral library.</p>
+<ol style="list-style-type: decimal"><li><p><strong>Open the DIA-NN</strong> GUI or a command line interface.
+If there are multiple versions of DIA-NN installed on your device,
+ensure to update <code>DIA-NN exe</code> with the file path to the
+version you wish to use.</p></li>
 <li>
-<strong>Run DIA-NN</strong>
-<ul><li>Can be run via the <strong>graphical user interface (GUI)</strong>
-or <strong>command line</strong>.</li>
-<li>Specify inputs, output directory, and parameters (e.g., FDR cutoff,
-protein grouping, library mode).</li>
+<p><strong>Upload your raw files</strong>.</p>
+<ul><li>If using the GUI, under <code>Input</code> select <code>Raw</code>
+then select all of the files you wish to search.</li>
+<li>If using the command line, you can use <code>--f</code> multiple
+times to list each file individually, or (recommended) use
+<code>--dir [folder]</code> to instruct DIA-NN to process all raw files
+saved in a particular folder.</li>
 </ul></li>
-<li>
-<strong>Output files</strong>
-<ul><li>Quantification tables for proteins and peptides
-(<code>report.tsv</code> or <code>.parquet</code>).</li>
-<li>Run summaries and performance metrics.</li>
-<li>Optional normalized intensity data for downstream statistical
-analysis.</li>
+<li><p><strong>Upload your spectral library</strong>.</p></li>
+</ol><div id="empirical-vs-predicted-spectral-library" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="empirical-vs-predicted-spectral-library" class="callout-inner">
+<h3 class="callout-title">Empirical vs predicted spectral library</h3>
+<div class="callout-content">
+<p>You may wish to generate an empirical spectral library from your
+data, and use this for future analyses. An empirical library will be
+smaller than a predicted library and therefore increase the speed of
+analysis; however, may result in fewer identifications. We only
+recommend using an empirical library if generated from high quality
+data.</p>
+<p>You can generate an empirical library from your samples by selecting
+<strong>Generate spectral library</strong> and specifying the location
+of its output.</p>
+</div>
+</div>
+</div>
+<ol start="4" style="list-style-type: decimal"><li>
+<p><strong>Adjust settings</strong> according to your experiment and
+research goals. Again, examples are included below for the additional
+settings we recommend changing from the default. You may wish to change
+additional settings from the default - read more in the <a href="https://github.com/vdemichev/DiaNN?tab=readme-ov-file#changing-default-settings" class="external-link">DIA-NN
+documentation</a>.</p>
+<ul><li>In this example, the <strong>protease</strong> Trypsin was used to
+generate peptides during sample preparation.</li>
+<li>Leaving <strong>Mass accuracy</strong> and <strong>MS1
+accuracy</strong> on the default 0 means DIA-NN will optimise these
+parameters automatically for the first run in the experiment and then
+reuse the optimised settings for other runs. The DIA-NN documentation
+recommends different settings depending on the type of mass spectrometer
+used to generate your data. In this example, data were generated on a
+<strong>TripleTOF 6600</strong>, so we set Mass accuracy to 20.0 and MS1
+accuracy to 12.0</li>
+<li>Set the number of <strong>Threads</strong> to be no more than the
+number of logical cores on your computer.</li>
+<li>In this experiment, we have set the <strong>maximum number of
+variable modifications</strong> to 0; however, it is common for this
+setting to be relaxed in the range of 1 - 3.</li>
+<li>DIA-NN’s default setting is to activate
+<strong>match-between-runs</strong>. From the documentation: <em>In MBR
+mode, DIA-NN does two passes over the data. During the first pass, it
+creates an empirical spectral library from the data. During the second
+pass, it reanalyses the experiment with this empirical library, which
+may result in much improved identification numbers, data completeness
+and quantification accuracy.</em>
+</li>
 </ul></li>
-<li>
-<strong>Post-processing</strong>
-<ul><li>Further analysis can be done in R (e.g., <code>tidyverse</code>,
-<code>MSstats</code>, <code>limma</code>), Python, or visualization
-tools.</li>
-<li>Data can also be imported into platforms like
-<strong>Perseus</strong>, <strong>Spectronaut</strong>, or
-<strong>Skyline</strong> for downstream exploration.</li>
-</ul></li>
-</ol></section><section><h2 class="section-heading" id="example-command-line-usage">Example Command-Line Usage<a class="anchor" aria-label="anchor" href="#example-command-line-usage"></a></h2>
-<hr class="half-width"><p>Below is an example of running DIA-NN in command-line mode (adjust
-paths for your setup):</p>
-<div class="codewrapper sourceCode" id="cb2">
+</ol><figure><img src="fig/02diann_DIANNgui_analysis.png" alt="Example of the DIA-NN GUI used to analyse the data described in this tutorial. Settings which have been altered from the default are highlighted in red" class="figure mx-auto d-block"><div class="figcaption">Example of the DIA-NN GUI used to analyse the
+data described in this tutorial. Settings which have been altered from
+the default are highlighted in red</div>
+</figure><div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">DIA-NN.exe</span> <span class="at">--f</span> <span class="st">"path/to/mzML_files/"</span> <span class="dt">\</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>           <span class="at">--out</span> <span class="st">"path/to/output_folder/"</span> <span class="dt">\</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>           <span class="at">--lib</span> <span class="st">"path/to/library.tsv"</span> <span class="dt">\</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>           <span class="at">--threads</span> 8 <span class="dt">\</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>           <span class="at">--fasta</span> <span class="st">"path/to/fasta_file.fasta"</span> <span class="dt">\</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>           <span class="at">--qvalue</span> 0.01 <span class="dt">\</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>           <span class="at">--verbose</span> 1</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">C:\DIA-NN\2.2.0\diann.exe</span> <span class="kw">`</span> <span class="co"># Replace with file path to DIA-NN on your device</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">--dir</span> <span class="st">"C:\path\to\folder\of\raw\files"</span> <span class="kw">`</span> <span class="co"># Replace with file path to folder containing all raw files to be analysed</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="ex">--lib</span> <span class="st">"C:\path\to\SpectralLibrary\report-lib.predicted.speclib"</span> <span class="kw">`</span> <span class="co"># Replace with file path to spectral library</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="ex">--out</span> <span class="st">"C:\path\to\output\report.parquet"</span> <span class="kw">`</span> <span class="co"># Replace with file path to output report.parquet</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="ex">--threads</span> 30 <span class="kw">`</span> <span class="co"># Replace with the number of threads to use for this analysis</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="ex">--verbose</span> 1 <span class="kw">`</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="ex">--qvalue</span> 0.01 <span class="kw">`</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="ex">--matrices</span>  <span class="kw">`</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="ex">--unimod4</span> <span class="kw">`</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="ex">--mass-acc</span> 20 <span class="kw">`</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="ex">--mass-acc-ms1</span> 12.0 <span class="kw">`</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="ex">--reanalyse</span> <span class="kw">`</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="ex">--rt-profiling</span> </span></code></pre>
 </div>
-<p>This command tells DIA-NN to:</p>
-<p>Analyze all .mzML files in a folder</p>
-<p>Use a specified spectral library and FASTA file</p>
-<p>Run on 8 threads</p>
-<p>Output results with a 1% false discovery rate cutoff</p>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>If you want to run DIA-NN from the command line but are unsure how to
+write the code, you can update your settings in the GUI, click ‘Run’,
+and copy the commands output in the log. That’s how we got the example
+code above! <strong>Can you match each line of code to the corresponding
+setting in the GUI?</strong></p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>Check the description of available commands in the <a href="https://github.com/vdemichev/DiaNN?tab=readme-ov-file#command-line-reference" class="external-link">DIA-NN
+documentation</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="dia-nn-output">DIA-NN output<a class="anchor" aria-label="anchor" href="#dia-nn-output"></a></h2>
+<hr class="half-width"><p>DIA-NN output includes several files, including:</p>
+<ul><li>
+<strong>log.txt:</strong> A log of what DIA-NN has run. You should
+always use <code>ctrl + F</code> to check for any ‘ERROR’ or ‘WARNING’
+messages issued by DIA-NN during your run.</li>
+<li>
+<strong>Parquet file:</strong> This is what we will be using for
+subsequent analyses in this workshop.</li>
+<li>
+<strong>pg_matrix.tsv:</strong> Matrix of protein values generated
+by DIA-NN.</li>
+<li>
+<strong>pr_matrix.tsv:</strong> Matrix of peptide values generated
+by DIA-NN.</li>
+<li>
+<strong>trends.pdf:</strong> A PDF report listing the number of
+peptides, proteins, and other quality control measures detected for each
+sample.</li>
+</ul><div id="challenge2" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>If DIA-NN is run through the command line rather than the GUI, the
+trends and runs PDF reports are not automatically generated. Using the
+documentation provided in the <a href="https://github.com/vdemichev/DiaNN?tab=readme-ov-file#changing-default-settings" class="external-link">DIA-NN
+GitHub page</a>, can you work out how to generate this report via the
+command line?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<p>Run the <code>diann-stats.py</code> Python script provided when you
+download DIA-NN.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">python</span> C:<span class="dt">\D</span>IA-NN<span class="dt">\2</span>.2.0<span class="dt">\d</span>iann-stats.py C:<span class="dt">\p</span>ath<span class="dt">\t</span>o<span class="dt">\r</span>eport.parquet</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>We have now processed our raw files, identifying the peptides present
+in our samples and inferring the proteins to which they belong.</p>
 <div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
-  <h3 class="accordion-header" id="headingSpoiler1">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
-  More about DIANN
-  </h3>
+  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> More about DIANN </h3>
 </button>
 <div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
-<ul><li><p>For more background information, see the original
-publication:<br><em>Demichev, V., et al. (2020). DIA-NN: neural networks and
+<p>For more background information, see the original publication:<br><em>Demichev, V., et al. (2020). DIA-NN: neural networks and
 interference correction enable deep proteome coverage in high
-throughput. Nature Methods.</em> <a href="https://doi.org/10.1038/s41592-019-0638-x" class="external-link">https://doi.org/10.1038/s41592-019-0638-x</a></p></li>
-<li><p>For further details about the different DIA-NN settings, see the
-[GitHub page] (<a href="https://github.com/vdemichev/DiaNN?tab=readme-ov-file" class="external-link uri">https://github.com/vdemichev/DiaNN?tab=readme-ov-file</a>)</p></li>
-<li><p>If you come across any issues, the creators are fairly active at
+throughput. Nature Methods.</em> <a href="https://doi.org/10.1038/s41592-019-0638-x" class="external-link">https://doi.org/10.1038/s41592-019-0638-x</a>.</p>
+<p>For further details about the different DIA-NN settings, see the <a href="https://github.com/vdemichev/DiaNN?tab=readme-ov-file" class="external-link">documentation</a>.</p>
+<p>If you come across any issues, the creators are fairly active at
 responding to <a href="https://github.com/vdemichev/DiaNN/issues" class="external-link">issues</a> and <a href="https://github.com/vdemichev/DiaNN/discussions" class="external-link">discussions</a> on
-their GitHub</p></li>
-</ul></div>
+their GitHub.</p>
+</div>
 </div>
 </div>
 </div>
@@ -511,7 +695,14 @@ their GitHub</p></li>
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-<ul><li>DIANN is fun and is theoretically easy to use!</li>
+<ul><li>Raw files from a mass-spectrometry based DIA proteomics experiment
+can be processed using DIA-NN (peptide identification and protein
+inference).</li>
+<li>The DIA-NN workflow has two key steps: generated a predicted
+spectral library, and processing raw files.</li>
+<li>The <a href="https://github.com/vdemichev/DiaNN?tab=readme-ov-file" class="external-link">DIA-NN
+documentation</a> contains detailed information about changing default
+settings as appropriate for your experiment.</li>
 </ul></div>
 </div>
 </div>
@@ -522,7 +713,7 @@ any links that you are not going to use.
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="01dataset.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="index.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="03datacleaning.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
@@ -530,8 +721,8 @@ any links that you are not going to use.
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
           Previous: Exploring the
         </a>
-        <a class="chapter-link float-end" href="index.html" rel="next">
-          Home
+        <a class="chapter-link float-end" href="03datacleaning.html" rel="next">
+          Next: Data cleaning using...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -543,20 +734,22 @@ any links that you are not going to use.
         <p>This lesson is subject to the <a href="CODE_OF_CONDUCT.html">Code of Conduct</a></p>
         <p>
 
-        <a href="https://example.com/template-source/lesson-example/edit/main/episodes/02diann.Rmd" class="external-link">Edit on GitHub</a>
+        <a href="https://github.com/julia-broadbent/intro-to-proteomics/edit/main/episodes/02diann.Rmd" class="external-link">Edit on GitHub</a>
 
 	
-        | <a href="https://example.com/template-source/lesson-example/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
-        | <a href="https://example.com/template-source/lesson-example/" class="external-link">Source</a></p>
-				<p><a href="https://example.com/template-source/lesson-example/blob/main/CITATION.cff" class="external-link">Cite</a> | <a href="mailto:bioinformatics-training@unimelb.edu.au">Contact</a> | <a href="https://carpentries.org/about/" class="external-link">About</a></p>
-			</div>
-			<div class="col-md-6">
+        | <a href="https://github.com/julia-broadbent/intro-to-proteomics/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
+        | <a href="https://github.com/julia-broadbent/intro-to-proteomics/" class="external-link">Source</a></p>
+        <p>
+        <a href="citation.html">Cite</a>
+        | <a href="mailto:bioinformatics-training@unimelb.edu.au">Contact</a> | <a href="https://carpentries.org/about/" class="external-link">About</a></p>
+		</div>
+		<div class="col-md-6">
 
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors.</p>
 
-        <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a>.</p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.17.1" class="external-link">sandpaper (0.17.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/melbournebioinformatics/uom-varnish/tree/main" class="external-link">varnish (1.0.7)</a>.</p>
-			</div>
+        <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.17.1" class="external-link">sandpaper (0.17.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/melbournebioinformatics/uom-varnish/tree/main" class="external-link">varnish (1.0.7)</a></p>
+		</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
 		<a href="#top">
@@ -577,8 +770,8 @@ any links that you are not going to use.
   "url": "melbournebioinformatics.github.io/uom-varnish/02diann.html",
   "identifier": "melbournebioinformatics.github.io/uom-varnish/02diann.html",
   "dateCreated": "2025-10-30",
-  "dateModified": "2025-10-31",
-  "datePublished": "2025-11-04"
+  "dateModified": "2025-11-10",
+  "datePublished": "2025-11-10"
 }
 
   </script><script>
