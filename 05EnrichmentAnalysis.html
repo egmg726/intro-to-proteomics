@@ -368,7 +368,7 @@ interactions (PPI) and functional annotation databases.</p>
 <h3 id="string-proteinprotein-interaction-network">STRING Protein–Protein Interaction Network<a class="anchor" aria-label="anchor" href="#string-proteinprotein-interaction-network"></a></h3>
 <p>The STRING database integrates known and predicted protein–protein
 interactions from multiple sources (e.g., experimental data, text
-mining, co-expression, and curated databases).</p>
+mining, prediction methods, and curated databases).</p>
 <p>We can visualise DE proteins within the context of their interaction
 network to identify clusters or modules potentially corresponding to
 biological pathways.</p>
@@ -378,28 +378,39 @@ biological pathways.</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">string_db</span> <span class="op">&lt;-</span> <span class="va">STRINGdb</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>version <span class="op">=</span> <span class="st">"11.5"</span>, species <span class="op">=</span> <span class="fl">9606</span>, score_threshold <span class="op">=</span> <span class="fl">400</span><span class="op">)</span></span>
 <span><span class="va">mapped</span> <span class="op">&lt;-</span> <span class="va">string_db</span><span class="op">$</span><span class="fu">map</span><span class="op">(</span><span class="va">results</span>, <span class="st">"Protein.Names"</span>, removeUnmappedRows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Only map the proteins of significance</span></span>
 <span><span class="va">de_proteins_mapped</span> <span class="op">&lt;-</span> <span class="va">mapped</span> <span class="op">%&gt;%</span> <span class="fu">filter</span><span class="op">(</span><span class="va">adj.P.Val</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot network of significant proteins</span></span>
 <span><span class="va">string_db</span><span class="op">$</span><span class="fu">plot_network</span><span class="op">(</span><span class="va">de_proteins_mapped</span><span class="op">$</span><span class="va">STRING_id</span><span class="op">)</span></span></code></pre>
 </div>
-<p>Note if not working, use this:</p>
-<div class="codewrapper sourceCode" id="cb2">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">load</span><span class="op">(</span><span class="st">"data/string_db.RData"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">de_proteins_mapped</span> <span class="op">&lt;-</span> <span class="va">mapped</span> <span class="op">%&gt;%</span> <span class="fu">filter</span><span class="op">(</span><span class="va">adj.P.Val</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">hits</span> <span class="op">&lt;-</span> <span class="va">de_proteins_mapped</span><span class="op">$</span><span class="va">STRING_id</span></span>
-<span></span>
-<span><span class="co"># Plot network of significant proteins</span></span>
-<span><span class="va">string_db</span><span class="op">$</span><span class="fu">plot_network</span><span class="op">(</span><span class="va">hits</span><span class="op">)</span></span></code></pre>
+<p><em>Note: if the above code takes too long to load, you can download
+an RData that contains the <code>string_db</code> and
+<code>mapped</code> functions <a href="https://github.com/egmg726/intro-to-proteomics/blob/main/episodes/data/string_db.RData" class="external-link">here</a>.</em></p>
+<figure><img src="fig/05EnrichmentAnalysis-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
 </div>
-<figure><img src="fig/05EnrichmentAnalysis-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>You can inspect available functions within the STRINGdb package by
-running:</p>
-<div class="codewrapper sourceCode" id="cb3">
+<span class="callout-header">Discussion</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>How many clusters are there? How many of these interactions are
+predicted versus experimentally validated? (See image below for
+legend)</p>
+</div>
+</div>
+</div>
+<p>You can explore how these proteins interact in an interactive setting
+by going to <a href="https://string-db.org/" class="external-link">https://string-db.org/</a>
+and further exploring your proteins of interest.</p>
+<figure><img src="fig/05enrichmentanalysis_stringdb.png" alt="Network plot for PRTN3 from string-db.org" class="figure mx-auto d-block"><div class="figcaption">Network plot for PRTN3 from string-db.org</div>
+</figure><p>There are many available ways of exploring your data using the STRING
+database that can’t be covered in one tutorial but you can learn more by
+reading the <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/STRINGdb/inst/doc/STRINGdb.pdf" class="external-link">vignette</a>
+and inspect available functions within the <code>STRINGdb</code> package
+by running:</p>
+<div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -436,17 +447,23 @@ running:</p>
 [51] "show#envRefClass"                    "trace"
 [53] "untrace"                             "usingMethods"                       </code></pre>
 </div>
-</div>
+<p>Read more about STRING:</p>
+<ul><li>Szklarczyk, Damian et al. “The STRING database in 2025: protein
+networks with directionality of regulation.” Nucleic acids research
+vol. 53,D1 (2025): D730-D737. <a href="doi:10.1093/nar/gkae1113" class="uri">doi:10.1093/nar/gkae1113</a>
+</li>
+</ul></div>
 <div class="section level3">
 <h3 id="functional-enrichment-go-and-kegg">Functional Enrichment (GO and KEGG)<a class="anchor" aria-label="anchor" href="#functional-enrichment-go-and-kegg"></a></h3>
 <p>Using the identified significant DE proteins, we can perform
 functional enrichment analysis to determine whether certain biological
 processes (BP), cellular components (CC), or molecular functions (MF)
 are over-represented.</p>
-<p>Two common types of enrichment are:</p>
+<p>Two common types of enrichment exploration are:</p>
 <ul><li>Gene Ontology (GO): describes BPs, CCs, amd MFs</li>
-<li>KEGG pathways: provides curated biochemical pathways</li>
-</ul><div class="codewrapper sourceCode" id="cb5">
+<li>KEGG pathways: curated molecular interactions</li>
+</ul><p>First, let’s look at enriched GO pathways:</p>
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -470,21 +487,23 @@ are over-represented.</p>
 <pre class="warning" tabindex="0"><code>Warning in bitr(de_proteins$Protein.Group, fromType = "UNIPROT", toType =
 "ENTREZID", : 7.69% of input gene IDs are fail to map...</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># GO Biological Process enrichment</span></span>
 <span><span class="va">ego</span> <span class="op">&lt;-</span> <span class="fu">enrichGO</span><span class="op">(</span>gene <span class="op">=</span> <span class="va">converted</span><span class="op">$</span><span class="va">ENTREZID</span>,</span>
 <span>                OrgDb <span class="op">=</span> <span class="va">org.Hs.eg.db</span>,</span>
-<span>                ont <span class="op">=</span> <span class="st">"BP"</span>,</span>
+<span>                ont <span class="op">=</span> <span class="st">"ALL"</span>, <span class="co"># looking at all 3 subontologies</span></span>
 <span>                pAdjustMethod <span class="op">=</span> <span class="st">"BH"</span>,</span>
 <span>                pvalueCutoff <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>                readable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Show plot</span></span>
 <span><span class="fu">dotplot</span><span class="op">(</span><span class="va">ego</span>, showCategory <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/05EnrichmentAnalysis-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb9">
+<figure><img src="fig/05EnrichmentAnalysis-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Now, let’s do a similar process for looking at KEGG pathways:</p>
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -503,13 +522,13 @@ are over-represented.</p>
 </h3>
 <pre class="output" tabindex="0"><code>Reading KEGG annotation online: "https://rest.kegg.jp/list/pathway/hsa"...</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dotplot</span><span class="op">(</span><span class="va">ekegg</span>, showCategory <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/05EnrichmentAnalysis-rendered-unnamed-chunk-5-2.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="challenge1" class="callout challenge">
+<figure><img src="fig/05EnrichmentAnalysis-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="challenge1" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
@@ -517,7 +536,7 @@ are over-represented.</p>
 <div class="callout-inner">
 <h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
-<p>How does this figure compare to <a href="https://mdpi-res.com/biomedicines/biomedicines-12-00333/article_deploy/html/images/biomedicines-12-00333-g004.png" class="external-link">Figure
+<p>How do these figures compare to <a href="https://mdpi-res.com/biomedicines/biomedicines-12-00333/article_deploy/html/images/biomedicines-12-00333-g004.png" class="external-link">Figure
 4</a> in the original paper?</p>
 </div>
 </div>
@@ -529,9 +548,9 @@ are over-represented.</p>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<p>While there are many immune-related pathways in both, the exact
-pathways are not identical. This is likely due to the fact we are using
-a subset of the larger dataset.</p>
+<p>While there are many similar pathways, the exact pathways are not
+identical. This is likely due to the fact we are using a subset of the
+larger dataset.</p>
 </div>
 </div>
 </div>
@@ -544,13 +563,14 @@ a subset of the larger dataset.</p>
 <div class="callout-inner">
 <div class="callout-content">
 <ul><li>DE analysis identifies statistically significant changes in protein
-abundance between conditions.</li>
+abundance between conditions, but does not necessarily tell us the
+biological significance of such identified proteins.</li>
 <li>Network analysis (STRING) reveals potential physical or functional
 interactions among DE proteins.</li>
 <li>Enrichment analysis (GO/KEGG) links those proteins to known
 biological processes or pathways.</li>
-<li>Using multiple approaches can help you interpret proteomics data in
-a systems biology context.</li>
+<li>Using multiple approaches can help you interpret proteomics data to
+measure reliability and consistency of results.</li>
 </ul></div>
 </div>
 </div>
