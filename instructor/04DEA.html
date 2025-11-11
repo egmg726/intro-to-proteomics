@@ -341,7 +341,7 @@
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul><li>How can we identify the differentially expressed proteins between
-experimental groups?</li>
+our experimental groups?</li>
 </ul></div>
 </div>
 </div>
@@ -349,7 +349,8 @@ experimental groups?</li>
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Conduct differential expression analysis using <em>limpa</em>
+<ul><li>Conduct differential expression analysis using
+<code>limpa</code>
 </li>
 <li>Visualise the top differentially expressed proteins</li>
 </ul></div>
@@ -360,11 +361,11 @@ experimental groups?</li>
 <section><h2 class="section-heading" id="differential-expression-analysis">Differential Expression Analysis<a class="anchor" aria-label="anchor" href="#differential-expression-analysis"></a></h2>
 <hr class="half-width"><p>Now it is time to analyse our data and investigate proteins that are
 differentially expressed between our two experimental groups (control vs
-active Crohn’s disease). We will make use of the <em>limma</em> package
-and closely related <em>limpa</em> functions specifically designed for
-proteomics data.</p>
-<p>First, we will fit a linear model that includes both Class and Batch
-effects.</p>
+active Crohn’s disease). We will make use of the <code>limma</code>
+package and closely related <code>limpa</code> functions specifically
+designed for proteomics data.</p>
+<p>First, we will <strong>fit a linear model</strong> that includes both
+Class and Batch effects.</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -414,9 +415,9 @@ attr(,"contrasts")$Batch
 </div>
 <p>We can see both Class and Batch accounted for in our design
 matrix.</p>
-<p>Now we run the <em>limpa</em> differential expression analysis
-function <code>dpcDE()</code> to identify the top differentially
-expressed proteins in our dataset.</p>
+<p>Now we run the <code>limpa</code> <strong>differential expression
+analysis</strong> function <code>dpcDE()</code> to identify the top
+differentially expressed proteins in our dataset.</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -555,28 +556,6 @@ samples.</p>
 <span>                ylim <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span>,</span>
 <span>                xlim <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="warning" tabindex="0"><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.
-ℹ The deprecated feature was likely used in the EnhancedVolcano package.
-  Please report the issue to the authors.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-generated.</code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="warning" tabindex="0"><code>Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
-ℹ Please use the `linewidth` argument instead.
-ℹ The deprecated feature was likely used in the EnhancedVolcano package.
-  Please report the issue to the authors.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-generated.</code></pre>
-</div>
 <figure><img src="../fig/04DEA-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -585,7 +564,7 @@ generated.</code></pre>
 <div class="callout-inner">
 <div class="callout-content">
 <ul><li>We can fit a linear model to our data and conduct differential
-expression analysis using <em>limpa</em> and <em>limma</em>
+expression analysis using <code>limpa</code> and <code>limma</code>
 functions.</li>
 <li>There are many different ways to visualise differentially expressed
 proteins.</li>
