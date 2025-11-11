@@ -6,13 +6,13 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How can we identify the differentially expressed proteins between experimental groups?
+- How can we identify the differentially expressed proteins between our experimental groups?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Conduct differential expression analysis using *limpa*
+- Conduct differential expression analysis using `limpa`
 - Visualise the top differentially expressed proteins
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
@@ -22,9 +22,9 @@ exercises: 2
 
 ## Differential Expression Analysis
 
-Now it is time to analyse our data and investigate proteins that are differentially expressed between our two experimental groups (control vs active Crohn’s disease). We will make use of the *limma* package and closely related *limpa* functions specifically designed for proteomics data. 
+Now it is time to analyse our data and investigate proteins that are differentially expressed between our two experimental groups (control vs active Crohn’s disease). We will make use of the `limma` package and closely related `limpa` functions specifically designed for proteomics data. 
 
-First, we will fit a linear model that includes both Class and Batch effects.
+First, we will **fit a linear model** that includes both Class and Batch effects.
 
 
 ``` r
@@ -73,7 +73,7 @@ attr(,"contrasts")$Batch
 
 We can see both Class and Batch accounted for in our design matrix. 
 
-Now we run the *limpa* differential expression analysis function `dpcDE()` to identify the top differentially expressed proteins in our dataset.
+Now we run the `limpa` **differential expression analysis** function `dpcDE()` to identify the top differentially expressed proteins in our dataset.
 
 
 ``` r
@@ -198,32 +198,12 @@ EnhancedVolcano(results,
                 xlim = c(-5, 5))
 ```
 
-``` warning
-Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.
-ℹ The deprecated feature was likely used in the EnhancedVolcano package.
-  Please report the issue to the authors.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-generated.
-```
-
-``` warning
-Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
-ℹ Please use the `linewidth` argument instead.
-ℹ The deprecated feature was likely used in the EnhancedVolcano package.
-  Please report the issue to the authors.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-generated.
-```
-
 <img src="fig/04DEA-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- We can fit a linear model to our data and conduct differential expression analysis using *limpa* and *limma* functions.
+- We can fit a linear model to our data and conduct differential expression analysis using `limpa` and `limma` functions.
 - There are many different ways to visualise differentially expressed proteins.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::

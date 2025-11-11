@@ -13,15 +13,15 @@ exercises: 5
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Learn how to process proteomics data using DIA-NN
+- Learn how to process proteomics data using DIA-NN.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Processing proteomics data
 
-There are many software options for processing mass spectrometry-based proteomics output. These software *match mass spectra* against an empirical or predicted spectral library to *identify peptides* and infer the protein to which they belong.
+There are many software options for processing mass spectrometry-based proteomics output. These software match mass spectra against an empirical or predicted spectral library to **identify peptides** and **infer the protein** to which they belong.
 
-Some software you may have heard of include Spectronaut, Fragpipe, MaxQuant and DIA-NN. Each software have slightly different functionality and attributes, and are frequently updated. In this tutorial, we are demonstrating the use of **DIA-NN**, a software designed to process **DIA** proteomics data.
+Some software you may have heard of include Spectronaut, Fragpipe, MaxQuant and DIA-NN. Each software have slightly different functionality and attributes, and are frequently updated. In this tutorial, we are demonstrating the use of **DIA-NN**, a software designed to process DIA proteomics data.
 
 ![Proteomics software like DIA-NN match observed spectra against a spectral library to identify peptides and assign them to a protein or protein group. Source: [Galaxy Training Network](https://training.galaxyproject.org/training-material/topics/proteomics/tutorials/introduction/slides.html#15)](episodes/fig/02diann_peptideMatching.png)
 
@@ -44,7 +44,6 @@ DIA-NN is free to download. Detailed operating instructions and a link to instal
 ## DIA-NN workflow
 
 :::::callout
-
 # Important Note
 
 Due to the amount of time it will take to process the data, you do not need to install or operate DIA-NN for the purposes of this tutorial. Pre-processed data is provided, which has been prepared following the procedures described below.
@@ -66,21 +65,20 @@ DIA-NN analysis consists of two steps. The first step is to **generate a predict
     
     d. Change the format to `FASTA (canonical and isoform)`
     
-    e. Select `No` under Compressed and download the Fasta file
+    e. Select `No` under Compressed and download the FASTA file
     
 :::::callout
-
 # FOR SPECIFIC SEARCHES
 
-If you need to search for a variant protein or peptide that differs from the standard organism proteome, you can manually edit the protein sequences in the UniProt fasta in a text editor.
+If you need to search for a variant protein or peptide that differs from the standard organism proteome, you can manually edit the protein sequences in the UniProt FASTA in a text editor.
 
 :::::
     
-2. **Download a contaminant Fasta file** from [here](https://github.com/HaoGroup-ProtContLib/Protein-Contaminant-Libraries-for-DDA-and-DIA-Proteomics/tree/main). For most studies, the Universal Contaminants.fasta will be appropriate, but you may prefer to use one of the sample-type specific contaminant fastas depending on your experiment. ***More information about this resource and contaminants will be discussed in the next lesson.***
+2. **Download a contaminant FASTA file** from [here](https://github.com/HaoGroup-ProtContLib/Protein-Contaminant-Libraries-for-DDA-and-DIA-Proteomics/tree/main). For most studies, the Universal Contaminants.fasta will be appropriate, but you may prefer to use one of the sample-type specific contaminant FASTAs depending on your experiment. ***More information about this resource and contaminants will be discussed in the next lesson.***
 
 3. **Open the DIA-NN** GUI or a command line interface. If there are multiple versions of DIA-NN installed on your device, ensure to update `DIA-NN exe` with the file path to the version you wish to use.
 
-4. **Add the UniProt and Contaminant fasta files** you just downloaded. 
+4. **Add the UniProt and Contaminant FASTA files** you just downloaded. 
 
 :::::caution
 
@@ -92,7 +90,7 @@ At the time of writing, DIA-NN 2.2.0 cannot read or write files saved in an exte
 
 6. **Run**. DIA-NN will output a predicted spectral library in the `.speclib` file type.
 
-![Example of the DIA-NN GUI used to generate a predicted spectral library. Settings which have been altered from the default are highlighted in red](episodes/fig/02diann_DIANNgui_speclib.png)
+![Example of the DIA-NN GUI used to generate a predicted spectral library. Settings which have been altered from the default are highlighted in red.](episodes/fig/02diann_DIANNgui_speclib.png)
 
 
 ``` bash
@@ -100,8 +98,8 @@ C:\DIA-NN\2.2.0\diann.exe ` # Replace with file path to DIA-NN on your device
 --lib "" `
 --out "C:\path\to\output\report.parquet" ` # Replace with file path to output report.parquet
 --out-lib "C:\path\to\output\report-lib.parquet" ` # Replace with file path to output report-lib.parquet
---fasta "C:\path\to\UniprotFasta\.fasta" ` # Replace with file path to Uniprot fasta
---fasta "C:\path\to\ContaminantsFasta\.fasta" ` # Replace with file path to contaminants fasta
+--fasta "C:\path\to\UniprotFasta\.fasta" ` # Replace with file path to Uniprot FASTA
+--fasta "C:\path\to\ContaminantsFasta\.fasta" ` # Replace with file path to contaminants FASTA
 --threads 30 ` # Replace with the number of threads to use for this analysis
 --verbose 1 `
 --qvalue 0.01 `
@@ -125,7 +123,7 @@ C:\DIA-NN\2.2.0\diann.exe ` # Replace with file path to DIA-NN on your device
 --rt-profiling 
 ```
 
-This spectral library can be re-used for all analyses of samples from the same organism. It is recommended to re-download the UniProt fasta and re-run this step approximately once a month to ensure your library is up-to-date.
+This spectral library can be re-used for all analyses of samples from the same organism. It is recommended to re-download the UniProt FASTA and re-run this step approximately once a month to ensure your library is up-to-date.
 
 <br>
 
@@ -144,7 +142,6 @@ The second step is to **search your raw files (mass spectrometry output files)**
 3. **Upload your spectral library**.
 
 :::::callout
-
 # Empirical vs predicted spectral library
 
 You may wish to generate an empirical spectral library from your data, and use this for future analyses. An empirical library will be smaller than a predicted library and therefore increase the speed of analysis; however, may result in fewer identifications. We only recommend using an empirical library if generated from high quality data.
@@ -161,7 +158,7 @@ You can generate an empirical library from your samples by selecting **Generate 
     - In this experiment, we have set the **maximum number of variable modifications** to 0; however, it is common for this setting to be relaxed in the range of 1 - 3.
     - DIA-NN's default setting is to activate **match-between-runs**. From the documentation: *In MBR mode, DIA-NN does two passes over the data. During the first pass, it creates an empirical spectral library from the data. During the second pass, it reanalyses the experiment with this empirical library, which may result in much improved identification numbers, data completeness and quantification accuracy.*
 
-![Example of the DIA-NN GUI used to analyse the data described in this tutorial. Settings which have been altered from the default are highlighted in red](episodes/fig/02diann_DIANNgui_analysis.png)
+![Example of the DIA-NN GUI used to analyse the data described in this tutorial. Settings which have been altered from the default are highlighted in red.](episodes/fig/02diann_DIANNgui_analysis.png)
 
 
 ``` bash
@@ -195,15 +192,17 @@ Check the description of available commands in the [DIA-NN documentation](https:
 
 DIA-NN output includes several files, including:
 
-- **log.txt:** A log of what DIA-NN has run. You should always use `ctrl + F` to check for any 'ERROR' or 'WARNING' messages issued by DIA-NN during your run.
-- **Parquet file:** This is what we will be using for subsequent analyses in this workshop.
-- **pg_matrix.tsv:** Matrix of protein values generated by DIA-NN.
-- **pr_matrix.tsv:** Matrix of peptide values generated by DIA-NN.
-- **trends.pdf:** A PDF report listing the number of peptides, proteins, and other quality control measures detected for each sample. 
+| Output file        | Description                                                                         |
+| -----              | ------------------                                                                        |
+| **log.txt**        | A log of what DIA-NN has run. You should always use `ctrl + F` to check for any 'ERROR' or 'WARNING' messages issued by DIA-NN during your run. |
+| **.parquet**       | This is what we will be using for subsequent analyses in this tutorial. |
+| **pg_matrix.tsv**  | Matrix of protein values generated by DIA-NN. |
+| **pr_matrix.tsv**  | Matrix of peptide values generated by DIA-NN. |
+| **trends.pdf**     | A PDF report listing the number of peptides, proteins, and other quality control measures detected for each sample. |
 
 ::::::::::::::challenge
 
-If DIA-NN is run through the command line rather than the GUI, the trends and runs PDF reports are not automatically generated. Using the documentation provided in the [DIA-NN GitHub page](https://github.com/vdemichev/DiaNN?tab=readme-ov-file#changing-default-settings), can you work out how to generate this report via the command line?
+If DIA-NN is run through the command line rather than the GUI, the trends.pdf and runs.pdf reports are not automatically generated. Using the documentation provided in the [DIA-NN GitHub page](https://github.com/vdemichev/DiaNN?tab=readme-ov-file#changing-default-settings), can you work out how to generate this report via the command line?
 
 :::solution
 
@@ -219,8 +218,8 @@ python C:\DIA-NN\2.2.0\diann-stats.py C:\path\to\report.parquet
 
 We have now processed our raw files, identifying the peptides present in our samples and inferring the proteins to which they belong.
 
-:::::spoiler
-# More about DIANN
+:::::callout
+# Learn more about DIANN
 
 For more background information, see the original publication:  
 *Demichev, V., et al. (2020). DIA-NN: neural networks and interference correction enable deep proteome coverage in high throughput. Nature Methods.*  [https://doi.org/10.1038/s41592-019-0638-x](https://doi.org/10.1038/s41592-019-0638-x).

@@ -14,6 +14,10 @@ exercises: 2
 -   To identify enriched biological processes and pathways (GO and KEGG)
 :::
 
+
+
+
+
 ## Network and Enrichment Analysis
 
 Now that we have a list of differentially expressed proteins, we can explore how these proteins interact with each other and what biological functions or pathways they are involved in.

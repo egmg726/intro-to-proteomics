@@ -12,27 +12,26 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Understand the steps required to clean proteomics data and generate analysis-ready protein values.
+- Understand the steps required to clean proteomics data and generate analysis-ready protein values using `limpa`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Load processed data and sample annotation 
 
-After processing raw proteomics data, further cleaning and analysis can be conducted using **(R, Python, or by importing data to other platforms like **Perseus** or **Skyline**.
+After processing raw proteomics data, further cleaning and analysis can be conducted using **R**, **Python**, or by importing data to other platforms like **Perseus** or **Skyline**.
 
-In this workshop, we will be teaching you one method of cleaning and analysing proteomics data using R. To follow along the remainder of this workshop, you should **open a new R script in RStudio** and **run the example code provided.**
+In this tutorial, we will be teaching you one method of cleaning and analysing proteomics data using R. **To follow along the remainder of this tutorial, you should open a new R script in RStudio and run the example code provided.**
 
 :::::callout
-
 # The limpa package
 
-In this workshop, we are using the *limpa* package to load and clean our data. This package was published in 2025 by the [Smyth Lab](https://github.com/SmythLab/limpa), based at the Walter and Eliza Hall Institute of Medical Research (WEHI). 
+In this tutorial, we are using the `limpa` package to load and clean our data. This package was published in 2025 by the [Smyth Lab](https://github.com/SmythLab/limpa), based at the Walter and Eliza Hall Institute of Medical Research (WEHI). 
 
 For background information, see the original publications:
 
-Li, M., Cobbold, S. A., & Smyth, G. K. (2025). Quantification and differential analysis of mass spectrometry proteomics data with probabilistic recovery of information from missing values. bioRxiv, 2025.2004.2028.651125. https://doi.org/10.1101/2025.04.28.651125 
+    - Li, M., Cobbold, S. A., & Smyth, G. K. (2025). Quantification and differential analysis of mass spectrometry proteomics data with probabilistic recovery of information from missing values. bioRxiv, 2025.2004.2028.651125. https://doi.org/10.1101/2025.04.28.651125 
 
-Li, M., & Smyth, G. K. (2023). Neither random nor censored: estimating intensity-dependent probabilities for missing values in label-free proteomics. Bioinformatics, 39(5). https://doi.org/10.1093/bioinformatics/btad200 
+    - Li, M., & Smyth, G. K. (2023). Neither random nor censored: estimating intensity-dependent probabilities for missing values in label-free proteomics. Bioinformatics, 39(5). https://doi.org/10.1093/bioinformatics/btad200 
 
 You can also find further information in the [vignette](https://bioconductor.org/packages/release/bioc/vignettes/limpa/inst/doc/limpa.html) or [reference manual](https://bioconductor.org/packages/release/bioc/manuals/limpa/man/limpa.pdf) accessed via the [Bioconductor page](https://bioconductor.org/packages/release/bioc/html/limpa.html).
 
@@ -59,7 +58,7 @@ library(stringr)
 
 ### Load DIA-NN output
 
-Load the peptide-level data processed by DIA-NN (`.parquet` file), filtering observations by quality metrics as recommended in the [limpa vignette](https://bioconductor.org/packages/release/bioc/vignettes/limpa/inst/doc/limpa.html).
+**Load the peptide-level data** processed by DIA-NN (`.parquet` file), **filtering observations** by quality metrics as recommended in the [limpa vignette](https://bioconductor.org/packages/release/bioc/vignettes/limpa/inst/doc/limpa.html). The peptide values will automatically be **converted to log2** upon import.
 
 
 ``` r
@@ -76,7 +75,7 @@ Length of q-value columns does not match with length of q-value cutoffs. Use q.c
 
 These quality filtering metrics are recommended in the [limpa vignette](https://bioconductor.org/packages/release/bioc/vignettes/limpa/inst/doc/limpa.html) for data searched in DIA-NN **with match-between-runs**.
 
-What q.columns are recommended for data searched **without MBR**?
+What `q.columns` are recommended for data searched **without MBR**?
 
 :::solution
 
@@ -85,10 +84,6 @@ What q.columns are recommended for data searched **without MBR**?
 y.peptide <- readDIANN(file='data/MBIntroToProteomics.parquet',format="parquet",
                        q.columns = c("Q.Value","Global.Q.Value","Global.PG.Q.Value"),
                        q.cutoffs = 0.01)
-```
-
-``` output
-Length of q-value columns does not match with length of q-value cutoffs. Use q.cutoffs[1] for all columns.
 ```
 :::
 :::::
@@ -104,186 +99,19 @@ names(y.peptide)
 [1] "E"     "genes"
 ```
 
+
 ``` r
 head(y.peptide$E)
-```
-
-``` output
-                                                 20220311_RDMitacsJFB_cal2a_036-41
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                    9.391807
-(UniMod:1)AQTPAFDKPK2                                                           NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                             11.219885
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
-                                                 20220311_RDMitacsJFB_cal2a_008-47
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                    13.18627
-(UniMod:1)AQTPAFDKPK2                                                      9.22398
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                    NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
-                                                 20220311_RDMitacsJFB_cal2a_064-26
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                   12.363677
-(UniMod:1)AQTPAFDKPK2                                                     9.763128
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                    NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
-                                                 20220311_RDMitacsJFB_cal2a_030-45
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                     9.88099
-(UniMod:1)AQTPAFDKPK2                                                           NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                    NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
-                                                 20201016_UdSjfb_20190115_freshstool_007-3
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                            8.200415
-(UniMod:1)AQTPAFDKPK2                                                                   NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                        NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                   NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                            NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                             NA
-                                                 20201016_UdSjfb_20190115_freshstool_159-73X
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                    NA
-(UniMod:1)AQTPAFDKPK2                                                               10.93557
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                          NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                     NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                              NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                               NA
-                                                 20220311_RDMitacsJFB_cal2a_080-42
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                          NA
-(UniMod:1)AQTPAFDKPK2                                                     10.09564
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                              10.26728
-(UniMod:1)SNYSVSLVGPAPWGFR2                                               12.39978
-                                                 20220311_RDMitacsJFB_cal2a_004-6
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                         NA
-(UniMod:1)AQTPAFDKPK2                                                     11.6263
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                               NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                          NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                   NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                    NA
-                                                 20201016_UdSjfb_20190115_freshstool_173-80
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
-(UniMod:1)AQTPAFDKPK2                                                              11.38190
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                   11.16801
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
-                                                 20201016_UdSjfb_20190115_freshstool_181-84
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
-(UniMod:1)AQTPAFDKPK2                                                              13.79761
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
-                                                 20220311_RDMitacsJFB_cal2a_032-19
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                          NA
-(UniMod:1)AQTPAFDKPK2                                                           NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                          14.27238
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                     14.91819
-(UniMod:1)MDVLAEANGTFALNLLK2                                              11.19329
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
-                                                 20201016_UdSjfb_20190115_freshstool_195-91
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
-(UniMod:1)AQTPAFDKPK2                                                                    NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                   12.22596
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                              11.55929
-(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
-                                                 20201016_UdSjfb_20190115_freshstool_019-8
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                  NA
-(UniMod:1)AQTPAFDKPK2                                                                   NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                  12.09667
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                   NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                            NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                             NA
-                                                 20220311_RDMitacsJFB_cal2a_020-38
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                          NA
-(UniMod:1)AQTPAFDKPK2                                                           NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                    NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
-                                                 20220311_RDMitacsJFB_cal2a_098-25
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                          NA
-(UniMod:1)AQTPAFDKPK2                                                           NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                           NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                    NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                     NA
-                                                 20201016_UdSjfb_20190115_freshstool_157-73
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
-(UniMod:1)AQTPAFDKPK2                                                                    NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
-                                                 20201016_UdSjfb_20190115_freshstool_003
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                NA
-(UniMod:1)AQTPAFDKPK2                                                                 NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                      NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                 NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                          NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                           NA
-                                                 20201016_UdSjfb_20190115_freshstool_165-76
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
-(UniMod:1)AQTPAFDKPK2                                                                    NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
-                                                 20201016_UdSjfb_20190115_freshstool_035-14
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
-(UniMod:1)AQTPAFDKPK2                                                                    NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
-                                                 20201016_UdSjfb_20190115_freshstool_013-5X
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                   NA
-(UniMod:1)AQTPAFDKPK2                                                                    NA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         NA
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    NA
-(UniMod:1)MDVLAEANGTFALNLLK2                                                             NA
-(UniMod:1)SNYSVSLVGPAPWGFR2                                                              NA
-```
-
-``` r
 head(y.peptide$genes)
-```
-
-``` output
-                                                                                       Protein.Group
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                                                        P06703
-(UniMod:1)AQTPAFDKPK2                                                                         P00813
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2                                         Cont_P01012
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                                                    Cont_P01012
-(UniMod:1)MDVLAEANGTFALNLLK2                                                                  P35237
-(UniMod:1)SNYSVSLVGPAPWGFR2                      Q96HC4;Q96HC4-2;Q96HC4-3;Q96HC4-4;Q96HC4-6;Q96HC4-7
-                                                 Protein.Names     Genes
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2             S10A6_HUMAN    S100A6
-(UniMod:1)AQTPAFDKPK2                                ADA_HUMAN       ADA
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2    OVAL_CHICK SERPINB14
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2               OVAL_CHICK SERPINB14
-(UniMod:1)MDVLAEANGTFALNLLK2                        SPB6_HUMAN  SERPINB6
-(UniMod:1)SNYSVSLVGPAPWGFR2                        PDLI5_HUMAN    PDLIM5
-                                                 Proteotypic
-(UniMod:1)AC(UniMod:4)PLDQAIGLLVAIFHK2                     1
-(UniMod:1)AQTPAFDKPK2                                      1
-(UniMod:1)GSIGAASM(UniMod:35)EFC(UniMod:4)FDVFK2           1
-(UniMod:1)GSIGAASMEFC(UniMod:4)FDVFK2                      1
-(UniMod:1)MDVLAEANGTFALNLLK2                               1
-(UniMod:1)SNYSVSLVGPAPWGFR2                                1
 ```
 
 As you can see, our data has been imported as a limma EList object, with components **'E' (log2 peptide matrix)** and **'genes' (feature annotation)** containing information about each peptide.
 
+<br>
+
 ### Load sample annotation
 
-We also need to import information about our samples for later analyses.
+We also need to **import information about our samples** for later analyses.
 
 
 ``` r
@@ -308,9 +136,9 @@ head(samples_stool)
 6 D:\\Elmira\\IBD\\01-MSconverter\\00-DIA_NN input-3 batches\\mix.mzMLpeakpicking(batch 1,2)\\Mix\\20201016_UdSjfb_20190115_freshstool_063-27.mzML
 ```
 
-We need to clean our sample annotation data to add an identifying column which matches the sample column names in our peptide matrix.
+We need to clean our sample annotation data to add an identifying column which **matches the sample column names in our peptide matrix.**
 
-Given we are only using a subset of the main dataset in this workshop, we can also filter the sample annotation dataframe to only include rows pertaining to the samples in our subset.
+Given we are only using a subset of the main dataset in this tutorial, we can also filter the sample annotation dataframe to **only include rows pertaining to the samples in our subset.**
 
 
 ``` r
@@ -334,15 +162,6 @@ y.peptide$E <- y.peptide$E[,rownames(sample_info)]
 
 # Add experimental metadata to EList
 y.peptide$targets <- sample_info[, c('Class', 'Batch')]
-
-# Set colors for later plotting
-Class <- factor(y.peptide$targets$Class)
-Class.color <- Class
-levels(Class.color) <- hcl.colors(nlevels(Class), palette = "cividis")
-
-Batch <- factor(y.peptide$targets$Batch)
-Batch.color <- Batch
-levels(Batch.color) <- hcl.colors(nlevels(Batch), palette = "Set 2")
 ```
 
 ## Quality filtering
@@ -360,15 +179,15 @@ y.peptide <- filterCompoundProteins(y.peptide)
 y.peptide <- filterSingletonPeptides(y.peptide, min.n.peptides = 2)
 ```
 
-These filtering steps are optional; limpa will still work if they are not run. For more information about these peptide-level filters and whether they are appropriate for your experiment, please consult the limpa documentation.
+These filtering steps are optional; if they are not run, `limpa` will still be able to conduct protein quantification. For more information about these peptide-level filters and whether they are appropriate for your experiment, please consult the [limpa documentation](https://bioconductor.org/packages/release/bioc/html/limpa.html).
 
 ## Removing contaminants
 
-Contaminant background signals can influence mass spectrometry-based proteomics data. It is essential to remove contaminant proteins from the sample preparation process to avoid confounding results.
+Contaminant background signals can influence mass spectrometry-based proteomics data. It is essential to **remove contaminant proteins** from the sample preparation process to avoid confounding results.
 
-Frankenfield et al. (2022) updated widely used contaminant protein lists from MaxQuant and the common Repository of Adventitious Proteins (cRAP) to create a new set of sample-type specific and universal contaminant FASTA files which reduced false identifications, increased protein identifications and did not influence protein quantification for DIA workflows. 
+[Frankenfield et al. (2022)](https://doi.org/10.1021/acs.jproteome.2c00145) created a new set of sample-type specific and universal contaminant FASTA files which they showed reduced false identifications, increased protein identifications and did not influence protein quantification for DIA workflows. These FASTA files updated upon widely used contaminant protein lists from MaxQuant and the common Repository of Adventitious Proteins (cRAP).
 
-In the previous lesson, we incorporated the universal contaminants fasta into our spectral library. This fasta is structured such that all contaminant proteins are named beginning with **'Cont_'**, which means we can simply remove any proteins from our analysis containing this string text.
+In the previous lesson, we incorporated the universal contaminants FASTA into our spectral library. This FASTA is structured such that all contaminant proteins are named beginning with **'Cont_'**, which means we can simply remove any proteins from our analysis containing this string text in their name.
 
 
 ``` r
@@ -382,35 +201,34 @@ y.peptide$E <- y.peptide$E[rownames(y.peptide$genes), ]
 :::::callout
 # More about contaminants
 
-You can **download the contaminant fasta files from [GitHub](https://github.com/HaoGroup-ProtContLib/Protein-Contaminant-Libraries-for-DDA-and-DIA-Proteomics).**
+You can **download the contaminant FASTA files from [GitHub](https://github.com/HaoGroup-ProtContLib/Protein-Contaminant-Libraries-for-DDA-and-DIA-Proteomics).**
 
-If you are analysing data that has been processed without the contaminant fasta, you can also download an **Excel spreadsheet contaminant list** from the same link and use this to identify and remove contaminant proteins from your dataset.
+If you are analysing data that has been processed without a contaminant FASTA, you can also download an **Excel spreadsheet contaminant list** from the same link and use this to identify and remove contaminant proteins from your dataset.
 
 For more information, see the original publication:
 
-Frankenfield AM, Ni J, Ahmed M, Hao L. Protein contaminants matter: building universal protein contaminant libraries for DDA and DIA proteomics. Journal of proteome research. 2022 Jul 6;21(9):2104-13. https://pubs.acs.org/doi/full/10.1021/acs.jproteome.2c00145
+Frankenfield, A. M., Ni, J., Ahmed, M., & Hao, L. (2022). Protein Contaminants Matter: Building Universal Protein Contaminant Libraries for DDA and DIA Proteomics. Journal of proteome research, 21(9), 2104–2113. https://doi.org/10.1021/acs.jproteome.2c00145
 
 :::::
 
 ## Protein quantification
 
-Missing data has been a longstanding issue impacting the accuracy and reproducibility of mass spectrometry-based proteomic analyses, complicating downstream analyses. Most imputation methods are not designed to account for the specific attributes of proteomics data, and there is no consensus in the literature for how missing values should be managed in proteomics experiments.
+Missing data has been a longstanding issue impacting the accuracy and reproducibility of mass spectrometry-based proteomic analyses, complicating downstream analyses. Most established imputation methods are not designed to account for the specific attributes of proteomics data, and there is no consensus in the literature for how missing values should be managed in proteomics experiments. This presents an issue with using the protein values directly generated by platforms like DIA-NN, which contain many missing values.
 
-Li & Smyth (2023) published the detection probability curve (DPC), which models the relationship between peptide intensity and missingness. They show that almost all missing values in label-free proteomics data are not missing at random and should be accounted for.
+In this tutorial, we are using the `dpcQuant()` method of protein quantification from the `limpa` package, or *Linear Models for Proteomics Data* [(Li, Cobbold & Smyth, 2025)](https://doi.org/10.1101/2025.04.28.651125). The **detection probability curve (DPC)** models the relationship between peptide intensity and missingness, showing that almost all missing values in label-free proteomics data are not missing at random and should be accounted for [(Li & Smyth, 2023)](https://doi.org/10.1093/bioinformatics/btad200). The `dpcQuant()` uses Bayesian statistical methods based on peptide intensities and the DPC coefficients for a particular dataset to generate a complete matrix of protein values without the need for imputation. This method outputs a linear model object suitable for downstream analysis with the `limma` package.
 
-Li, Cobbold & Smyth (2025) present a solution to this problem through *limpa* package, or *Linear Models for Proteomics Data*. Their method uses Bayesian statistical methods to generate a complete matrix of protein values without the need for imputation, based on peptide intensities and the DPC coefficients. This method outputs a linear model object suitable for downstream analysis with the *limma* package.
-
-To learn more about the detection probability curve and the limpa package, see the original publications referenced at the beginning of this lesson.
+To learn more about the detection probability curve and the `limpa` package, please read the original publications.
 
 ### Using limpa and the DPC for protein quantification
 
-First, we will generate and visualise our detection probability curve.
+First, we will generate and visualise our **detection probability curve**.
 
 The DPC coefficients are related to the dataset and software used for processing. A steeper slope means there is more statistical information in the pattern of missing data. A slope closer to 0 means there is more data missing at random.
 
 
 
 ``` r
+# Estimate the DPC for our data
 dpcfit <- dpcON(y.peptide, robust=TRUE)
 
 # Print the intercept and slope of our DPC
@@ -419,7 +237,7 @@ dpcfit$dpc
 
 ``` output
      beta0      beta1 
--7.1928577  0.6050907 
+-7.2678650  0.6033267 
 ```
 
 ``` r
@@ -427,13 +245,13 @@ dpcfit$dpc
 plotDPC(dpcfit)
 ```
 
-<img src="fig/03datacleaning-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="fig/03datacleaning-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
-Now we can use the DPC to generate our log2 protein values. This function requires the following input:
+Next, we can use the DPC to generate our log2 protein values. This function requires the following input:
 
-- limma EList object, or a numeric matrix, of peptide-level log2 expression values, with samples as columns and peptides as rows
-- vector of protein IDs
-- numeric vector providing the slope and intercept of the DPC
+- a limma EList object, or a numeric matrix, of peptide-level log2 expression values, with samples as columns and peptides as rows (`y.peptide`)
+- vector of protein IDs (`"Protein.Names"`)
+- numeric vector providing the slope and intercept of the DPC (`dpcfit`)
 
 
 ``` r
@@ -449,7 +267,7 @@ Quantifying proteins ...
 ```
 
 ``` output
-Proteins: 275 Peptides: 2520
+Proteins: 280 Peptides: 2672
 ```
 
 *Note: our dataset is quite small, so this process should only take a few seconds. For larger datasets, it may take minutes or hours for this command to run.*
@@ -459,11 +277,11 @@ Proteins: 275 Peptides: 2520
 
 The base `dpc()` assumes observed log-intensities are normally distributed.
 
-A modified version `dpcON(robust=TRUE)` downweighs outliers.
+A modified version, used in this tutorial, `dpcON(robust=TRUE)` downweighs outliers.
 
 Alternatively, `dpcCN()` assumes the complete set of log-intensities are normally distributed. Using this method may underestimate the DPC slope if there is a non-small proportion of peptides missing by chance.
 
-You can also choose your own slope by passing the argument `dpc.slope=` to `dpcQuant()`. Using this method, an intercept value will automatically be generated. You can check this value by using `estimateDPCIntercept()`. The authors recommend a slope of 0.6 - 0.8 is usually appropriate for data generated using DIA-NN.
+You can also choose your own slope by passing the argument `dpc.slope=` to `dpcQuant()` instead of `dpc=dpcfit`. Using this method, an intercept value will automatically be generated. You can check this value by using `estimateDPCIntercept()`. The authors recommend a slope of 0.6 - 0.8 is usually appropriate for data generated using DIA-NN.
 
 You may wish to conduct further statistical analyses to determine which method is most appropriate for your experiment; however, the authors suggest that downstream analysis should not be significantly affected by differing DPC coefficients.
 
@@ -521,11 +339,11 @@ names(y.protein$genes)
 
 :::::challenge
 
-Compare the first few rows of the *protein (E)*, *n.observations* and *standard.error* matrices. Take a look at the *NPeptides* and *PropObs* values for those proteins also. What do you notice about the relationship between these quality metrics?
+Compare the first few rows of the protein (`E`), `n.observations` and `standard.error` matrices. Take a look at the `NPeptides` and `PropObs` values for those proteins also. What do you notice about the relationship between these quality metrics?
 
 :::solution
 
-Proteins with smaller NPeptides and PropObs values, and smaller n.observations for individual samples, have higher standard error. 
+Proteins with smaller `NPeptides` and `PropObs` values, and smaller `n.observations` for individual samples, have higher standard error. 
 
 The more peptide data available for a particular protein in a particular sample, the greater the confidence in the protein value, and therefore the lower the standard error.
 
@@ -536,46 +354,56 @@ If you are interested in a particular protein, it is important to look at these 
 
 ## Dimensionality Reduction and QC
 
-Let's take a look at our dataset. The `plotMDSUsingSEs()` function, or *Multidimensional Scaling Plot of Gene Expression Profiles, Using Standard Errors*, is similar to `plotMDS()` in the *limma* package, but takes account of the standard errors generated by `dpcQuant()`. This is essentially a PCA plot for the newly generated protein values that takes into consideration their standard error.
+Let's take a look at our dataset. The `plotMDSUsingSEs()` function, or *Multidimensional Scaling Plot of Gene Expression Profiles, Using Standard Errors*, is similar to `plotMDS()` in the `limma` package, but takes account of the standard errors generated by `dpcQuant()`. This is essentially a PCA plot for the newly generated protein values that takes into consideration their standard error.
 
 
 ``` r
 plotMDSUsingSEs(y.protein)
 ```
 
-<img src="fig/03datacleaning-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="fig/03datacleaning-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
 
-That plot is extremely messy and doesn't tell us much! Let's clean it up using the Class and Batch coloring we generated earlier.
+That plot is extremely messy and doesn't tell us much! Let's clean it up.
 
 
 ``` r
+# Factorise and set colors for class and batch
+Class <- factor(y.peptide$targets$Class)
+Class.color <- Class
+levels(Class.color) <- hcl.colors(nlevels(Class), palette = "cividis")
+
+Batch <- factor(y.peptide$targets$Batch)
+Batch.color <- Batch
+levels(Batch.color) <- hcl.colors(nlevels(Batch), palette = "Set 2")
+
 # Class visualisation
 plotMDSUsingSEs(y.protein, pch=16, col=as.character(Class.color))
 ```
 
-<img src="fig/03datacleaning-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+<img src="fig/03datacleaning-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # Batch visualisation
 plotMDSUsingSEs(y.protein, pch=16, col=as.character(Batch.color))
 ```
 
-<img src="fig/03datacleaning-rendered-unnamed-chunk-14-2.png" style="display: block; margin: auto;" />
+<img src="fig/03datacleaning-rendered-unnamed-chunk-15-2.png" style="display: block; margin: auto;" />
 
 ``` r
 # Class (labels) and batch (colors) visualisation
 plotMDSUsingSEs(y.protein, labels=Class, col=as.character(Batch.color))
 ```
 
-<img src="fig/03datacleaning-rendered-unnamed-chunk-14-3.png" style="display: block; margin: auto;" />
+<img src="fig/03datacleaning-rendered-unnamed-chunk-15-3.png" style="display: block; margin: auto;" />
 
 We can already see a distinction between the aCD and Ctrl groups, which will be explored further in the next lesson.
 
 It also looks like there are some differences between the batches. **We should add batch as a covariate to our analyses in the next lesson.**
 
 :::callout
+# Managing batch effects
 
-Explaining the different methods of identifying, accounting and correcting for batch effects in proteomics data is an entire workshop itself! For further information, we recommend the [Melbourne Integrative Genomics Workshop: Managing batch effects in biological studies](https://github.com/melbintgen/Batch-effect-management?tab=readme-ov-file).
+Explaining the different methods of identifying, accounting and correcting for batch effects in proteomics data is an entire tutorial itself! For further information, we recommend the [Melbourne Integrative Genomics Workshop: Managing batch effects in biological studies](https://github.com/melbintgen/Batch-effect-management?tab=readme-ov-file).
 
 If you are concerned about batch effects in your data, University of Melbourne staff and students or affiliates can also [contact us](https://mdhs.unimelb.edu.au/melbournebioinformatics/training-and-support/expert-advice) for a free consultation.
 

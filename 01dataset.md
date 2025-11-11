@@ -12,8 +12,8 @@ exercises: 5
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Understand the dataset we are using in this tutorial
-- Learn how to download publicly available proteomics data from within R
+- Understand the dataset we are using in this tutorial.
+- Learn how to download publicly available proteomics data from within R.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -23,8 +23,13 @@ The data we are using in this tutorial comes from a study done exploring a non-i
 
 **For the purpose of this tutorial**, we will be using a subset of the total data presented in the paper, including:
 
-- 11 control samples (6 from Batch One + 5 from Batch Three)
-- 9 aCD (active Crohn’s disease) samples (5 from Batch One + 4 from Batch 3)
+- 11 control (Ctrl) samples
+
+    - 6 from batch one + 5 from batch three
+    
+- 9 active Crohn’s disease (aCD) samples
+
+    - 5 from batch one + 4 from batch three
 
 **Reference**
 Shajari, E.; Gagné, D.; Malick, M.; Roy, P.; Noël, J.-F.; Gagnon, H.; Brunet, M.A.; Delisle, M.; Boisvert, F.-M.; Beaulieu, J.-F. Application of SWATH Mass Spectrometry and Machine Learning in the Diagnosis of Inflammatory Bowel Disease Based on the Stool Proteome. Biomedicines 2024, 12, 333. https://doi.org/10.3390/biomedicines12020333.
@@ -63,13 +68,19 @@ The `rpx` package gives us programmatic access to the ProteomeXchange without ha
 # Set the dataset identifier and load
 px_id <- 'PXD047585' 
 px <- PXDataset(px_id)
+```
 
+``` error
+Error in open.connection(con, open = mode): cannot open the connection
+```
+
+``` r
 # Print the dataset title
 pxtitle(px)
 ```
 
-``` output
-[1] "Application of SWATH Mass Spectrometry and Machine Learning in Diagnosis of Inflammatory Bowel Disease Based on Stool Proteome"
+``` error
+Error: object 'px' not found
 ```
 
 ``` r
@@ -77,8 +88,8 @@ pxtitle(px)
 pxurl(px)
 ```
 
-``` output
-[1] "ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2024/02/PXD047585"
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'pxurl': object 'px' not found
 ```
 
 ``` r
@@ -86,8 +97,8 @@ pxurl(px)
 pxtax(px)
 ```
 
-``` output
-[1] "Homo sapiens (human)"
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'pxtax': object 'px' not found
 ```
 
 ### Exploring dataset files
@@ -98,18 +109,19 @@ Let’s see which files are included in this dataset.
 ``` r
 # Retrieve a list of dataset files
 px_files <- pxfiles(px)
+```
 
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'pxfiles': object 'px' not found
+```
+
+``` r
 # Display the first few files
 head(px_files)
 ```
 
-``` output
-[1] "20201016_UdSjfb_20190115_freshstool_003.mzML"     
-[2] "20201016_UdSjfb_20190115_freshstool_003.wiff"     
-[3] "20201016_UdSjfb_20190115_freshstool_003.wiff.scan"
-[4] "20201016_UdSjfb_20190115_freshstool_005.mzML"     
-[5] "20201016_UdSjfb_20190115_freshstool_005.wiff"     
-[6] "20201016_UdSjfb_20190115_freshstool_005.wiff.scan"
+``` error
+Error: object 'px_files' not found
 ```
 
 PRIDE datasets often include a mix of raw data, search results, processed outputs, and metadata.
@@ -122,10 +134,8 @@ To understand the data composition, we’ll examine file extensions.
 table(sapply(strsplit(px_files, "\\."), tail, 1))
 ```
 
-``` output
-
-    fas    mzML     pdf    scan speclib     tsv     txt    wiff    xlsx 
-      1      78       1      78       2      13       1      78       3 
+``` error
+Error: object 'px_files' not found
 ```
 
 Alternatively, we can get the same result with the tools package:
@@ -136,10 +146,8 @@ library(tools)
 table(file_ext(px_files))
 ```
 
-``` output
-
-    fas    mzML     pdf    scan speclib     tsv     txt    wiff    xlsx 
-      1      78       1      78       2      13       1      78       3 
+``` error
+Error: object 'px_files' not found
 ```
 
 Each file extension represents a specific proteomics data type. 
@@ -151,9 +159,9 @@ For example, `.raw` may indicate vendor instrument output and `.mzML` indicates 
 
 For more information about different proteomics file formats, check out:
 
-- [PRIDE File Formats Documentation](https://www.ebi.ac.uk/pride/markdownpage/pridefileformats)
+    - [PRIDE File Formats Documentation](https://www.ebi.ac.uk/pride/markdownpage/pridefileformats)
 
-- [Paper on mass spec file formats (PMC3518119)](https://pmc.ncbi.nlm.nih.gov/articles/PMC3518119/)
+    - [Paper on mass spec file formats (PMC3518119)](https://pmc.ncbi.nlm.nih.gov/articles/PMC3518119/)
 
 :::
 
@@ -173,9 +181,8 @@ Questions to consider:
 
 ::: solution
 
-UPDATE
-
 Programmatic access allows you to automate each step of your analysis, making your workflow fully reproducible.
+
 :::
 ::::::
 
@@ -191,18 +198,18 @@ library(curl)
 curl::curl_download(url='https://ftp.pride.ebi.ac.uk/pride/data/archive/2024/02/PXD047585/SampleAnnotation.xlsx',destfile = 'data/SampleAnnotation.xlsx')
 ```
 
-- We retrieved the `url` in an earlier step using pxurl(). Note:
+- We retrieved the `url` in an earlier step using `pxurl()`. Note:
     
     - We have replaced `ftp://` at the start with `https://`
     - We have specified the name of the file we wish to download (`SampleAnnotation.xlsx`), from the list we sourced earlier using `pxfiles()`
 
-- Set `destfile` to the name and location for your downloaded file
+- We set `destfile` to our desired name and location for the downloaded file.
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- This dataset includes stool samples used to investigate non-invasive diagnostic alternatives for Inflammatory Bowel Disease.
-- We can use the *rpx* package to download and explore data from PRIDE or the ProteomeXchange Consortium without leaving R.
+- The dataset used in this tutorial includes stool samples used to investigate non-invasive diagnostic methods for Inflammatory Bowel Disease.
+- We can use the `rpx` package to download and explore data from PRIDE or the ProteomeXchange Consortium without leaving R.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 

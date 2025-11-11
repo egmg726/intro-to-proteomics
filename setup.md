@@ -4,7 +4,7 @@ title: Setup
 
 ## Workshop overview
 
-This workshop will introduce participants to proteomic data processing, cleaning, and analysis, 
+This workshop will introduce participants to **proteomic data processing, cleaning, and analysis**, 
 with a focus on **label-free, bottom-up, DIA, mass-spectrometry based quantitative proteomics**. 
 
 We will begin with a brief overview of the proteomics workflow and introduction to the dataset used in this tutorial. 
@@ -45,7 +45,7 @@ This introductory workshop assumes some knowledge of R and basic biology. No pro
 
 ## REQUIRED KNOWLEDGE
 
-- This workshop assumes participants have a basic understanding of R or have previously attended 
+- This workshop assumes participants have a **basic understanding of R** or have previously attended 
 an Intro to R workshop. Please review introductory materials [here](https://melbournebioinformatics.github.io/intro-to-r/).
 
 ::::
@@ -54,7 +54,7 @@ an Intro to R workshop. Please review introductory materials [here](https://melb
 
 ## REQUIRED SOFTWARE
 
-Attendees are required to bring their own laptop computers. Please ensure you have installed:
+Attendees are required to bring their own laptop computers. **Please ensure you have installed:**
 
 - [Chrome](https://www.google.com/chrome/) or [FireFox](https://www.mozilla.org/en-US/)
 - [R](https://cran.ms.unimelb.edu.au/) (Download and install the latest version of R using the UniMelb mirror)
@@ -120,7 +120,7 @@ for (pkg in bioc_packages) {
 :::: checklist
 ## REQUIRED DATA
 
-Please click the links below to download the data required for this workshop:
+**Please click the links below to download the data required for this workshop:**
 
   - [Parquet file](episodes/data/MBIntroToProteomics.parquet)
   - [Sample Annotation file](episodes/data/SampleAnnotation.xlsx)
