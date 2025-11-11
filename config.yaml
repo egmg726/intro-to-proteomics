@@ -38,7 +38,7 @@ life_cycle: 'pre-alpha'
 license: 'CC-BY 4.0'
 
 # Link to the source repository for this lesson
-source: 'https://example.com/template-source/lesson-example' # UPDATE
+source: 'https://github.com/julia-broadbent/intro-to-proteomics'
 
 # Default branch of your lesson
 branch: 'main'
@@ -57,6 +57,9 @@ episodes: # UPDATE
 # - introduction.Rmd
 - 01dataset.Rmd
 - 02diann.Rmd
+- 03datacleaning.Rmd
+- 04DEA.Rmd
+- 05EnrichmentAnalysis.Rmd
 
 # Information for Learners
 learners:
