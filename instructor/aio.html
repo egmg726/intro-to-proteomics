@@ -531,17 +531,7 @@ ProteomeXchange without having to leave R.</p>
 <code class="sourceCode R"><span><span class="co"># Retrieve a list of dataset files</span></span>
 <span><span class="va">px_files</span> <span class="op">&lt;-</span> <span class="fu">pxfiles</span><span class="op">(</span><span class="va">px</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'bfcinfo': Directory of lock file does not exist: '/Users/egail/Library/Caches/org.R-project.R/R/rpx'</code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'bfcinfo': error in evaluating the argument 'conn' in selecting a method for function 'dbDisconnect': object 'info' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -549,15 +539,20 @@ ProteomeXchange without having to leave R.</p>
 <span><span class="fu">head</span><span class="op">(</span><span class="va">px_files</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error: object 'px_files' not found</code></pre>
+<pre class="output" tabindex="0"><code>[1] "20201016_UdSjfb_20190115_freshstool_003.mzML"
+[2] "20201016_UdSjfb_20190115_freshstool_003.wiff"
+[3] "20201016_UdSjfb_20190115_freshstool_003.wiff.scan"
+[4] "20201016_UdSjfb_20190115_freshstool_005.mzML"
+[5] "20201016_UdSjfb_20190115_freshstool_005.wiff"
+[6] "20201016_UdSjfb_20190115_freshstool_005.wiff.scan"</code></pre>
 </div>
 <p>PRIDE datasets often include a mix of raw data, search results,
 processed outputs, and metadata.</p>
 <p>To understand the data composition, we’ll examine file
 extensions.</p>
-<div class="codewrapper sourceCode" id="cb14">
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -565,12 +560,14 @@ extensions.</p>
 <span><span class="fu">table</span><span class="op">(</span><span class="fu">sapply</span><span class="op">(</span><span class="fu">strsplit</span><span class="op">(</span><span class="va">px_files</span>, <span class="st">"\\."</span><span class="op">)</span>, <span class="va">tail</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error: object 'px_files' not found</code></pre>
+<pre class="output" tabindex="0"><code>
+    fas    mzML     pdf    scan speclib     tsv     txt    wiff    xlsx
+      1      78       1      78       2      13       1      78       3 </code></pre>
 </div>
 <p>Alternatively, we can get the same result with the tools package:</p>
-<div class="codewrapper sourceCode" id="cb16">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -578,9 +575,11 @@ extensions.</p>
 <span><span class="fu">table</span><span class="op">(</span><span class="fu">file_ext</span><span class="op">(</span><span class="va">px_files</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error: object 'px_files' not found</code></pre>
+<pre class="output" tabindex="0"><code>
+    fas    mzML     pdf    scan speclib     tsv     txt    wiff    xlsx
+      1      78       1      78       2      13       1      78       3 </code></pre>
 </div>
 <p>Each file extension represents a specific proteomics data type. For
 example, <code>.raw</code> may indicate vendor instrument output and
@@ -648,7 +647,7 @@ analysis, making your workflow fully reproducible.</p>
 as described in the next lesson. For future reference, you can use the
 <strong>Curl</strong> package to download files as demonstrated
 below.</p>
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1288,7 +1287,7 @@ match-between-runs</strong>.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1618,7 +1617,7 @@ missing values in a rowwise manner?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p><code>dpcImpute()</code></p>
 </div>
@@ -1727,7 +1726,7 @@ relationship between these quality metrics?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>Proteins with smaller <code>NPeptides</code> and <code>PropObs</code>
 values, and smaller <code>n.observations</code> for individual samples,
@@ -1834,7 +1833,7 @@ in 2026.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> More about normalisation </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>To learn more about different normalisation techniques for proteomics
 data, we recommend the following papers:</p>
