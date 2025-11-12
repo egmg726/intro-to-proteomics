@@ -18,8 +18,7 @@ carpentry: 'uom'
 
 # Custom carpentry description
 # This will be used as the alt text for the logo
-carpentry_description: 'This workshop will introduce participants to proteomic data processing, cleaning, and analysis,
-with a focus on label-free, bottom-up, DIA, mass-spectrometry based quantitative proteomics.'
+carpentry_description: 'This workshop will introduce participants to proteomic data processing, cleaning, and analysis, with a focus on label-free, bottom-up, DIA, mass-spectrometry based quantitative proteomics.'
 
 # Overall title for pages.
 title: 'Introduction to Proteomics'
@@ -32,13 +31,13 @@ keywords: 'proteomics, mass spectrometry, DIA, DIA-NN, limpa, differential expre
 
 # Life cycle stage of the lesson
 # possible values: pre-alpha, alpha, beta, stable
-life_cycle: 'pre-alpha'
+life_cycle: 'beta'
 
 # License of the lesson materials (recommended CC-BY 4.0)
 license: 'CC-BY 4.0'
 
 # Link to the source repository for this lesson
-source: 'https://github.com/julia-broadbent/intro-to-proteomics'
+source: 'https://melbournebioinformatics.github.io/intro-to-proteomics/'
 
 # Default branch of your lesson
 branch: 'main'
@@ -64,7 +63,7 @@ episodes: # UPDATE
 # Information for Learners
 learners:
 - setup.md
-# - reference.md
+- reference.md
 - contact.md
 
 # Information for Instructors
