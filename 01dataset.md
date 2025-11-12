@@ -68,7 +68,14 @@ The `rpx` package gives us programmatic access to the ProteomeXchange without ha
 # Set the dataset identifier and load
 px_id <- 'PXD047585' 
 px <- PXDataset(px_id)
+```
 
+
+
+We can then perform several functions to extract the contents of the `px` object:
+
+
+``` r
 # Print the dataset title
 pxtitle(px)
 ```
@@ -95,6 +102,7 @@ pxtax(px)
 [1] "Homo sapiens (human)"
 ```
 
+
 ### Exploring dataset files
 
 Let’s see which files are included in this dataset.
@@ -103,18 +111,23 @@ Let’s see which files are included in this dataset.
 ``` r
 # Retrieve a list of dataset files
 px_files <- pxfiles(px)
+```
 
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'bfcinfo': Directory of lock file does not exist: '/Users/egail/Library/Caches/org.R-project.R/R/rpx'
+```
+
+``` error
+Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'bfcinfo': error in evaluating the argument 'conn' in selecting a method for function 'dbDisconnect': object 'info' not found
+```
+
+``` r
 # Display the first few files
 head(px_files)
 ```
 
-``` output
-[1] "20201016_UdSjfb_20190115_freshstool_003.mzML"     
-[2] "20201016_UdSjfb_20190115_freshstool_003.wiff"     
-[3] "20201016_UdSjfb_20190115_freshstool_003.wiff.scan"
-[4] "20201016_UdSjfb_20190115_freshstool_005.mzML"     
-[5] "20201016_UdSjfb_20190115_freshstool_005.wiff"     
-[6] "20201016_UdSjfb_20190115_freshstool_005.wiff.scan"
+``` error
+Error: object 'px_files' not found
 ```
 
 PRIDE datasets often include a mix of raw data, search results, processed outputs, and metadata.
@@ -127,10 +140,8 @@ To understand the data composition, we’ll examine file extensions.
 table(sapply(strsplit(px_files, "\\."), tail, 1))
 ```
 
-``` output
-
-    fas    mzML     pdf    scan speclib     tsv     txt    wiff    xlsx 
-      1      78       1      78       2      13       1      78       3 
+``` error
+Error: object 'px_files' not found
 ```
 
 Alternatively, we can get the same result with the tools package:
@@ -141,10 +152,8 @@ library(tools)
 table(file_ext(px_files))
 ```
 
-``` output
-
-    fas    mzML     pdf    scan speclib     tsv     txt    wiff    xlsx 
-      1      78       1      78       2      13       1      78       3 
+``` error
+Error: object 'px_files' not found
 ```
 
 Each file extension represents a specific proteomics data type. 
